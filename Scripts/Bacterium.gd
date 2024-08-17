@@ -4,7 +4,7 @@ class_name Bacterium
 @export var max_speed := 200.0
 
 @export var detection_radius = 30.0
-@export var separation_strength := 20.0
+@export var separation_strength := 15.0
 
 @onready var collision := $CollisionShape2D
 
@@ -12,11 +12,11 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
-	
 	var mouse_offset = get_global_mouse_position() - global_position
 	var max_speed_distance = get_viewport_rect().size.length() / 4
 	var speed = min(remap(mouse_offset.length(), 0, max_speed_distance, 0, max_speed), max_speed)
-	#For Performance:
+	
+	# For Performance:
 	#velocity = mouse_offset.normalized() * speed
 	velocity = (mouse_offset.normalized() + get_separation_velocity() * separation_strength) * speed
 		

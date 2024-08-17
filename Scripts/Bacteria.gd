@@ -4,6 +4,8 @@ class_name Bacteria
 @export var backterium_scene : PackedScene
 @export var spawn_check_increment := 20.0
 @export var min_bacteria_count := 3
+@export var max_bacteria_count := 200
+@export var scroll_spawn_count := 1
 
 func _ready():
 	global_position = Vector2.ZERO
@@ -15,14 +17,11 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				spawn_bacterium()
+				for i in range(scroll_spawn_count): 
+					spawn_bacterium()
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				remove_bacterium()
-	
-	if event.is_action_pressed("ui_accept"):
-		spawn_bacterium()
-	elif event.is_action_pressed("ui_cancel"):
-		remove_bacterium()
+				for i in range(scroll_spawn_count): 
+					remove_bacterium()
 		
 func remove_bacterium():
 	if get_bacteria_count() <= min_bacteria_count:
@@ -35,20 +34,30 @@ func remove_bacterium():
 		if distance > farthest_dist:
 			farthest_bacterium = bacterium
 			farthest_dist = distance
-			
-	farthest_bacterium.queue_free()
+	
+	if is_instance_valid(farthest_bacterium):
+		farthest_bacterium.queue_free()
 	
 		
 func spawn_bacterium():
+	if get_bacteria_count() >= max_bacteria_count:
+		return
+		
 	var bacterium := backterium_scene.instantiate() as Bacterium
 	add_child(bacterium)
 	
 	var spawn_points = generate_spiral_points(get_bacteria_position(), 1000, spawn_check_increment)
 	
+	var can_spawn = false
+	
 	for point in spawn_points:
 		if can_spawn(bacterium.collision, point):
 			bacterium.global_position = point
+			can_spawn = true
 			break
+
+	if not can_spawn:
+		bacterium.queue_free()
 
 func get_bacteria() -> Array[Bacterium]:
 	var result : Array[Bacterium]

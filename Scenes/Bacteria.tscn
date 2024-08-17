@@ -9,5 +9,6 @@ script = ExtResource("1_tx7fs")
 backterium_scene = ExtResource("2_xf4yk")
 
 [node name="BacteriaCenter" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 texture = ExtResource("3_0ul33")
