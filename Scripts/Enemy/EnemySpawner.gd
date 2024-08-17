@@ -8,17 +8,18 @@ var AOEEnemyScript = preload("res://Scripts/Enemy/AOEEnemy.gd")
 var TankEnemyScript = preload("res://Scripts/Enemy/TankEnemy.gd")
 var AbsorberEnemyScript = preload("res://Scripts/Enemy/AbsorberEnemy.gd")
 var FreezerEnemyScript = preload("res://Scripts/Enemy/FreezerEnemy.gd")
+var ImmunityBoosterEnemyScript = preload("res://Scripts/Enemy/ImmunityBoosterEnemy.gd")
 
-# Spawn chances for each enemy type (adjust as needed)
+# Update spawn chances
 var spawn_chances = {
-	"Basic": 5,
+	"Basic": 10,
 	"Shooter": 10,
-	"AOE": 15,
-	"Tank": 15,
+	"AOE": 10,
+	"Tank": 10,
 	"Absorber": 10,
-	"Freezer":10
+	"Freezer": 1,
+	"ImmunityBooster": 100  # Adjust this value as needed
 }
-
 var total_spawn_chance: int = 0
 var spawn_timer: float = 0.0
 var time_to_next_spawn: float = 0.0
@@ -39,8 +40,10 @@ func _process(delta):
 		set_next_spawn_time()
 
 func set_next_spawn_time():
-	time_to_next_spawn = randf_range(2.0, 4.0)
-
+	var immunity = Globals.immunity_response
+	var min_time = lerp(0.3, 0.05, immunity / 100.0)
+	var max_time = lerp(0.6, 0.1, immunity / 100.0)
+	time_to_next_spawn = randf_range(min_time, max_time)
 func spawn_enemy():
 	var spawn_position = get_spawn_position()
 	if spawn_position == null:
@@ -50,6 +53,8 @@ func spawn_enemy():
 	var enemy_instance = BasicEnemyScene.instantiate()
 
 	match enemy_type:
+		"ImmunityBooster":
+			enemy_instance.set_script(ImmunityBoosterEnemyScript)
 		"Basic":
 			pass  # BasicEnemy is already the default
 		"Shooter":
