@@ -3,8 +3,7 @@ class_name Bacteria
 
 @export var backterium_scene : PackedScene
 @export var spawn_check_increment := 20.0
-
-var points_to_draw : Array
+@export var min_bacteria_count := 3
 
 func _ready():
 	global_position = Vector2.ZERO
@@ -13,35 +12,68 @@ func _physics_process(delta):
 	$BacteriaCenter.position = get_bacteria_position()
 	
 func _input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				spawn_bacterium()
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				remove_bacterium()
+	
 	if event.is_action_pressed("ui_accept"):
 		spawn_bacterium()
+	elif event.is_action_pressed("ui_cancel"):
+		remove_bacterium()
+		
+func remove_bacterium():
+	if get_bacteria_count() <= min_bacteria_count:
+		return
+	
+	var farthest_bacterium : Bacterium
+	var farthest_dist := 0.0
+	for bacterium in get_bacteria():
+		var distance = (get_bacteria_position() - bacterium.position).length()
+		if distance > farthest_dist:
+			farthest_bacterium = bacterium
+			farthest_dist = distance
+			
+	farthest_bacterium.queue_free()
+	
 		
 func spawn_bacterium():
 	var bacterium := backterium_scene.instantiate() as Bacterium
 	add_child(bacterium)
 	
-	var spawn_points = generate_spiral_points(get_global_mouse_position(), 1000, spawn_check_increment)
-	points_to_draw = spawn_points
+	var spawn_points = generate_spiral_points(get_bacteria_position(), 1000, spawn_check_increment)
 	
 	for point in spawn_points:
 		if can_spawn(bacterium.collision, point):
 			bacterium.global_position = point
 			break
 
-	
-func get_bacteria_position() -> Vector2:
-	print(get_child_count(true))
-	if get_child_count(true) <= 0:
-		return Vector2.ZERO
-		
-	var sum_positions := Vector2.ZERO
+func get_bacteria() -> Array[Bacterium]:
+	var result : Array[Bacterium]
 	
 	for child in get_children(true):
-		var bacterium = child as Node2D
+		if child is Bacterium:
+			result.append(child)
+			
+	return result
+
+func get_bacteria_count() -> int:
+	return get_bacteria().size()
+	
+func get_bacteria_position() -> Vector2:
+	var bacteria_count := get_bacteria_count()
+	
+	if bacteria_count <= 0:
+		return Vector2.ZERO
+	
+	var sum_positions := Vector2.ZERO
+	
+	for bacterium in get_bacteria():
 		sum_positions += bacterium.global_position
 	
-	print(sum_positions / get_child_count(true))
-	return sum_positions / get_child_count(true)
+	return sum_positions / bacteria_count
 		
 func can_spawn(collision : CollisionShape2D, position : Vector2) -> bool:
 	var params := PhysicsShapeQueryParameters2D.new()
@@ -77,10 +109,3 @@ func generate_spiral_points(origin: Vector2, points_count: int, increment: int) 
 		step_count += 1
 		
 	return result
-		
-func random_point_on_circle(origin: Vector2, radius: float) -> Vector2:
-	var angle = randf() * TAU 
-	var x = cos(angle) * radius
-	var y = sin(angle) * radius
-	
-	return Vector2(x, y)
