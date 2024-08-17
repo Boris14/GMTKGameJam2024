@@ -5,6 +5,7 @@ enum State { MOVE, PREPARE_ATTACK, ATTACK }
 
 var current_state = State.MOVE
 var attack_timer: float = 0.0
+var attack_timer_max: float = 4.0
 @onready var aoe_visual = (func():
 	# Create the ColorRect
 	var rect = ColorRect.new()
@@ -54,27 +55,31 @@ var attack_timer: float = 0.0
 	
 func _ready():
 	super._ready()
+	radius=randf_range(50, 100)
+	$Icon.modulate=Color.YELLOW
 
-	$CollisionShape2D.shape.radius = radius
+	#$CollisionShape2D.shape.radius = radius
 func aoe_radius():
-	return radius*2*2*attack_timer/2 if current_state == State.PREPARE_ATTACK else radius*2*2 if current_state==State.ATTACK else 0
+	return radius*2*2*attack_timer/attack_timer_max if current_state == State.PREPARE_ATTACK else radius*2*2 if current_state==State.ATTACK else 0
 func step(delta):
+	aoe_visual.size = Vector2.ONE * aoe_radius()*2
+	aoe_visual.position = -aoe_visual.size/2
 	match current_state:
 		State.MOVE:
-			var player_pos = get_player_position()
+			var player_pos = get_closest_bacterium_position()
 			velocity = (player_pos - global_position).normalized() * movement_speed
 			if global_position.distance_to(player_pos) < radius*2:  # Adjust this value as needed
 				current_state = State.PREPARE_ATTACK
 				velocity = Vector2.ZERO
 		State.PREPARE_ATTACK:
 			attack_timer += delta
-			aoe_visual.size = Vector2.ONE * aoe_radius()*2
-			aoe_visual.position = -aoe_visual.size/2
-			if attack_timer >= 2.0:
+			
+			if attack_timer >= attack_timer_max:
 				current_state = State.ATTACK
 				attack_timer = 0.0
 		State.ATTACK:
 			for b in get_tree().get_nodes_in_group("bacterium"):
 				if position.distance_to(b.position) < aoe_radius():
-					b.death()
+					#b.death()
+					b.queue_free()
 			current_state = State.MOVE

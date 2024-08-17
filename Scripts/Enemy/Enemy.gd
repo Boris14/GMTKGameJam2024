@@ -3,13 +3,11 @@ class_name Enemy
 
 @export var health: int = 1
 @export var max_health: int = 1
-@export var size: float = 1.0
 @export var movement_speed: float = 100.0
-@export var radius: float = 10.0
+@export var radius: float = 70.0
 
-func _ready():
-	scale = Vector2(size, size)
-
+func _ready() -> void:
+	pass
 func take_damage(amount: int = 1):
 	health -= amount
 	if health <= 0:
@@ -17,13 +15,30 @@ func take_damage(amount: int = 1):
 
 func _physics_process(delta):
 	step(delta)
+	$Icon.scale = Vector2.ONE * radius/66
 	move_and_slide()
-
+	for b in get_tree().get_nodes_in_group("bacterium"):
+		if position.distance_to(b.position) < radius:
+			take_damage()
+			b.queue_free()
+		
 func step(delta):
 	# This function is intended to be overwritten by child classes
 	pass
 
-func get_player_position() -> Vector2:
-	return get_parent().get_parent().get_node("Bacterium").position
-	# Assume this function exists and returns the player's position
-	#return Vector2.ZERO
+
+func get_closest_bacterium_position() -> Vector2:
+	var bacteria = get_tree().get_nodes_in_group("bacterium")
+	if bacteria.is_empty():
+		return Vector2.ZERO
+	
+	var closest_bacterium = bacteria[0]
+	var closest_distance = position.distance_squared_to(closest_bacterium.position)
+	
+	for bacterium in bacteria:
+		var distance = position.distance_squared_to(bacterium.position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_bacterium = bacterium
+	
+	return closest_bacterium.position
