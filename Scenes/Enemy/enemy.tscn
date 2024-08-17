@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bo61pcdr1iw2w"]
+[gd_scene load_steps=8 format=3 uid="uid://bo61pcdr1iw2w"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/AOEEnemy.gd" id="1_bugk0"]
 [ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="1_cfkou"]
+[ext_resource type="AudioStream" uid="uid://c1qcfi2efjxwk" path="res://Audio/sfx_character_hit_01.wav" id="2_miarl"]
+[ext_resource type="AudioStream" uid="uid://c3hefghrn4r22" path="res://Audio/sfx_character_hit_02.wav" id="3_4mpc1"]
+[ext_resource type="AudioStream" uid="uid://ceykrempdt1bx" path="res://Audio/sfx_character_hit_03.wav" id="4_x0g6b"]
+[ext_resource type="AudioStream" uid="uid://lobs8xjxks0n" path="res://Audio/sfx_character_hit_04.wav" id="5_q1ycc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
 radius = 0.1
@@ -9,6 +13,7 @@ radius = 0.1
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_bugk0")
 max_health = 5
+hit_sounds = Array[AudioStream]([ExtResource("2_miarl"), ExtResource("3_4mpc1"), ExtResource("4_x0g6b"), ExtResource("5_q1ycc")])
 
 [node name="Icon" type="Sprite2D" parent="."]
 z_index = 1
@@ -17,3 +22,5 @@ texture = ExtResource("1_cfkou")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0ngu5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

@@ -1,17 +1,94 @@
-[gd_scene load_steps=4 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=15 format=3 uid="uid://cypu6v8555nk4"]
 
-[ext_resource type="Texture2D" uid="uid://dfg4rybeg3mei" path="res://Assets/360_F_297455425_lNivJ7rm7LPLuApu3jx36L02PeLllDxN.jpg" id="1_c1gtc"]
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
 [ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/enemy_spawner.tscn" id="3_4guve"]
 [ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="3_kpg0x"]
+[ext_resource type="Texture2D" uid="uid://clmgi24pvhniw" path="res://Assets/first map/tile 1.png" id="3_q1n2g"]
+[ext_resource type="Texture2D" uid="uid://dwwkw08o34pit" path="res://Assets/first map/tile 2.png" id="4_45hd7"]
+[ext_resource type="Texture2D" uid="uid://cqlt1j2gmcumx" path="res://Assets/first map/tile 3.png" id="5_faqba"]
+[ext_resource type="Texture2D" uid="uid://dfbw2dbskw387" path="res://Assets/first map/tile 4.png" id="6_snfvs"]
+[ext_resource type="Texture2D" uid="uid://1bslyy67amib" path="res://Assets/first map/tile 5.png" id="7_ljom2"]
+[ext_resource type="Texture2D" uid="uid://0cyijlqtqqi5" path="res://Assets/first map/tile 6.png" id="8_ud62q"]
+[ext_resource type="Texture2D" uid="uid://bh7uuqhttyuee" path="res://Assets/first map/tile 7.png" id="9_bom7c"]
+[ext_resource type="Texture2D" uid="uid://dkpisxv60l1u4" path="res://Assets/first map/tile 8.png" id="10_fa17k"]
+[ext_resource type="Script" path="res://Scripts/CameraMarker.gd" id="11_aqhmd"]
+[ext_resource type="Texture2D" uid="uid://bd60wqaro2p2y" path="res://Assets/first map/tile 9.png" id="11_ui88e"]
+[ext_resource type="AudioStream" uid="uid://b0lm467ab888g" path="res://Audio/atm_blood_1.wav" id="14_85iis"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Main" type="Node2D"]
+script = ExtResource("1_w3i5e")
+camera_speed = 200.0
 
-[node name="Background" type="Sprite2D" parent="."]
-position = Vector2(945.5, 541.75)
-scale = Vector2(2.25056, 3.11806)
-texture = ExtResource("1_c1gtc")
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+limit_left = 0
+limit_top = 0
+limit_right = 9600
 
-[node name="Bacteria" parent="." instance=ExtResource("3_kpg0x")]
-position = Vector2(0, -2)
+[node name="Background" type="Node" parent="."]
+
+[node name="Tile1" type="Sprite2D" parent="Background"]
+position = Vector2(960, 540)
+texture = ExtResource("3_q1n2g")
+
+[node name="Tile2" type="Sprite2D" parent="Background"]
+position = Vector2(2880, 540)
+texture = ExtResource("4_45hd7")
+
+[node name="Tile3" type="Sprite2D" parent="Background"]
+position = Vector2(2880, 1616)
+texture = ExtResource("5_faqba")
+
+[node name="Tile4" type="Sprite2D" parent="Background"]
+position = Vector2(2880, 2696)
+texture = ExtResource("6_snfvs")
+
+[node name="Tile5" type="Sprite2D" parent="Background"]
+position = Vector2(4800, 2696)
+texture = ExtResource("7_ljom2")
+
+[node name="Tile6" type="Sprite2D" parent="Background"]
+position = Vector2(6720, 2696)
+texture = ExtResource("8_ud62q")
+
+[node name="Tile7" type="Sprite2D" parent="Background"]
+position = Vector2(6720, 1615)
+texture = ExtResource("9_bom7c")
+
+[node name="Tile8" type="Sprite2D" parent="Background"]
+position = Vector2(6720, 534)
+texture = ExtResource("10_fa17k")
+
+[node name="Tile9" type="Sprite2D" parent="Background"]
+position = Vector2(8640, 534)
+texture = ExtResource("11_ui88e")
+
+[node name="CameraMarkers" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="CameraDown" type="Marker2D" parent="CameraMarkers"]
+position = Vector2(2880, 536)
+script = ExtResource("11_aqhmd")
+camera_direction = 2
+
+[node name="CameraForward" type="Marker2D" parent="CameraMarkers"]
+position = Vector2(2880, 2696)
+script = ExtResource("11_aqhmd")
+
+[node name="CameraUp" type="Marker2D" parent="CameraMarkers"]
+position = Vector2(6720, 2696)
+script = ExtResource("11_aqhmd")
+camera_direction = 1
+
+[node name="CameraForward2" type="Marker2D" parent="CameraMarkers"]
+position = Vector2(6720, 534)
+script = ExtResource("11_aqhmd")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_4guve")]
+
+[node name="Bacteria" parent="." instance=ExtResource("3_kpg0x")]
+z_index = 1
+
+[node name="BloodSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_85iis")
+autoplay = true

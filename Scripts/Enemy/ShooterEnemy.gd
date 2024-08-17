@@ -35,7 +35,7 @@ func step(delta):
 					current_state = State.MOVE
 
 func shoot():
-	print("Shoot Tank cell")  # Replace with actual shooting logic
+	#print("Shoot Tank cell")  # Replace with actual shooting logic
 
 
 	# Instance the scene

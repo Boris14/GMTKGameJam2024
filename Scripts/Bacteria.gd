@@ -1,14 +1,23 @@
 extends Node2D
 class_name Bacteria
 
-@export var backterium_scene : PackedScene
+@export var bacterium_scene : PackedScene
 @export var spawn_check_increment := 20.0
 @export var min_bacteria_count := 3
 @export var max_bacteria_count := 200
-@export var scroll_spawn_count := 1
+@export var start_bacteria_count := 10
+@export var initial_bacteria_position := Vector2(960, 540)
+@export var scroll_spawn_count := 2
+
+@export var spawn_sounds : Array[AudioStream]
+@export var remove_sounds : Array[AudioStream]
+
+@onready var audio_player := $AudioStreamPlayer
 
 func _ready():
 	global_position = Vector2.ZERO
+	for i in range(start_bacteria_count):
+		spawn_bacterium()
 	
 func _physics_process(delta):
 	$BacteriaCenter.position = get_bacteria_position()
@@ -36,61 +45,81 @@ func remove_bacterium():
 			farthest_dist = distance
 	
 	if is_instance_valid(farthest_bacterium):
+		play_remove_sound()
 		farthest_bacterium.queue_free()
+		remove_child(farthest_bacterium)
 	
 		
 func spawn_bacterium():
 	if get_bacteria_count() >= max_bacteria_count:
 		return
 		
-	var bacterium := backterium_scene.instantiate() as Bacterium
-	add_child(bacterium)
+	var bacterium := bacterium_scene.instantiate() as Bacterium
 	
 	var spawn_points = generate_spiral_points(get_bacteria_position(), 1000, spawn_check_increment)
-	
-	var can_spawn = false
+	var is_spawned = false
 	
 	for point in spawn_points:
-		if can_spawn(bacterium.collision, point):
+		if can_spawn(15, point):
 			bacterium.global_position = point
-			can_spawn = true
+			add_child(bacterium)
+			is_spawned = true
+			play_spawn_sound()
 			break
-
-	if not can_spawn:
+			
+	if not is_spawned:
 		bacterium.queue_free()
 
 func get_bacteria() -> Array[Bacterium]:
-	var result : Array[Bacterium]
+	var result : Array[Bacterium] = []
 	
 	for child in get_children(true):
-		if child is Bacterium:
+		if child is Bacterium and child.is_in_group("bacterium"):
 			result.append(child)
-			
+	
 	return result
 
 func get_bacteria_count() -> int:
 	return get_bacteria().size()
 	
 func get_bacteria_position() -> Vector2:
-	var bacteria_count := get_bacteria_count()
+	var bacteria_count = get_bacteria_count()
 	
 	if bacteria_count <= 0:
-		return Vector2.ZERO
+		return initial_bacteria_position
 	
 	var sum_positions := Vector2.ZERO
 	
 	for bacterium in get_bacteria():
+		if not is_instance_valid(bacterium):
+			remove_child(bacterium)
 		sum_positions += bacterium.global_position
 	
 	return sum_positions / bacteria_count
 		
-func can_spawn(collision : CollisionShape2D, position : Vector2) -> bool:
+func can_spawn(body_radius : float, position : Vector2) -> bool:
 	var params := PhysicsShapeQueryParameters2D.new()
-	params.shape = collision.shape
+	var circle_shape := CircleShape2D.new()
+	circle_shape.radius = body_radius
+	params.shape = circle_shape
 	params.transform = Transform2D(0, position)
 	var hits : Array = get_world_2d().direct_space_state.intersect_shape(params)
 	
 	return hits.size() == 0
+	
+func play_spawn_sound():
+	if spawn_sounds.is_empty() or audio_player.playing:
+		return
+		
+	audio_player.stream = spawn_sounds.pick_random()
+	audio_player.play()
+	
+func play_remove_sound():
+	if remove_sounds.is_empty() or audio_player.playing:
+		return
+		
+	audio_player.stream = remove_sounds.pick_random()
+	audio_player.play()
 	
 func generate_spiral_points(origin: Vector2, points_count: int, increment: int) -> Array:
 	var result = []

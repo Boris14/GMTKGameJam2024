@@ -1,17 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://nd8dp5ps2alk"]
 
-[ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="1_i1odc"]
 [ext_resource type="Script" path="res://Scripts/Bacterium.gd" id="1_r1wcf"]
+[ext_resource type="Texture2D" uid="uid://eusqv4qdwxj" path="res://Assets/bakteriq.png" id="2_w3wkt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7r5fa"]
-radius = 14.1421
+radius = 15.0
 
 [node name="Bacterium" type="CharacterBody2D" groups=["bacterium"]]
 script = ExtResource("1_r1wcf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_i1odc")
+texture = ExtResource("2_w3wkt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7r5fa")

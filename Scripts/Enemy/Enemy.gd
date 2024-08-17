@@ -5,6 +5,9 @@ class_name Enemy
 @export var max_health: int = 1
 @export var movement_speed: float = 100.0
 @export var radius: float = 70.0
+@export var hit_sounds : Array[AudioStream]
+
+@onready var audio_player := $AudioStreamPlayer
 
 func _ready() -> void:
 	pass
@@ -19,6 +22,7 @@ func _physics_process(delta):
 	move_and_slide()
 	for b in get_tree().get_nodes_in_group("bacterium"):
 		if position.distance_to(b.position) < radius:
+			play_hit_sound()
 			take_damage()
 			b.queue_free()
 		
@@ -42,3 +46,10 @@ func get_closest_bacterium_position() -> Vector2:
 			closest_bacterium = bacterium
 	
 	return closest_bacterium.position
+	
+func play_hit_sound():
+	if hit_sounds.is_empty() or audio_player.playing:
+		return
+	
+	audio_player.stream = hit_sounds.pick_random()
+	audio_player.play()

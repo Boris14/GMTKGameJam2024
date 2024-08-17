@@ -82,4 +82,5 @@ func step(delta):
 				if position.distance_to(b.position) < aoe_radius():
 					#b.death()
 					b.queue_free()
+					
 			current_state = State.MOVE

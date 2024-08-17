@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Bacterium
 
-@export var max_speed := 200.0
+@export var max_speed := 300.0
 
 @export var detection_radius = 30.0
 @export var separation_strength := 15.0
@@ -13,7 +13,7 @@ func _ready():
 	
 func _physics_process(delta):
 	var mouse_offset = get_global_mouse_position() - global_position
-	var max_speed_distance = get_viewport_rect().size.length() / 4
+	var max_speed_distance = get_viewport_rect().size.length() / 6
 	var speed = min(remap(mouse_offset.length(), 0, max_speed_distance, 0, max_speed), max_speed)
 	
 	# For Performance:
