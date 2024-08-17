@@ -15,7 +15,7 @@ var spawn_chances = {
 	"Shooter": 10,
 	"AOE": 15,
 	"Tank": 15,
-	"Absorber": 100,
+	"Absorber": 10,
 	"Freezer":10
 }
 
