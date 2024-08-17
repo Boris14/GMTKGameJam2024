@@ -3,6 +3,8 @@ class_name Bacterium
 
 @export var speed := 60.0
 
+@onready var collision := $CollisionShape2D
+
 var goal_pos : Vector2
 
 func _ready():
