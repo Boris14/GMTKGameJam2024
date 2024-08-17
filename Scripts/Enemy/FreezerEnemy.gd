@@ -51,4 +51,4 @@ func step(delta):
 			slow_bacterium(b, delta)
 
 func slow_bacterium(bacterium, delta):
-	bacterium.speed = max(20, bacterium.speed * 0.9 *delta)
+	bacterium.max_speed = max(20, bacterium.max_speed * 0.9 *delta)

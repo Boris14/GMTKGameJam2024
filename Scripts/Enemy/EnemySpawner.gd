@@ -15,8 +15,8 @@ var spawn_chances = {
 	"Shooter": 10,
 	"AOE": 15,
 	"Tank": 15,
-	"Absorber": 10,
-	"Freezer": 20
+	"Absorber": 100,
+	"Freezer":10
 }
 
 var total_spawn_chance: int = 0
@@ -24,6 +24,7 @@ var spawn_timer: float = 0.0
 var time_to_next_spawn: float = 0.0
 
 func _ready():
+	randomize()
 	# Calculate total spawn chance
 	for chance in spawn_chances.values():
 		total_spawn_chance += chance

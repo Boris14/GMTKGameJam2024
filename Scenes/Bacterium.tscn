@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7r5fa"]
 radius = 14.1421
 
-[node name="Bacterium" type="CharacterBody2D"]
+[node name="Bacterium" type="CharacterBody2D" groups=["bacterium"]]
 script = ExtResource("1_r1wcf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
