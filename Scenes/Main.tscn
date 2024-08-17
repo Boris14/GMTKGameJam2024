@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cypu6v8555nk4"]
+
+[ext_resource type="Texture2D" uid="uid://dfg4rybeg3mei" path="res://Assets/360_F_297455425_lNivJ7rm7LPLuApu3jx36L02PeLllDxN.jpg" id="1_c1gtc"]
+[ext_resource type="PackedScene" uid="uid://nd8dp5ps2alk" path="res://Scenes/Bacterium.tscn" id="2_cveoi"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(945.5, 541.75)
+scale = Vector2(2.25056, 3.11806)
+texture = ExtResource("1_c1gtc")
+
+[node name="Bacterium" parent="." instance=ExtResource("2_cveoi")]
+position = Vector2(423, 321)
+speed = 120.0
