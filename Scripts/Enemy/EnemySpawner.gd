@@ -86,15 +86,11 @@ func spawn_enemy():
 	enemy_instance._ready()  # Call _ready manually to ensure proper initialization
 
 func get_spawn_position():
-	var bacteria = get_tree().get_nodes_in_group("bacterium")
-	if bacteria.is_empty():
-		return null
-
-	var random_bacterium = bacteria[randi() % bacteria.size()]
-	var spawn_distance = randf_range(200, 400)
+	
+	var spawn_distance = randf_range(50, 300)
 	var spawn_angle = randf() * 2 * PI
 	
-	return random_bacterium.position + Vector2(cos(spawn_angle), sin(spawn_angle)) * spawn_distance
+	return get_tree().get_first_node_in_group("spawn_progress").position + Vector2(cos(spawn_angle), sin(spawn_angle)) * spawn_distance
 
 func choose_enemy_type():
 	var roll = randi() % total_spawn_chance

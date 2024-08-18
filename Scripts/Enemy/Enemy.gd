@@ -25,7 +25,7 @@ func _physics_process(delta):
 			play_hit_sound()
 			take_damage()
 			b.die(true)
-		
+
 func step(delta):
 	# This function is intended to be overwritten by child classes
 	pass

@@ -37,7 +37,7 @@ var attack_timer_max: float = 4.0
 	# Create and setup the ShaderMaterial
 	var material = ShaderMaterial.new()
 	material.shader = shader
-	var color = Color.RED 
+	var color = Color.YELLOW
 	color.a=0.1
 	# Set initial shader parameters
 	material.set_shader_parameter("circle_color", color)
@@ -56,6 +56,8 @@ var attack_timer_max: float = 4.0
 func _ready():
 	super._ready()
 	radius=randf_range(50, 100)
+	health = 15
+	max_health = 15
 	$Icon.modulate=Color.YELLOW
 
 	#$CollisionShape2D.shape.radius = radius

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=21 format=3 uid="uid://cypu6v8555nk4"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
 [ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/enemy_spawner.tscn" id="3_4guve"]
@@ -11,24 +11,85 @@
 [ext_resource type="Texture2D" uid="uid://0cyijlqtqqi5" path="res://Assets/first map/tile 6.png" id="8_ud62q"]
 [ext_resource type="Texture2D" uid="uid://bh7uuqhttyuee" path="res://Assets/first map/tile 7.png" id="9_bom7c"]
 [ext_resource type="Texture2D" uid="uid://dkpisxv60l1u4" path="res://Assets/first map/tile 8.png" id="10_fa17k"]
-[ext_resource type="Script" path="res://Scripts/CameraMarker.gd" id="11_aqhmd"]
 [ext_resource type="Texture2D" uid="uid://bd60wqaro2p2y" path="res://Assets/first map/tile 9.png" id="11_ui88e"]
 [ext_resource type="AudioStream" uid="uid://b0lm467ab888g" path="res://Audio/atm_blood_1.wav" id="14_85iis"]
 [ext_resource type="Script" path="res://Scripts/StickyTraps.gd" id="15_jo04y"]
 [ext_resource type="AudioStream" uid="uid://08qpha8leih1" path="res://Audio/proba_music.wav" id="16_bbv1f"]
+[ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="16_d2i1o"]
+
+[sub_resource type="Curve2D" id="Curve2D_q1k00"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 958, 554, 0, 0, 0, 0, 1633, 421, 0, 0, 0, 0, 2175, 392, 0, 0, 0, 0, 2870, 621, 0, 0, 0, 0, 2984, 1249, 0, 0, 0, 0, 2860, 1810, 0, 0, 0, 0, 2908, 2657, 0, 0, 0, 0, 3755, 2742, 0, 0, 0, 0, 6752, 2695, 0, 0, 0, 0, 6694, 535, 0, 0, 0, 0, 7910, 564, 0, 0, 0, 0, 8681, 564)
+}
+point_count = 12
+
+[sub_resource type="Animation" id="Animation_vb48y"]
+resource_name = "new_animation"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraProgress:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnProgress:progress_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_kecin"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraProgress:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnProgress:progress_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8uny0"]
+_data = {
+"RESET": SubResource("Animation_kecin"),
+"new_animation": SubResource("Animation_vb48y")
+}
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_w3i5e")
 camera_speed = 200.0
 bacteria_scene = ExtResource("3_kpg0x")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(960, 540)
-limit_left = 0
-limit_top = 0
-limit_right = 9600
-
-[node name="Background" type="Node" parent="."]
+[node name="Background" type="Node2D" parent="."]
 
 [node name="Tile1" type="Sprite2D" parent="Background"]
 position = Vector2(960, 540)
@@ -65,27 +126,6 @@ texture = ExtResource("10_fa17k")
 [node name="Tile9" type="Sprite2D" parent="Background"]
 position = Vector2(8640, 534)
 texture = ExtResource("11_ui88e")
-
-[node name="CameraMarkers" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="CameraDown" type="Marker2D" parent="CameraMarkers"]
-position = Vector2(2880, 536)
-script = ExtResource("11_aqhmd")
-camera_direction = 2
-
-[node name="CameraForward" type="Marker2D" parent="CameraMarkers"]
-position = Vector2(2880, 2696)
-script = ExtResource("11_aqhmd")
-
-[node name="CameraUp" type="Marker2D" parent="CameraMarkers"]
-position = Vector2(6720, 2696)
-script = ExtResource("11_aqhmd")
-camera_direction = 1
-
-[node name="CameraForward2" type="Marker2D" parent="CameraMarkers"]
-position = Vector2(6720, 534)
-script = ExtResource("11_aqhmd")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_4guve")]
 
@@ -139,3 +179,34 @@ autoplay = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_bbv1f")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(978, -1077, 2404, -736)
+
+[node name="ProgressPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_q1k00")
+
+[node name="CameraProgress" type="PathFollow2D" parent="ProgressPath"]
+position = Vector2(8681, 564)
+progress = 12020.5
+
+[node name="Camera2D" type="Camera2D" parent="ProgressPath/CameraProgress"]
+
+[node name="SpawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
+position = Vector2(8681, 564)
+progress = 12020.5
+
+[node name="Sprite2D" type="Sprite2D" parent="ProgressPath/SpawnProgress"]
+z_index = 5
+scale = Vector2(0.176427, 1.94073)
+texture = ExtResource("16_d2i1o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ProgressPath"]
+libraries = {
+"": SubResource("AnimationLibrary_8uny0")
+}
+autoplay = "new_animation"
+speed_scale = 0.008
+
+[node name="PlayerStartPosition" type="Marker2D" parent="."]
+position = Vector2(492, 551)

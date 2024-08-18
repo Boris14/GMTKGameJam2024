@@ -54,6 +54,7 @@ func stick(action_after: Callable, action_delay: float):
 	
 func die(is_killed : bool):
 	is_dead = true
+	remove_from_group("bacterium")
 	died.emit(self)
 	animation.play("Shrink")
 	var death_duration = animation.get_animation("Shrink").length
