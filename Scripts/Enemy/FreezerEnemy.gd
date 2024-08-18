@@ -6,12 +6,12 @@ var slowed_bacteria : Array[Bacterium]
 
 func _ready():
 	super._ready()
-	health = 6
+	sprite.texture = preload("res://Assets/Enemies/enemy_freezer.png")
+	health = 4
 	max_health = health
 	movement_speed = 30.0
 	radius = 30.0
 	aura_radius = radius * 8
-	$Icon.modulate = Color.LIGHT_BLUE
 	create_aura_visual()
 
 func create_aura_visual():

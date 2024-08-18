@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dxfb5k0m6r7ki"
+path="res://.godot/imported/sfx_absorber_enemy_grow_01.wav-7559341b3b03b2a04891a9f7f98708f0.sample"
+
+[deps]
+
+source_file="res://Audio/05. Absorber/sfx_absorber_enemy_grow_01.wav"
+dest_files=["res://.godot/imported/sfx_absorber_enemy_grow_01.wav-7559341b3b03b2a04891a9f7f98708f0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

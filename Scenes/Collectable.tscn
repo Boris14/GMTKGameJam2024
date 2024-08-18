@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwb7xi11bhme"]
+
+[ext_resource type="Script" path="res://Scripts/Collectable.gd" id="1_d45bh"]
+[ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="1_o7v4r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b12i"]
+radius = 16.0
+
+[node name="Collectable" type="Area2D"]
+script = ExtResource("1_d45bh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_o7v4r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3b12i")

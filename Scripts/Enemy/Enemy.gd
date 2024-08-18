@@ -7,10 +7,13 @@ class_name Enemy
 @export var radius: float = 30.0
 @export var hit_sounds : Array[AudioStream]
 
+
+@onready var sprite := $Icon
 @onready var audio_player := $AudioStreamPlayer
 
 func _ready() -> void:
-	pass
+	sprite.texture = preload("res://Assets/Enemies/enemy_basic.png")
+	$Icon.scale = Vector2.ONE * radius/66 * 0.3
 
 func take_damage(amount: int = 1):
 	health -= amount
@@ -21,7 +24,7 @@ func die():
 	queue_free()
 func _physics_process(delta):
 	step(delta)
-	$Icon.scale = Vector2.ONE * radius/66
+	#$Icon.scale = Vector2.ONE * radius/66 * 0.3
 	move_and_slide()
 	var tree = get_tree()
 	if tree:
@@ -66,4 +69,3 @@ func play_hit_sound():
 func _on_despawn_area_entered(area: Area2D) -> void:
 	if area.is_in_group("despawner"):
 		die()
-	pass # Replace with function body.

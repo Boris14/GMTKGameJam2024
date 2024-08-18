@@ -1,6 +1,8 @@
 extends Node2D
 class_name EnemySpawner
 
+@export var blood_cell_spawn_rate := 1
+
 # Preload enemy scenes
 var BasicEnemyScene = preload("res://Scenes/Enemy/enemy.tscn")
 var ShooterEnemyScript = preload("res://Scripts/Enemy/ShooterEnemy.gd")
@@ -12,41 +14,48 @@ var SplitterEnemyScript = preload("res://Scripts/Enemy/SplitterEnemy.gd")
 
 var ImmunityBoosterEnemyScript = preload("res://Scripts/Enemy/ImmunityBoosterEnemy.gd")
 
-# Update spawn chances
-func spawn_chances():
-	var immunity_coefficient = Globals.immunity_response / 100.0  # 0.0 easier - 1.0
-	var progress_coefficient = Globals.progress  # 0.0 - 1.0
-	var difficulty_factor = min(progress_coefficient / 0.6, 1.0)  # Reaches 1 at 60% progress
+@onready var blood_cell_timer : Timer = Timer.new()
 
-	return {
-		"Basic": 1.0,
-		"Splitter": lerp(0.5, 1.0, difficulty_factor),
-		"Shooter": lerp(0.5, 1.0, difficulty_factor),
-		"AOE": lerp(0.3, 1.0, difficulty_factor),
-		"Tank": lerp(0.2, 1.0, difficulty_factor),
-		"Absorber": lerp(0.2, 1.0, difficulty_factor),
-		"Freezer": lerp(0.1, 1.0, difficulty_factor),
-		"ImmunityBooster": 25.0  # Always high chance to spawn
-	}
-
-func set_next_spawn_time():
-	var immunity_coefficient = Globals.immunity_response / 100.0  # 0.0 easier - 1.0
-	var progress_coefficient = Globals.progress  # 0.0 - 1.0
-	
-	var min_time = lerp(0.3, 0.05, immunity_coefficient)
-	var max_time = lerp(0.6, 0.1, immunity_coefficient)
-	
-	# Decrease spawn time as progress increases
-	var progress_factor = 1.0 - (progress_coefficient * 0.25)  # Reduce time by up to 50%
-	min_time *= progress_factor
-	max_time *= progress_factor
-	
-	time_to_next_spawn = randf_range(min_time*2., max_time*2.)
 var total_spawn_chance: int = 0
 var spawn_timer: float = 0.0
 var time_to_next_spawn: float = -1.0
 
+# Update spawn chances
+func spawn_chances():
+	# Reaches 1 at 60% progress
+	var difficulty_factor = min(Globals.progress / 0.6, 1.0) 
+
+	return {
+		"Basic": 10,
+		"Splitter": int(lerp(5, 10, difficulty_factor)),
+		"Shooter": int(lerp(5, 10, difficulty_factor)),
+		"AOE": int(lerp(3, 10, difficulty_factor)),
+		"Tank": int(lerp(2, 10, difficulty_factor)),
+		"Absorber": int(lerp(0, 0, difficulty_factor)), # Needs to be fixed (doesn't change size and it's too strong)
+		"Freezer": int(lerp(1, 10, difficulty_factor)),
+	}
+
+func blood_cell_timer_handler():
+	var spawn_position = get_spawn_position()
+	if spawn_position == null:
+		return  # No valid spawn position found
+
+	var enemy_instance = BasicEnemyScene.instantiate()
+	enemy_instance.set_script(ImmunityBoosterEnemyScript)
+
+	enemy_instance.position = spawn_position
+	add_child(enemy_instance)
+	enemy_instance._ready()
+
+func set_next_spawn_time():
+	# Decrease spawn time as progress increases
+	time_to_next_spawn = lerp(3., 0.5, Globals.immunity_response / 100.0)
+	
+
 func _ready():
+	add_child(blood_cell_timer)
+	blood_cell_timer.timeout.connect(blood_cell_timer_handler)
+	
 	randomize()
 	# Calculate total spawn chance
 	for chance in spawn_chances().values():
@@ -66,12 +75,12 @@ func start():
 		if child is Enemy:
 			child.queue_free()
 	set_next_spawn_time()
+	blood_cell_timer.start(blood_cell_spawn_rate)
 
 	
 func stop():
 	time_to_next_spawn = -1
 	spawn_timer = 0
-
 
 
 func spawn_enemy():
@@ -83,8 +92,6 @@ func spawn_enemy():
 	var enemy_instance = BasicEnemyScene.instantiate()
 
 	match enemy_type:
-		"ImmunityBooster":
-			enemy_instance.set_script(ImmunityBoosterEnemyScript)
 		"Splitter":
 			enemy_instance.set_script(SplitterEnemyScript)
 		"Basic":

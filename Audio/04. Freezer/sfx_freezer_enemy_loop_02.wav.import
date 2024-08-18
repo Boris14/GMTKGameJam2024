@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cr4xhc72qidp2"
+path="res://.godot/imported/sfx_freezer_enemy_loop_02.wav-36e4177ef7fc940eeabdedf21d665cfd.sample"
+
+[deps]
+
+source_file="res://Audio/04. Freezer/sfx_freezer_enemy_loop_02.wav"
+dest_files=["res://.godot/imported/sfx_freezer_enemy_loop_02.wav-36e4177ef7fc940eeabdedf21d665cfd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

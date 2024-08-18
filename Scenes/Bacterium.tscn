@@ -1,5 +1,4 @@
-
-[gd_scene load_steps=10 format=3 uid="uid://nd8dp5ps2alk"]
+[gd_scene load_steps=11 format=3 uid="uid://nd8dp5ps2alk"]
 
 [ext_resource type="Script" path="res://Scripts/Bacterium.gd" id="1_r1wcf"]
 [ext_resource type="Texture2D" uid="uid://cl54pmfhp7tx6" path="res://Assets/Bacteria/sheet.png" id="2_7wihj"]

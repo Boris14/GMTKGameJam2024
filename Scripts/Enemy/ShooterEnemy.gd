@@ -10,11 +10,12 @@ var EnemyScene = preload("res://Scenes/Enemy/enemy.tscn")
 
 func _ready():
 	super._ready()
-	health = 6
+	sprite.texture = preload("res://Assets/Enemies/enemy_shooter.png")
+	health = 5
 	max_health = health
 	movement_speed = 150.0
 	radius = 30.0
-	$Icon.modulate = Color.DEEP_PINK
+
 func step(delta):
 	state_timer += delta
 	var distance_to_closest_bacterium = position.distance_to(get_closest_bacterium_position())

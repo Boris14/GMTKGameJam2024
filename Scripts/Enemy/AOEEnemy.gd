@@ -5,7 +5,8 @@ enum State { MOVE, PREPARE_ATTACK, ATTACK }
 
 var current_state = State.MOVE
 var attack_timer: float = 0.0
-var attack_timer_max: float = 2.5
+var attack_timer_max: float = 3.0
+
 @onready var aoe_visual = (func():
 	# Create the ColorRect
 	var rect = ColorRect.new()

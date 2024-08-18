@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bmuv2ojxtijw0"
+path="res://.godot/imported/sfx_AOE_enemy_dies_01.wav-d81bbb4b8085c305919d1c8b5be614bc.sample"
+
+[deps]
+
+source_file="res://Audio/02 AOE/sfx_AOE_enemy_dies_01.wav"
+dest_files=["res://.godot/imported/sfx_AOE_enemy_dies_01.wav-d81bbb4b8085c305919d1c8b5be614bc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

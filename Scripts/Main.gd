@@ -45,7 +45,12 @@ func _ready():
 
 	start_game()
 	
+func _physics_process(delta):
+	game_flow.speed_scale = lerp(0.008, 0.015, Globals.progress)
+	Engine.time_scale = lerp(1, 2, Globals.progress)
+
 func start_game():
+	Engine.time_scale = 1.0
 	Globals.immunity_response = 0.0
 	has_won = false
 	enemy_spawner.stop()
@@ -63,7 +68,9 @@ func _on_music_start_sound_finished():
 		music_player.play()
 	
 func stop_game_flow():
-	HUD.queue_free()
+	bacteria.queue_free()
+	if HUD:
+		HUD.queue_free()
 	music_player.stop()
 	game_flow.active = false
 	enemy_spawner.stop()
@@ -72,6 +79,7 @@ func win_game():
 	if has_won:
 		return
 		
+	has_won = true
 	stop_game_flow()
 	
 	await get_tree().create_timer(0.2).timeout
@@ -79,12 +87,14 @@ func win_game():
 	if win_sound:
 		sfx_player.stream = win_sound
 		sfx_player.play()
-	
-	has_won = true
+
 	win_screen.pop_up()
 
 
 func _on_bacteria_died():
+	if has_won:
+		return
+	
 	stop_game_flow()	
 	
 	await get_tree().create_timer(0.2).timeout

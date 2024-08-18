@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=3 uid="uid://bo61pcdr1iw2w"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/Enemy.gd" id="1_62i6m"]
-[ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="1_cfkou"]
 [ext_resource type="AudioStream" uid="uid://c1qcfi2efjxwk" path="res://Audio/sfx_character_hit_01.wav" id="2_miarl"]
 [ext_resource type="AudioStream" uid="uid://c3hefghrn4r22" path="res://Audio/sfx_character_hit_02.wav" id="3_4mpc1"]
 [ext_resource type="AudioStream" uid="uid://ceykrempdt1bx" path="res://Audio/sfx_character_hit_03.wav" id="4_x0g6b"]
 [ext_resource type="AudioStream" uid="uid://lobs8xjxks0n" path="res://Audio/sfx_character_hit_04.wav" id="5_q1ycc"]
+[ext_resource type="Texture2D" uid="uid://dhu11lwb43f3x" path="res://Assets/Enemies/enemy_basic.png" id="6_ckmy4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
 radius = 0.1
@@ -93,7 +93,7 @@ hit_sounds = Array[AudioStream]([ExtResource("2_miarl"), ExtResource("3_4mpc1"),
 [node name="Icon" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(1, 1)
-texture = ExtResource("1_cfkou")
+texture = ExtResource("6_ckmy4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0ngu5")
