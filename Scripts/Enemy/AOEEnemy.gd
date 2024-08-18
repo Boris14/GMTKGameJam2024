@@ -5,7 +5,7 @@ enum State { MOVE, PREPARE_ATTACK, ATTACK }
 
 var current_state = State.MOVE
 var attack_timer: float = 0.0
-var attack_timer_max: float = 3.0
+var attack_timer_max: float = 2.5
 @onready var aoe_visual = (func():
 	# Create the ColorRect
 	var rect = ColorRect.new()
@@ -56,7 +56,7 @@ var attack_timer_max: float = 3.0
 func _ready():
 	super._ready()
 	radius=randf_range(50, 100)
-	health = 25
+	health = 35
 	max_health = 35
 	$Icon.modulate=Color.YELLOW
 

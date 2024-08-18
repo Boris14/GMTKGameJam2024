@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=29 format=3 uid="uid://cypu6v8555nk4"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
 [ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/enemy_spawner.tscn" id="3_4guve"]
@@ -25,9 +25,9 @@
 
 [sub_resource type="Curve2D" id="Curve2D_q1k00"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 960, 540, 0, 0, 0, 0, 2880, 540, 0, 0, 0, 0, 2880, 2696, 0, 0, 0, 0, 6720, 2696, 0, 0, 0, 0, 6720, 536, 0, 0, 0, 0, 8640, 534)
+"points": PackedVector2Array(0, 0, 0, 0, -243, 516, 0, 0, 0, 0, 938, 543, 0, 0, 0, 0, 2880, 540, 0, 0, 0, 0, 2880, 2696, 0, 0, 0, 0, 6720, 2696, 0, 0, 0, 0, 6720, 536, 0, 0, 0, 0, 8640, 534)
 }
-point_count = 6
+point_count = 7
 
 [sub_resource type="GDScript" id="GDScript_ui4mo"]
 script/source = "extends Path2D
@@ -40,9 +40,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	Globals.progress = $SpawnProgress.progress_ratio
+	Globals.progress = $DespawnProgress.progress_ratio
 	pass
 "
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mrklr"]
+radius = 973.857
 
 [sub_resource type="Animation" id="Animation_kecin"]
 length = 0.001
@@ -70,10 +73,22 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DespawnProgress:progress_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_vb48y"]
 resource_name = "new_animation"
-length = 1.1
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -84,7 +99,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, 1.0]
+"values": [0.0909091, 1.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -96,7 +111,19 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.1, 1.0]
+"values": [0.19, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DespawnProgress:progress_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.633333, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.3257, 0.4458, 0.9]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8uny0"]
@@ -211,12 +238,14 @@ curve = SubResource("Curve2D_q1k00")
 script = SubResource("GDScript_ui4mo")
 
 [node name="CameraProgress" type="PathFollow2D" parent="ProgressPath"]
-position = Vector2(960, 540)
+position = Vector2(-243, 516)
+rotation = 0.022858
 
 [node name="Camera2D" type="Camera2D" parent="ProgressPath/CameraProgress"]
 
 [node name="SpawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
-position = Vector2(960, 540)
+position = Vector2(-243, 516)
+rotation = 0.022858
 
 [node name="Sprite2D" type="Sprite2D" parent="ProgressPath/SpawnProgress"]
 visible = false
@@ -224,9 +253,23 @@ z_index = 5
 scale = Vector2(0.176427, 1.94073)
 texture = ExtResource("16_d2i1o")
 
+[node name="DespawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
+position = Vector2(-243, 516)
+rotation = 0.022858
+
+[node name="Sprite2D" type="Sprite2D" parent="ProgressPath/DespawnProgress"]
+z_index = 5
+position = Vector2(-17.6763, -4.372)
+scale = Vector2(0.232768, 0.927688)
+texture = ExtResource("16_d2i1o")
+
+[node name="Area2D" type="Area2D" parent="ProgressPath/DespawnProgress/Sprite2D" groups=["despawner"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProgressPath/DespawnProgress/Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_mrklr")
+
 [node name="GameFlow" type="AnimationPlayer" parent="ProgressPath"]
 unique_name_in_owner = true
-active = false
 libraries = {
 "": SubResource("AnimationLibrary_8uny0")
 }

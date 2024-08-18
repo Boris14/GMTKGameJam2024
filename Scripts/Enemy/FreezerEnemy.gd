@@ -6,9 +6,9 @@ var slowed_bacteria : Array[Bacterium]
 
 func _ready():
 	super._ready()
-	health = 3
+	health = 6
 	max_health = health
-	movement_speed = 20.0
+	movement_speed = 30.0
 	radius = 30.0
 	aura_radius = radius * 8
 	$Icon.modulate = Color.LIGHT_BLUE

@@ -113,3 +113,9 @@ func get_neighbours() -> Array[Bacterium]:
 #		sum_positions += neighbour.global_position
 #		
 #	return sum_positions / neighbours.size() - global_position
+
+
+func _on_despawn_area_entered(area: Area2D) -> void:
+	if area.is_in_group("despawner"):
+		die(true)
+	pass # Replace with function body.

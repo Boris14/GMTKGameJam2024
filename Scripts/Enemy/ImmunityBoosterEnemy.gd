@@ -9,8 +9,9 @@ func _ready():
 	radius = 20.0
 	$Icon.modulate = Color.RED
 	$Icon.scale = Vector2.ONE * radius/66
-	velocity = Vector2(randf_range(-1,1),randf_range(-1,1)).normalized() * movement_speed
-
+	var direction =  position.direction_to(get_closest_bacterium_position()).rotated(deg_to_rad(randf_range(-35,35)))
+	velocity = direction * movement_speed
+	
 
 func take_damage(amount: int = 1):
 	health -= amount

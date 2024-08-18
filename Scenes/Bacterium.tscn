@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://nd8dp5ps2alk"]
+[gd_scene load_steps=8 format=3 uid="uid://nd8dp5ps2alk"]
 
 [ext_resource type="Script" path="res://Scripts/Bacterium.gd" id="1_r1wcf"]
 [ext_resource type="Texture2D" uid="uid://uow6m1xs26rw" path="res://Assets/Bacteria/bekteriq.png" id="2_hvo1m"]
@@ -43,6 +43,8 @@ _data = {
 "Shrink": SubResource("Animation_jq58n")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5glqf"]
+
 [node name="Bacterium" type="CharacterBody2D" groups=["bacterium"]]
 script = ExtResource("1_r1wcf")
 
@@ -57,3 +59,10 @@ shape = SubResource("CircleShape2D_7r5fa")
 libraries = {
 "": SubResource("AnimationLibrary_548fd")
 }
+
+[node name="despawn" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="despawn"]
+shape = SubResource("CircleShape2D_5glqf")
+
+[connection signal="area_entered" from="despawn" to="." method="_on_despawn_area_entered"]

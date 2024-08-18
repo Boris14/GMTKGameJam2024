@@ -10,9 +10,9 @@ var EnemyScene = preload("res://Scenes/Enemy/enemy.tscn")
 
 func _ready():
 	super._ready()
-	health = 3
+	health = 6
 	max_health = health
-	movement_speed = 120.0
+	movement_speed = 150.0
 	radius = 30.0
 	$Icon.modulate = Color.DEEP_PINK
 func step(delta):

@@ -5,7 +5,7 @@ var max_radius: float = 1000.0
 
 func _ready():
 	super._ready()
-	health = 25
+	health = 35
 	max_health = health
 	movement_speed = 40.0
 	radius = 20.0
