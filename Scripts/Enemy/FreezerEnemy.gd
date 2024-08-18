@@ -48,13 +48,22 @@ func step(delta):
 		velocity = Vector2.ZERO
 
 	for b in get_tree().get_nodes_in_group("bacterium"):
-		if position.distance_to(b.position) < aura_radius:
+		if position.distance_to(b.position) < aura_radius and !is_queued_for_deletion():
 			slow_bacterium(b, delta)
 		elif b in slowed_bacteria:
+			#print(position.distance_to(b.position) >= aura_radius, " ", is_queued_for_deletion())
 			b.curr_max_speed = b.max_speed
 			slowed_bacteria.erase(b)
+func die():
+	for b in slowed_bacteria:
+		print("must unslow")
+		if is_instance_valid(b):
+			b.curr_max_speed = b.max_speed
+			print("success unslow")
+
+	super.die()
 
 func slow_bacterium(bacterium : Bacterium, delta : float):
 	if not bacterium in slowed_bacteria:
 		slowed_bacteria.append(bacterium)
-	bacterium.curr_max_speed = max(20, bacterium.max_speed * 0.9 *delta)
+	bacterium.curr_max_speed = max(20, bacterium.max_speed * 0.3)

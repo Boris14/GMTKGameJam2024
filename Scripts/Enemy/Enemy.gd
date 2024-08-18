@@ -14,16 +14,19 @@ func _ready() -> void:
 func take_damage(amount: int = 1):
 	health -= amount
 	if health <= 0:
-		queue_free()
-
+		die()
+func die():
+	queue_free()
 func _physics_process(delta):
 	step(delta)
 	$Icon.scale = Vector2.ONE * radius/66
 	move_and_slide()
 	for b in get_tree().get_nodes_in_group("bacterium"):
 		if position.distance_to(b.position) < radius:
+			$AnimationPlayer.play("hit")
 			play_hit_sound()
 			take_damage()
+			
 			b.die(true)
 
 func step(delta):

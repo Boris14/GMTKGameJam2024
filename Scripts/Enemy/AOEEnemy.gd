@@ -5,7 +5,7 @@ enum State { MOVE, PREPARE_ATTACK, ATTACK }
 
 var current_state = State.MOVE
 var attack_timer: float = 0.0
-var attack_timer_max: float = 4.0
+var attack_timer_max: float = 2.0
 @onready var aoe_visual = (func():
 	# Create the ColorRect
 	var rect = ColorRect.new()
@@ -56,13 +56,13 @@ var attack_timer_max: float = 4.0
 func _ready():
 	super._ready()
 	radius=randf_range(50, 100)
-	health = 15
-	max_health = 15
+	health = 35
+	max_health = 35
 	$Icon.modulate=Color.YELLOW
 
 	#$CollisionShape2D.shape.radius = radius
 func aoe_radius():
-	return radius*2*2*attack_timer/attack_timer_max if current_state == State.PREPARE_ATTACK else radius*2*2 if current_state==State.ATTACK else 0
+	return radius*1.2+radius*2*attack_timer/attack_timer_max if current_state == State.PREPARE_ATTACK else radius*2*2 if current_state==State.ATTACK else 0
 func step(delta):
 	aoe_visual.size = Vector2.ONE * aoe_radius()*2
 	aoe_visual.position = -aoe_visual.size/2
