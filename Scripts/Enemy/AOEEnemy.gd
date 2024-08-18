@@ -80,7 +80,6 @@ func step(delta):
 		State.ATTACK:
 			for b in get_tree().get_nodes_in_group("bacterium"):
 				if position.distance_to(b.position) < aoe_radius():
-					#b.death()
-					b.queue_free()
+					b.die(true)
 					
 			current_state = State.MOVE

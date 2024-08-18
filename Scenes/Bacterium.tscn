@@ -1,10 +1,47 @@
-[gd_scene load_steps=4 format=3 uid="uid://nd8dp5ps2alk"]
+[gd_scene load_steps=7 format=3 uid="uid://nd8dp5ps2alk"]
 
 [ext_resource type="Script" path="res://Scripts/Bacterium.gd" id="1_r1wcf"]
 [ext_resource type="Texture2D" uid="uid://eusqv4qdwxj" path="res://Assets/bakteriq.png" id="2_w3wkt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7r5fa"]
 radius = 15.0
+
+[sub_resource type="Animation" id="Animation_jq58n"]
+resource_name = "Shrink"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_383mx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_548fd"]
+_data = {
+"RESET": SubResource("Animation_383mx"),
+"Shrink": SubResource("Animation_jq58n")
+}
 
 [node name="Bacterium" type="CharacterBody2D" groups=["bacterium"]]
 script = ExtResource("1_r1wcf")
@@ -14,3 +51,8 @@ texture = ExtResource("2_w3wkt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7r5fa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_548fd")
+}

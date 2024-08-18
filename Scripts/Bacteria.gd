@@ -14,8 +14,15 @@ class_name Bacteria
 
 @onready var audio_player := $AudioStreamPlayer
 
+signal died
+
 func _ready():
 	global_position = Vector2.ZERO
+	
+func start_bacteria():
+	for b in get_bacteria():
+		b.queue_free()
+		remove_child(b)
 	for i in range(start_bacteria_count):
 		spawn_bacterium()
 	
@@ -46,8 +53,7 @@ func remove_bacterium():
 	
 	if is_instance_valid(farthest_bacterium):
 		play_remove_sound()
-		farthest_bacterium.queue_free()
-		remove_child(farthest_bacterium)
+		farthest_bacterium.die(false)
 	
 		
 func spawn_bacterium():
@@ -62,6 +68,7 @@ func spawn_bacterium():
 	for point in spawn_points:
 		if can_spawn(15, point):
 			bacterium.global_position = point
+			bacterium.died.connect(_on_bacterium_died)
 			add_child(bacterium)
 			is_spawned = true
 			play_spawn_sound()
@@ -70,11 +77,17 @@ func spawn_bacterium():
 	if not is_spawned:
 		bacterium.queue_free()
 
+func _on_bacterium_died(bacterium: Bacterium):
+	if get_bacteria_count() <= 0:
+		died.emit()
+
 func get_bacteria() -> Array[Bacterium]:
 	var result : Array[Bacterium] = []
 	
 	for child in get_children(true):
-		if child is Bacterium and child.is_in_group("bacterium"):
+		if child is Bacterium \
+		and child.is_in_group("bacterium") \
+		and not child.is_dead:
 			result.append(child)
 	
 	return result

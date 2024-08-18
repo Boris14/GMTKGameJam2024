@@ -29,8 +29,7 @@ func _ready():
 	# Calculate total spawn chance
 	for chance in spawn_chances.values():
 		total_spawn_chance += chance
-	
-	set_next_spawn_time()
+
 
 func _process(delta):
 	spawn_timer += delta
@@ -38,6 +37,12 @@ func _process(delta):
 		spawn_enemy()
 		spawn_timer = 0.0
 		set_next_spawn_time()
+
+func start():
+	for child in get_children():
+		if child is Enemy:
+			child.queue_free()
+	set_next_spawn_time()
 
 func set_next_spawn_time():
 	var immunity = Globals.immunity_response

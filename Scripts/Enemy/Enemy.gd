@@ -24,7 +24,7 @@ func _physics_process(delta):
 		if position.distance_to(b.position) < radius:
 			play_hit_sound()
 			take_damage()
-			b.queue_free()
+			b.die(true)
 		
 func step(delta):
 	# This function is intended to be overwritten by child classes

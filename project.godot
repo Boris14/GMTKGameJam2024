@@ -28,6 +28,7 @@ window/stretch/mode="viewport"
 [global_group]
 
 bacterium=""
+sticky="A body that stops movement of bacteria"
 
 [rendering]
 

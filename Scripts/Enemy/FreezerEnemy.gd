@@ -2,6 +2,7 @@ extends Enemy
 class_name FreezerEnemy
 
 var aura_radius: float
+var slowed_bacteria : Array[Bacterium]
 
 func _ready():
 	super._ready()
@@ -49,6 +50,11 @@ func step(delta):
 	for b in get_tree().get_nodes_in_group("bacterium"):
 		if position.distance_to(b.position) < aura_radius:
 			slow_bacterium(b, delta)
+		elif b in slowed_bacteria:
+			b.curr_max_speed = b.max_speed
+			slowed_bacteria.erase(b)
 
-func slow_bacterium(bacterium, delta):
-	bacterium.max_speed = max(20, bacterium.max_speed * 0.9 *delta)
+func slow_bacterium(bacterium : Bacterium, delta : float):
+	if not bacterium in slowed_bacteria:
+		slowed_bacteria.append(bacterium)
+	bacterium.curr_max_speed = max(20, bacterium.max_speed * 0.9 *delta)
