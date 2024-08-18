@@ -37,9 +37,7 @@ func _physics_process(delta):
 				b.die(true)
 
 func step(delta):
-	velocity = position.direction_to(get_closest_bacterium_position())
-	# This function is intended to be overwritten by child classes
-	pass
+	velocity = position.direction_to(get_closest_bacterium_position()) * movement_speed
 
 
 func get_closest_bacterium_position() -> Vector2:

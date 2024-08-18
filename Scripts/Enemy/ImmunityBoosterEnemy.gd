@@ -11,6 +11,8 @@ func _ready():
 	var direction =  position.direction_to(get_closest_bacterium_position()).rotated(deg_to_rad(randf_range(-35,35)))
 	velocity = direction * movement_speed
 
+func step(delta):
+	pass
 
 func take_damage(amount: int = 1):
 	health -= amount
