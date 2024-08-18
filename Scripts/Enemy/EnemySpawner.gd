@@ -22,7 +22,7 @@ var spawn_chances = {
 }
 var total_spawn_chance: int = 0
 var spawn_timer: float = 0.0
-var time_to_next_spawn: float = 0.0
+var time_to_next_spawn: float = -1.0
 
 func _ready():
 	randomize()
@@ -33,22 +33,30 @@ func _ready():
 
 func _process(delta):
 	spawn_timer += delta
-	if spawn_timer >= time_to_next_spawn:
+	if time_to_next_spawn > 0 and spawn_timer >= time_to_next_spawn:
 		spawn_enemy()
 		spawn_timer = 0.0
 		set_next_spawn_time()
 
+
 func start():
+	set_next_spawn_time()
+
+	
+func stop():
 	for child in get_children():
 		if child is Enemy:
 			child.queue_free()
-	set_next_spawn_time()
+	time_to_next_spawn = -1
+	spawn_timer = 0
 
 func set_next_spawn_time():
 	var immunity = Globals.immunity_response
 	var min_time = lerp(0.3, 0.05, immunity / 100.0)
 	var max_time = lerp(0.6, 0.1, immunity / 100.0)
 	time_to_next_spawn = randf_range(min_time, max_time)
+
+
 func spawn_enemy():
 	var spawn_position = get_spawn_position()
 	if spawn_position == null:

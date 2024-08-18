@@ -29,6 +29,8 @@ window/stretch/mode="viewport"
 
 bacterium=""
 sticky="A body that stops movement of bacteria"
+lethal="Kills bacteria"
+win="Wins the game if touched"
 
 [rendering]
 

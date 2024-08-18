@@ -7,9 +7,12 @@ class_name Bacterium
 @export var separation_strength := 15.0
 @export var stick_color : Color = Color.YELLOW
 @export var stick_death_delay := 0.5
+@export var win_delay := 1
 
 @onready var animation := $AnimationPlayer
 @onready var collision := $CollisionShape2D
+
+var win_method : Callable
 
 signal died(bacterium : Bacterium)
 
@@ -31,15 +34,23 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	for i in get_slide_collision_count():
-		var collider = get_slide_collision(i).get_collider()
-		if collider is Node and collider.is_in_group("sticky"):
-			stick_and_die()
+		var body = get_slide_collision(i).get_collider() as Node
+		if body.is_in_group("sticky"):
+			var stick_action: Callable
+			var action_delay := 0
+			if body.is_in_group("lethal"):
+				stick_action = func(): die(true)
+				action_delay = stick_death_delay
+			elif body.is_in_group("win") and win_method.is_valid():
+				stick_action = func(): win_method.call()
+				action_delay = win_delay
+			stick(stick_action, action_delay)
 
-func stick_and_die():
+func stick(action_after: Callable, action_delay: float):
 	curr_max_speed = 0
 	modulate = stick_color
-	await get_tree().create_timer(stick_death_delay).timeout 
-	die(true)
+	await get_tree().create_timer(action_delay).timeout 
+	action_after.call()
 	
 func die(is_killed : bool):
 	is_dead = true

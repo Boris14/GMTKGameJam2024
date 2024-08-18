@@ -1,19 +1,21 @@
-[gd_scene load_steps=10 format=3 uid="uid://2am0ed8ir5co"]
+[gd_scene load_steps=12 format=3 uid="uid://2am0ed8ir5co"]
 
 [ext_resource type="Script" path="res://Scripts/Bacteria.gd" id="1_tx7fs"]
 [ext_resource type="PackedScene" uid="uid://nd8dp5ps2alk" path="res://Scenes/Bacterium.tscn" id="2_xf4yk"]
 [ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="3_0ul33"]
-[ext_resource type="AudioStream" uid="uid://dle7ul24ylrn2" path="res://Audio/sfx_character_split_long_01.wav" id="3_1tejb"]
 [ext_resource type="AudioStream" uid="uid://s05sf5jyx3cw" path="res://Audio/sfx_character_split_short_01.wav" id="4_0phlm"]
 [ext_resource type="AudioStream" uid="uid://dd14k7nk2qia2" path="res://Audio/sfx_character_split_short_02.wav" id="5_5u7mv"]
+[ext_resource type="AudioStream" uid="uid://ddi4oa0g6fd4g" path="res://Audio/sfx_character_split_short_03.wav" id="5_44roj"]
+[ext_resource type="AudioStream" uid="uid://yfkvww2tc5np" path="res://Audio/sfx_character_split_short_04.wav" id="6_clh5i"]
 [ext_resource type="AudioStream" uid="uid://ctpguv38ghojs" path="res://Audio/sfx_character_shrink_01.wav" id="6_iy35o"]
+[ext_resource type="AudioStream" uid="uid://klu33d0kdeso" path="res://Audio/sfx_character_split_short_05.wav" id="7_gwny8"]
 [ext_resource type="AudioStream" uid="uid://d2jphtkrdrk03" path="res://Audio/sfx_character_shrink_02.wav" id="7_pwi2v"]
 [ext_resource type="AudioStream" uid="uid://dkitg2637jqn0" path="res://Audio/sfx_character_shrink_03.wav" id="8_ct075"]
 
 [node name="Bacteria" type="Node2D"]
 script = ExtResource("1_tx7fs")
 bacterium_scene = ExtResource("2_xf4yk")
-spawn_sounds = Array[AudioStream]([ExtResource("3_1tejb"), ExtResource("4_0phlm"), ExtResource("5_5u7mv")])
+spawn_sounds = Array[AudioStream]([ExtResource("4_0phlm"), ExtResource("5_5u7mv"), ExtResource("5_44roj"), ExtResource("6_clh5i"), ExtResource("7_gwny8")])
 remove_sounds = Array[AudioStream]([ExtResource("6_iy35o"), ExtResource("7_pwi2v"), ExtResource("8_ct075")])
 
 [node name="BacteriaCenter" type="Sprite2D" parent="."]

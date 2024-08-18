@@ -14,6 +14,8 @@ class_name Bacteria
 
 @onready var audio_player := $AudioStreamPlayer
 
+var win_method: Callable
+
 signal died
 
 func _ready():
@@ -69,6 +71,7 @@ func spawn_bacterium():
 		if can_spawn(15, point):
 			bacterium.global_position = point
 			bacterium.died.connect(_on_bacterium_died)
+			bacterium.win_method = win_method
 			add_child(bacterium)
 			is_spawned = true
 			play_spawn_sound()
@@ -76,6 +79,7 @@ func spawn_bacterium():
 			
 	if not is_spawned:
 		bacterium.queue_free()
+
 
 func _on_bacterium_died(bacterium: Bacterium):
 	if get_bacteria_count() <= 0:
