@@ -1,15 +1,19 @@
-[gd_scene load_steps=24 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=28 format=3 uid="uid://cypu6v8555nk4"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
 [ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/enemy_spawner.tscn" id="3_4guve"]
+[ext_resource type="PackedScene" uid="uid://bjm6e6qdxmegr" path="res://Scenes/UI/WinScreen.tscn" id="3_cy5hu"]
 [ext_resource type="AudioStream" uid="uid://dy0q5r2d8i2fh" path="res://Audio/Music/mx_game_music_one_shot_intro.wav" id="3_den0g"]
 [ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="3_kpg0x"]
 [ext_resource type="Texture2D" uid="uid://clmgi24pvhniw" path="res://Assets/first map/tile 1.png" id="3_q1n2g"]
 [ext_resource type="Texture2D" uid="uid://dwwkw08o34pit" path="res://Assets/first map/tile 2.png" id="4_45hd7"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/LooseScreen.tscn" id="4_afyfy"]
 [ext_resource type="AudioStream" uid="uid://dpxwfeqyoaat7" path="res://Audio/Music/mx_game_music_main_loop.wav" id="4_xb1y2"]
 [ext_resource type="Texture2D" uid="uid://cqlt1j2gmcumx" path="res://Assets/first map/tile 3.png" id="5_faqba"]
 [ext_resource type="Texture2D" uid="uid://dfbw2dbskw387" path="res://Assets/first map/tile 4.png" id="6_snfvs"]
 [ext_resource type="Texture2D" uid="uid://1bslyy67amib" path="res://Assets/first map/tile 5.png" id="7_ljom2"]
+[ext_resource type="AudioStream" uid="uid://c8hb228knwp3e" path="res://Audio/mx_win_stinger.wav" id="7_n404d"]
+[ext_resource type="AudioStream" uid="uid://dumel1hf44acy" path="res://Audio/mx_lose_stinger.wav" id="8_34f0m"]
 [ext_resource type="Texture2D" uid="uid://0cyijlqtqqi5" path="res://Assets/first map/tile 6.png" id="8_ud62q"]
 [ext_resource type="Texture2D" uid="uid://bh7uuqhttyuee" path="res://Assets/first map/tile 7.png" id="9_bom7c"]
 [ext_resource type="Texture2D" uid="uid://dkpisxv60l1u4" path="res://Assets/first map/tile 8.png" id="10_fa17k"]
@@ -105,8 +109,12 @@ _data = {
 script = ExtResource("1_w3i5e")
 camera_speed = 200.0
 bacteria_scene = ExtResource("3_kpg0x")
+win_screen_scene = ExtResource("3_cy5hu")
+loose_screen_scene = ExtResource("4_afyfy")
 music_start_sound = ExtResource("3_den0g")
 music_loop_sound = ExtResource("4_xb1y2")
+win_sound = ExtResource("7_n404d")
+loose_sound = ExtResource("8_34f0m")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -198,9 +206,6 @@ autoplay = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 
-[node name="Line2D" type="Line2D" parent="."]
-points = PackedVector2Array(978, -1077, 2404, -736)
-
 [node name="ProgressPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_q1k00")
 script = SubResource("GDScript_ui4mo")
@@ -219,7 +224,9 @@ z_index = 5
 scale = Vector2(0.176427, 1.94073)
 texture = ExtResource("16_d2i1o")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ProgressPath"]
+[node name="GameFlow" type="AnimationPlayer" parent="ProgressPath"]
+unique_name_in_owner = true
+active = false
 libraries = {
 "": SubResource("AnimationLibrary_8uny0")
 }
@@ -230,3 +237,4 @@ speed_scale = 0.008
 position = Vector2(492, 551)
 
 [node name="Hud" parent="." instance=ExtResource("17_i7f2u")]
+unique_name_in_owner = true
