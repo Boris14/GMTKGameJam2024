@@ -74,6 +74,8 @@ func win_game():
 		
 	stop_game_flow()
 	
+	await get_tree().create_timer(0.2).timeout
+	
 	if win_sound:
 		sfx_player.stream = win_sound
 		sfx_player.play()
@@ -84,6 +86,8 @@ func win_game():
 
 func _on_bacteria_died():
 	stop_game_flow()	
+	
+	await get_tree().create_timer(0.2).timeout
 	
 	loose_screen.pop_up()
 	

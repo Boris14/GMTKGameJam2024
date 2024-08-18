@@ -11,6 +11,7 @@ class_name Bacteria
 
 @export var spawn_sounds : Array[AudioStream]
 @export var remove_sounds : Array[AudioStream]
+@export var death_sounds : Array[AudioStream]
 
 @onready var audio_player := $AudioStreamPlayer
 
@@ -81,7 +82,8 @@ func spawn_bacterium():
 		bacterium.queue_free()
 
 
-func _on_bacterium_died(bacterium: Bacterium):
+func _on_bacterium_died(bacterium: Bacterium, is_killed: bool):
+	play_death_sound()
 	if get_bacteria_count() <= 0:
 		died.emit()
 
@@ -136,6 +138,13 @@ func play_remove_sound():
 		return
 		
 	audio_player.stream = remove_sounds.pick_random()
+	audio_player.play()
+	
+func play_death_sound():
+	if death_sounds.is_empty() or audio_player.playing:
+		return
+		
+	audio_player.stream = death_sounds.pick_random()
 	audio_player.play()
 	
 func generate_spiral_points(origin: Vector2, points_count: int, increment: int) -> Array:

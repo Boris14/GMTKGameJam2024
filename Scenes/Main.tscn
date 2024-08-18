@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="3_kpg0x"]
 [ext_resource type="Texture2D" uid="uid://clmgi24pvhniw" path="res://Assets/first map/tile 1.png" id="3_q1n2g"]
 [ext_resource type="Texture2D" uid="uid://dwwkw08o34pit" path="res://Assets/first map/tile 2.png" id="4_45hd7"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/LooseScreen.tscn" id="4_afyfy"]
+[ext_resource type="PackedScene" uid="uid://bkcnyk5w2eiec" path="res://Scenes/UI/LooseScreen.tscn" id="4_afyfy"]
 [ext_resource type="AudioStream" uid="uid://dpxwfeqyoaat7" path="res://Audio/Music/mx_game_music_main_loop.wav" id="4_xb1y2"]
 [ext_resource type="Texture2D" uid="uid://cqlt1j2gmcumx" path="res://Assets/first map/tile 3.png" id="5_faqba"]
 [ext_resource type="Texture2D" uid="uid://dfbw2dbskw387" path="res://Assets/first map/tile 4.png" id="6_snfvs"]
