@@ -40,13 +40,13 @@ func _process(delta):
 
 
 func start():
+	for child in get_children():
+		if child is Enemy:
+			child.queue_free()
 	set_next_spawn_time()
 
 	
 func stop():
-	for child in get_children():
-		if child is Enemy:
-			child.queue_free()
 	time_to_next_spawn = -1
 	spawn_timer = 0
 
