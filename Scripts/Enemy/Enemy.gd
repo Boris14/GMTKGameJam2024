@@ -11,6 +11,7 @@ class_name Enemy
 
 func _ready() -> void:
 	pass
+
 func take_damage(amount: int = 1):
 	health -= amount
 	if health <= 0:

@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjm6e6qdxmegr"]
+
+[ext_resource type="Script" path="res://Scripts/UI/PopUp.gd" id="1_5oeh0"]
+[ext_resource type="Texture2D" uid="uid://bwkh6xmr10k8j" path="res://Assets/UI/Rectangle_1_copy.png" id="1_dukpj"]
+[ext_resource type="Texture2D" uid="uid://c4fhorflxm7lb" path="res://Assets/UI/Rectangle_1.png" id="2_kis60"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5tncs"]
+font_size = 60
+
+[node name="WinScreen" type="CanvasLayer"]
+script = ExtResource("1_5oeh0")
+
+[node name="PopUpBackground" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -300.0
+offset_right = 500.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_dukpj")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="PopUpBackground"]
+anchors_preset = 0
+offset_right = 1000.0
+offset_bottom = 600.0
+
+[node name="TitleLabel" type="Label" parent="PopUpBackground/Control"]
+layout_mode = 2
+offset_top = 50.0
+offset_right = 1000.0
+offset_bottom = 133.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You Won!
+"
+label_settings = SubResource("LabelSettings_5tncs")
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="TextureButton" parent="PopUpBackground/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -354.0
+offset_top = -120.0
+offset_right = 354.0
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("2_kis60")

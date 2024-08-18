@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://nd8dp5ps2alk"]
 
 [ext_resource type="Script" path="res://Scripts/Bacterium.gd" id="1_r1wcf"]
-[ext_resource type="Texture2D" uid="uid://eusqv4qdwxj" path="res://Assets/bakteriq.png" id="2_w3wkt"]
+[ext_resource type="Texture2D" uid="uid://uow6m1xs26rw" path="res://Assets/Bacteria/bekteriq.png" id="2_hvo1m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7r5fa"]
 radius = 15.0
@@ -47,7 +47,8 @@ _data = {
 script = ExtResource("1_r1wcf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_w3wkt")
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_hvo1m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7r5fa")

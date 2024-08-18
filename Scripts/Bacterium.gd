@@ -17,6 +17,7 @@ var win_method : Callable
 signal died(bacterium : Bacterium)
 
 var is_dead := false
+var is_stuck := false
 var curr_max_speed := max_speed
 
 func _ready():
@@ -35,9 +36,9 @@ func _physics_process(delta):
 	
 	for i in get_slide_collision_count():
 		var body = get_slide_collision(i).get_collider() as Node
-		if body.is_in_group("sticky"):
+		if body.is_in_group("sticky") and not is_stuck:
 			var stick_action: Callable
-			var action_delay := 0
+			var action_delay := 0.0
 			if body.is_in_group("lethal"):
 				stick_action = func(): die(true)
 				action_delay = stick_death_delay
@@ -47,6 +48,7 @@ func _physics_process(delta):
 			stick(stick_action, action_delay)
 
 func stick(action_after: Callable, action_delay: float):
+	is_stuck = true
 	curr_max_speed = 0
 	modulate = stick_color
 	await get_tree().create_timer(action_delay).timeout 
@@ -58,8 +60,10 @@ func die(is_killed : bool):
 	died.emit(self)
 	animation.play("Shrink")
 	var death_duration = animation.get_animation("Shrink").length
-	await get_tree().create_timer(death_duration).timeout
-	queue_free()
+	var scene_tree = get_tree()
+	if scene_tree:
+		await get_tree().create_timer(death_duration).timeout
+		queue_free()
 
 func get_separation_velocity() -> Vector2:
 	var neighbours = get_neighbours()
