@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://2am0ed8ir5co"]
+[gd_scene load_steps=15 format=3 uid="uid://2am0ed8ir5co"]
 
 [ext_resource type="Script" path="res://Scripts/Bacteria.gd" id="1_tx7fs"]
 [ext_resource type="PackedScene" uid="uid://nd8dp5ps2alk" path="res://Scenes/Bacterium.tscn" id="2_xf4yk"]
@@ -11,12 +11,16 @@
 [ext_resource type="AudioStream" uid="uid://klu33d0kdeso" path="res://Audio/sfx_character_split_short_05.wav" id="7_gwny8"]
 [ext_resource type="AudioStream" uid="uid://d2jphtkrdrk03" path="res://Audio/sfx_character_shrink_02.wav" id="7_pwi2v"]
 [ext_resource type="AudioStream" uid="uid://dkitg2637jqn0" path="res://Audio/sfx_character_shrink_03.wav" id="8_ct075"]
+[ext_resource type="AudioStream" uid="uid://b6vrr1g0kc5yg" path="res://Audio/sfx_character_dies_01.wav" id="11_bfbm6"]
+[ext_resource type="AudioStream" uid="uid://diufa3swdeaa6" path="res://Audio/sfx_character_dies_02.wav" id="12_h47h8"]
+[ext_resource type="AudioStream" uid="uid://s7bdrsawnxxg" path="res://Audio/sfx_character_dies_03.wav" id="13_hpnra"]
 
 [node name="Bacteria" type="Node2D"]
 script = ExtResource("1_tx7fs")
 bacterium_scene = ExtResource("2_xf4yk")
 spawn_sounds = Array[AudioStream]([ExtResource("4_0phlm"), ExtResource("5_5u7mv"), ExtResource("5_44roj"), ExtResource("6_clh5i"), ExtResource("7_gwny8")])
 remove_sounds = Array[AudioStream]([ExtResource("6_iy35o"), ExtResource("7_pwi2v"), ExtResource("8_ct075")])
+death_sounds = Array[AudioStream]([ExtResource("11_bfbm6"), ExtResource("12_h47h8"), ExtResource("13_hpnra")])
 
 [node name="BacteriaCenter" type="Sprite2D" parent="."]
 visible = false

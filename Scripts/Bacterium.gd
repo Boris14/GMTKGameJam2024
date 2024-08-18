@@ -5,7 +5,6 @@ class_name Bacterium
 
 @export var detection_radius = 30.0
 @export var separation_strength := 15.0
-@export var stick_color : Color = Color.YELLOW
 @export var stick_death_delay := 0.5
 @export var win_delay := 1
 
@@ -14,7 +13,7 @@ class_name Bacterium
 
 var win_method : Callable
 
-signal died(bacterium : Bacterium)
+signal died(bacterium : Bacterium, is_killed : bool)
 
 var is_dead := false
 var is_stuck := false
@@ -50,20 +49,23 @@ func _physics_process(delta):
 func stick(action_after: Callable, action_delay: float):
 	is_stuck = true
 	curr_max_speed = 0
-	modulate = stick_color
+	animation.play("Stick")
 	await get_tree().create_timer(action_delay).timeout 
 	action_after.call()
 	
 func die(is_killed : bool):
 	is_dead = true
 	remove_from_group("bacterium")
-	died.emit(self)
-	animation.play("Shrink")
-	var death_duration = animation.get_animation("Shrink").length
+	died.emit(self, is_killed)
+	var death_duration := 0.
+	if is_killed:
+		death_duration = animation.get_animation("Death").length
+		animation.play("Death")
+	else:
+		death_duration = animation.get_animation("Shrink").length
+		animation.play("Shrink")
 	
-	# Store the scene tree reference
 	var scene_tree = get_tree()
-	
 	if scene_tree:
 		# Use a Timer node instead of create_timer
 		var timer = Timer.new()
