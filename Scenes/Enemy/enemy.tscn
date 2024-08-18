@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bo61pcdr1iw2w"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy/AOEEnemy.gd" id="1_bugk0"]
+[ext_resource type="Script" path="res://Scripts/Enemy/Enemy.gd" id="1_62i6m"]
 [ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="1_cfkou"]
 [ext_resource type="AudioStream" uid="uid://c1qcfi2efjxwk" path="res://Audio/sfx_character_hit_01.wav" id="2_miarl"]
 [ext_resource type="AudioStream" uid="uid://c3hefghrn4r22" path="res://Audio/sfx_character_hit_02.wav" id="3_4mpc1"]
@@ -27,6 +27,32 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_8ca3t"]
 resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.266667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_m21if"]
 resource_name = "hit"
@@ -57,7 +83,7 @@ _data = {
 }
 
 [node name="Enemy" type="CharacterBody2D"]
-script = ExtResource("1_bugk0")
+script = ExtResource("1_62i6m")
 max_health = 5
 hit_sounds = Array[AudioStream]([ExtResource("2_miarl"), ExtResource("3_4mpc1"), ExtResource("4_x0g6b"), ExtResource("5_q1ycc")])
 

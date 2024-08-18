@@ -5,7 +5,7 @@ var max_radius: float = 1000.0
 
 func _ready():
 	super._ready()
-	health = 50
+	health = 25
 	max_health = health
 	movement_speed = 40.0
 	radius = 20.0
@@ -24,7 +24,7 @@ func step(delta):
 
 
 func take_damage(amount: int = 1):
-	radius = min(radius + 3, max_radius)
+	radius = min(radius + 2, max_radius)
 	$Icon.scale = Vector2.ONE * radius / 66
 	movement_speed = max(10, movement_speed - 2)
 	super.take_damage(amount)

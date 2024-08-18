@@ -56,10 +56,11 @@ func step(delta):
 			slowed_bacteria.erase(b)
 func die():
 	for b in slowed_bacteria:
-		print("must unslow")
+		#print("must unslow")
 		if is_instance_valid(b):
 			b.curr_max_speed = b.max_speed
-			print("success unslow")
+			slowed_bacteria.erase(b)
+			#print("success unslow")
 
 	super.die()
 

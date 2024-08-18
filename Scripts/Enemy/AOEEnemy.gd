@@ -5,7 +5,7 @@ enum State { MOVE, PREPARE_ATTACK, ATTACK }
 
 var current_state = State.MOVE
 var attack_timer: float = 0.0
-var attack_timer_max: float = 2.0
+var attack_timer_max: float = 3.0
 @onready var aoe_visual = (func():
 	# Create the ColorRect
 	var rect = ColorRect.new()
@@ -38,10 +38,10 @@ var attack_timer_max: float = 2.0
 	var material = ShaderMaterial.new()
 	material.shader = shader
 	var color = Color.YELLOW
-	color.a=0.1
+	color.a=0.5
 	# Set initial shader parameters
 	material.set_shader_parameter("circle_color", color)
-	material.set_shader_parameter("radius", 0.4)
+	material.set_shader_parameter("radius", 0.5)
 	material.set_shader_parameter("border_width", 0.05)
 	
 	# Apply the material to the ColorRect
@@ -56,16 +56,28 @@ var attack_timer_max: float = 2.0
 func _ready():
 	super._ready()
 	radius=randf_range(50, 100)
-	health = 35
+	health = 25
 	max_health = 35
 	$Icon.modulate=Color.YELLOW
 
 	#$CollisionShape2D.shape.radius = radius
 func aoe_radius():
-	return radius*1.2+radius*2*attack_timer/attack_timer_max if current_state == State.PREPARE_ATTACK else radius*2*2 if current_state==State.ATTACK else 0
+	return radius*1.2+radius*2*attack_timer/attack_timer_max if current_state == State.PREPARE_ATTACK else radius*1.2+radius*2 if current_state==State.ATTACK else 0
 func step(delta):
-	aoe_visual.size = Vector2.ONE * aoe_radius()*2
+	
+	aoe_visual.size = Vector2.ONE * aoe_radius()*2.0
 	aoe_visual.position = -aoe_visual.size/2
+	var color_progress = 0.0
+	if current_state == State.PREPARE_ATTACK:
+		color_progress = attack_timer / attack_timer_max
+	elif current_state == State.ATTACK:
+		color_progress = 1.0
+
+	var lerped_color = Color.YELLOW.lerp(Color.RED, color_progress)
+	lerped_color.a = 0.5  # Set alpha to 0.5 for semi-transparency
+
+	aoe_visual.material.set_shader_parameter("circle_color", lerped_color)
+
 	match current_state:
 		State.MOVE:
 			var player_pos = get_closest_bacterium_position()

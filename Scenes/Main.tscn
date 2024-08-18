@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=24 format=3 uid="uid://cypu6v8555nk4"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
 [ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/enemy_spawner.tscn" id="3_4guve"]
@@ -24,6 +24,21 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 960, 540, 0, 0, 0, 0, 2880, 540, 0, 0, 0, 0, 2880, 2696, 0, 0, 0, 0, 6720, 2696, 0, 0, 0, 0, 6720, 536, 0, 0, 0, 0, 8640, 534)
 }
 point_count = 6
+
+[sub_resource type="GDScript" id="GDScript_ui4mo"]
+script/source = "extends Path2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	Globals.progress = $SpawnProgress.progress_ratio
+	pass
+"
 
 [sub_resource type="Animation" id="Animation_kecin"]
 length = 0.001
@@ -188,6 +203,7 @@ points = PackedVector2Array(978, -1077, 2404, -736)
 
 [node name="ProgressPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_q1k00")
+script = SubResource("GDScript_ui4mo")
 
 [node name="CameraProgress" type="PathFollow2D" parent="ProgressPath"]
 position = Vector2(960, 540)

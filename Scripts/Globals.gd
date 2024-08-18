@@ -6,6 +6,8 @@ var immunity_response := 0.0
 
 var curr_delay := 0.0
 
+var progress := 0.
+
 func increase_immunity_response(amount: float):
 	if amount <= 0:
 		return

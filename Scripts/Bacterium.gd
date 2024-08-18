@@ -60,9 +60,20 @@ func die(is_killed : bool):
 	died.emit(self)
 	animation.play("Shrink")
 	var death_duration = animation.get_animation("Shrink").length
+	
+	# Store the scene tree reference
 	var scene_tree = get_tree()
+	
 	if scene_tree:
-		await get_tree().create_timer(death_duration).timeout
+		# Use a Timer node instead of create_timer
+		var timer = Timer.new()
+		add_child(timer)
+		timer.set_one_shot(true)
+		timer.set_wait_time(death_duration)
+		timer.timeout.connect(func(): queue_free())
+		timer.start()
+	else:
+		# If there's no scene tree, queue_free immediately
 		queue_free()
 
 func get_separation_velocity() -> Vector2:

@@ -8,18 +8,40 @@ var AOEEnemyScript = preload("res://Scripts/Enemy/AOEEnemy.gd")
 var TankEnemyScript = preload("res://Scripts/Enemy/TankEnemy.gd")
 var AbsorberEnemyScript = preload("res://Scripts/Enemy/AbsorberEnemy.gd")
 var FreezerEnemyScript = preload("res://Scripts/Enemy/FreezerEnemy.gd")
+var SplitterEnemyScript = preload("res://Scripts/Enemy/SplitterEnemy.gd")
+
 var ImmunityBoosterEnemyScript = preload("res://Scripts/Enemy/ImmunityBoosterEnemy.gd")
 
 # Update spawn chances
-var spawn_chances = {
-	"Basic": 10,
-	"Shooter": 10,
-	"AOE": 10,
-	"Tank": 10,
-	"Absorber": 10,
-	"Freezer": 1,
-	"ImmunityBooster": 100  # Adjust this value as needed
-}
+func spawn_chances():
+	var immunity_coefficient = Globals.immunity_response / 100.0  # 0.0 easier - 1.0
+	var progress_coefficient = Globals.progress  # 0.0 - 1.0
+	var difficulty_factor = min(progress_coefficient / 0.6, 1.0)  # Reaches 1 at 60% progress
+
+	return {
+		"Basic": 1.0,
+		"Splitter": lerp(0.5, 1.0, difficulty_factor),
+		"Shooter": lerp(0.5, 1.0, difficulty_factor),
+		"AOE": lerp(0.3, 1.0, difficulty_factor),
+		"Tank": lerp(0.2, 1.0, difficulty_factor),
+		"Absorber": lerp(0.2, 1.0, difficulty_factor),
+		"Freezer": lerp(0.1, 1.0, difficulty_factor),
+		"ImmunityBooster": 25.0  # Always high chance to spawn
+	}
+
+func set_next_spawn_time():
+	var immunity_coefficient = Globals.immunity_response / 100.0  # 0.0 easier - 1.0
+	var progress_coefficient = Globals.progress  # 0.0 - 1.0
+	
+	var min_time = lerp(0.3, 0.05, immunity_coefficient)
+	var max_time = lerp(0.6, 0.1, immunity_coefficient)
+	
+	# Decrease spawn time as progress increases
+	var progress_factor = 1.0 - (progress_coefficient * 0.25)  # Reduce time by up to 50%
+	min_time *= progress_factor
+	max_time *= progress_factor
+	
+	time_to_next_spawn = randf_range(min_time*2., max_time*2.)
 var total_spawn_chance: int = 0
 var spawn_timer: float = 0.0
 var time_to_next_spawn: float = -1.0
@@ -27,7 +49,7 @@ var time_to_next_spawn: float = -1.0
 func _ready():
 	randomize()
 	# Calculate total spawn chance
-	for chance in spawn_chances.values():
+	for chance in spawn_chances().values():
 		total_spawn_chance += chance
 
 
@@ -50,11 +72,6 @@ func stop():
 	time_to_next_spawn = -1
 	spawn_timer = 0
 
-func set_next_spawn_time():
-	var immunity = Globals.immunity_response
-	var min_time = lerp(0.3, 0.05, immunity / 100.0)
-	var max_time = lerp(0.6, 0.1, immunity / 100.0)
-	time_to_next_spawn = randf_range(min_time, max_time)
 
 
 func spawn_enemy():
@@ -68,6 +85,8 @@ func spawn_enemy():
 	match enemy_type:
 		"ImmunityBooster":
 			enemy_instance.set_script(ImmunityBoosterEnemyScript)
+		"Splitter":
+			enemy_instance.set_script(SplitterEnemyScript)
 		"Basic":
 			pass  # BasicEnemy is already the default
 		"Shooter":
@@ -96,8 +115,8 @@ func choose_enemy_type():
 	var roll = randi() % total_spawn_chance
 	var cumulative_chance = 0
 
-	for enemy_type in spawn_chances:
-		cumulative_chance += spawn_chances[enemy_type]
+	for enemy_type in spawn_chances():
+		cumulative_chance += spawn_chances()[enemy_type]
 		if roll < cumulative_chance:
 			return enemy_type
 

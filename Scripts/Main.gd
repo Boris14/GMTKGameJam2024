@@ -8,7 +8,6 @@ extends Node2D
 @export var music_start_sound : AudioStream
 @export var music_loop_sound : AudioStream
 
-@onready var camera := $Camera2D
 @onready var enemy_spawner := $EnemySpawner
 @onready var music_player := $MusicPlayer
 
