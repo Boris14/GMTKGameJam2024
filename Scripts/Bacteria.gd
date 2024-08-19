@@ -6,7 +6,6 @@ class_name Bacteria
 @export var min_bacteria_count := 3
 @export var max_bacteria_count := 200
 @export var start_bacteria_count := 10
-@export var initial_bacteria_position := Vector2(960, 540)
 @export var scroll_spawn_count := 2
 
 @export var spawn_sounds : Array[AudioStream]
@@ -15,6 +14,7 @@ class_name Bacteria
 
 @onready var audio_player := $AudioStreamPlayer
 
+var initial_bacteria_position : Vector2
 var win_method: Callable
 
 signal died
@@ -22,7 +22,8 @@ signal died
 func _ready():
 	global_position = Vector2.ZERO
 	
-func start_bacteria():
+func start_bacteria(start_position):
+	initial_bacteria_position = start_position
 	for b in get_bacteria():
 		b.queue_free()
 		remove_child(b)

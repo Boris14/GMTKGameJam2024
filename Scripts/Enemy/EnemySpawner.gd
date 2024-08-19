@@ -1,6 +1,7 @@
 extends Node2D
 class_name EnemySpawner
 
+# HARD:
 #	"Basic": {"base": 10, "max":3},
 #	"Shooter": {"base": 8, "max":3},
 #	"Tank": {"base": 3, "max":3},
@@ -8,17 +9,25 @@ class_name EnemySpawner
 #	"Freezer": {"base": 0, "max":5},
 #	"AOE": {"base": 0, "max":5},
 
+# EASY:
+#	"Basic": {"base": 5, "max":3},
+#	"Shooter": {"base": 2, "max":3},
+#	"Tank": {"base": 1, "max":3},
+#	"Splitter": {"base": 0, "max":3},
+#	"Freezer": {"base": 0, "max":1},
+#	"AOE": {"base": 0, "max":0},
+
 @export var blood_cell_spawn_rate := 1.
 @export var base_enemy_spawn_rate := 3.
 @export var max_enemy_spawn_rate := 1.
 @export var max_enemy_health_boost := 2.
 @export var enemy_probabilities : Dictionary = {
-	"Basic": {"base": 5, "max":3},
-	"Shooter": {"base": 2, "max":3},
-	"Tank": {"base": 1, "max":3},
-	"Splitter": {"base": 0, "max":3},
-	"Freezer": {"base": 0, "max":1},
-	"AOE": {"base": 0, "max":0},
+	"Basic": {"base": 10, "max":3},
+	"Shooter": {"base": 8, "max":3},
+	"Tank": {"base": 3, "max":3},
+	"Splitter": {"base": 1, "max":4},
+	"Freezer": {"base": 0, "max":5},
+	"AOE": {"base": 0, "max":5},
 }
 
 # Preload enemy scenes

@@ -222,7 +222,7 @@ polygon = PackedVector2Array(6136, 360, 6160, 472, 6176, 504, 6208, 504, 6224, 5
 top_level = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Brain"]
-polygon = PackedVector2Array(8976, -8, 8984, 48, 9008, 96, 9032, 120, 9016, 168, 9032, 248, 9072, 312, 9160, 360, 9168, 416, 9224, 480, 9312, 504, 9344, 512, 9368, 568, 9424, 624, 9512, 656, 9600, 680)
+polygon = PackedVector2Array(8976, -8, 8984, 48, 9008, 96, 9032, 120, 9016, 168, 9032, 248, 9072, 312, 9160, 360, 9168, 416, 9224, 480, 9312, 504, 9344, 512, 9368, 568, 9424, 624, 9512, 656, 9600, 680, 9616, -8)
 
 [node name="ProgressPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_q1k00")

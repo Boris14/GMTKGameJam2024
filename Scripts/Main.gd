@@ -23,6 +23,7 @@ var win_screen : PopUp
 var sfx_player : AudioStreamPlayer
 var bacteria : Bacteria
 var has_won := false
+var is_idle := true
 
 func _ready():
 	var loose_screen_scene = preload("res://Scenes/UI/LooseScreen.tscn")
@@ -43,12 +44,14 @@ func _ready():
 	bacteria.initial_bacteria_position = $PlayerStartPosition.position
 	bacteria.win_method = win_game
 	add_child(bacteria)
-	bacteria.start_bacteria()
+	bacteria.start_bacteria($PlayerStartPosition.position)
 	
 	music_player.finished.connect(_on_music_start_sound_finished)
 	game_flow.speed_scale = 0.0
 	
 func _input(event):
+	if not is_idle:
+		return
 	if event is InputEventMouseButton:
 		if event.is_pressed() and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
 			start_game()
@@ -61,6 +64,7 @@ func _physics_process(delta):
 		Engine.time_scale = lerp(1., game_speed_at_max, Globals.progress)
 
 func start_game():
+	is_idle = false
 	Engine.time_scale = 1.0
 	Globals.immunity_response = 0.0
 	has_won = false

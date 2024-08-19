@@ -1,0 +1,347 @@
+[gd_scene load_steps=31 format=3 uid="uid://bg4qvqi413d8a"]
+
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_4m6fa"]
+[ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="2_ig6s1"]
+[ext_resource type="AudioStream" uid="uid://b08g4nstnp27v" path="res://Audio/Music/mx_game_music_hard_lvl_intro.wav" id="3_os7gf"]
+[ext_resource type="AudioStream" uid="uid://cnb4yjmc3023k" path="res://Audio/Music/mx_game_music_hard_lvl_loop.wav" id="4_1fbpk"]
+[ext_resource type="AudioStream" uid="uid://c8hb228knwp3e" path="res://Audio/mx_win_stinger.wav" id="5_st1d1"]
+[ext_resource type="AudioStream" uid="uid://dumel1hf44acy" path="res://Audio/mx_lose_stinger.wav" id="6_j4j0p"]
+[ext_resource type="Texture2D" uid="uid://6fm3fdku7k0n" path="res://Assets/level 2/map 2 1.png" id="7_4sqxv"]
+[ext_resource type="Texture2D" uid="uid://bqob5vi3nakjp" path="res://Assets/level 2/map 2 2.png" id="8_yjk2a"]
+[ext_resource type="Texture2D" uid="uid://bfu2kfokqqdr4" path="res://Assets/level 2/map 2 3.png" id="9_rm8pl"]
+[ext_resource type="Texture2D" uid="uid://bkul8j0rwideg" path="res://Assets/level 2/map 2 4.png" id="10_tq0no"]
+[ext_resource type="Texture2D" uid="uid://cvrhn2jqpmeji" path="res://Assets/level 2/map 2 5.png" id="11_fxhj0"]
+[ext_resource type="Texture2D" uid="uid://dgik658kco4n0" path="res://Assets/level 2/map 2 6 .png" id="12_dd82c"]
+[ext_resource type="Texture2D" uid="uid://csy2de0p3t1xx" path="res://Assets/level 2/map 2 7.png" id="13_s84ox"]
+[ext_resource type="Texture2D" uid="uid://db6xl7yjppao1" path="res://Assets/level 2/map 2 8.png" id="14_ufx45"]
+[ext_resource type="Texture2D" uid="uid://c4kkvjq41uegm" path="res://Assets/level 2/map 2 9.png" id="15_uktxj"]
+[ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/EnemySpawner1.tscn" id="16_g3p4h"]
+[ext_resource type="Texture2D" uid="uid://dymp8q2b0ivfk" path="res://Assets/level 2/map 2 10.png" id="16_jb68n"]
+[ext_resource type="Texture2D" uid="uid://bwqklbcn0qqft" path="res://Assets/level 2/map 2 11.png" id="17_4q867"]
+[ext_resource type="Script" path="res://Scripts/StickyTraps.gd" id="17_wrj5u"]
+[ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="18_gqgwl"]
+[ext_resource type="Texture2D" uid="uid://d3xxx4i8hqx26" path="res://Assets/level 2/map 2 12.png" id="18_jgyof"]
+[ext_resource type="PackedScene" uid="uid://cl3sd8f0l1by3" path="res://Scenes/UI/HUD.tscn" id="19_tqass"]
+[ext_resource type="AudioStream" uid="uid://b0lm467ab888g" path="res://Audio/atm_blood_1.wav" id="20_t7piw"]
+[ext_resource type="AudioStream" uid="uid://b5iy8ecla6fm1" path="res://Audio/sfx_heartbeat_loop.wav" id="21_tgvca"]
+
+[sub_resource type="Curve2D" id="Curve2D_q1k00"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -243, 540, 0, 0, 0, 0, 938, 540, 0, 0, 0, 0, 2880, 540, 0, 0, 0, 0, 2880, -536, 0, 0, 0, 0, 4800, -536, 0, 0, 0, 0, 4800, 1608, 0, 0, 0, 0, 8640, 1608, 0, 0, 0, 0, 8641, 532, 0, 0, 0, 0, 10560, 536, 0, 0, 0, 0, 10560, 1616, 0, 0, 0, 0, 13400, 1616)
+}
+point_count = 11
+
+[sub_resource type="GDScript" id="GDScript_ui4mo"]
+script/source = "extends Path2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	Globals.progress = $DespawnProgress.progress_ratio
+	pass
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mrklr"]
+radius = 973.857
+
+[sub_resource type="Animation" id="Animation_kecin"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraProgress:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnProgress:progress_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DespawnProgress:progress_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vb48y"]
+resource_name = "new_animation"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraProgress:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.064, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnProgress:progress_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.19, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DespawnProgress:progress_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.633333, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.3257, 0.4458, 0.9]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8uny0"]
+_data = {
+"RESET": SubResource("Animation_kecin"),
+"new_animation": SubResource("Animation_vb48y")
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_4m6fa")
+camera_speed = 200.0
+game_flow_speed = Vector2(0.008, 0.012)
+bacteria_scene = ExtResource("2_ig6s1")
+music_start_sound = ExtResource("3_os7gf")
+music_loop_sound = ExtResource("4_1fbpk")
+win_sound = ExtResource("5_st1d1")
+loose_sound = ExtResource("6_j4j0p")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Tile1" type="Sprite2D" parent="Background"]
+position = Vector2(960, 540)
+texture = ExtResource("7_4sqxv")
+
+[node name="Tile2" type="Sprite2D" parent="Background"]
+position = Vector2(2880, 540)
+texture = ExtResource("8_yjk2a")
+
+[node name="Tile3" type="Sprite2D" parent="Background"]
+position = Vector2(2880, -536)
+texture = ExtResource("9_rm8pl")
+
+[node name="Tile4" type="Sprite2D" parent="Background"]
+position = Vector2(4800, -536)
+texture = ExtResource("10_tq0no")
+
+[node name="Tile5" type="Sprite2D" parent="Background"]
+position = Vector2(4800, 532)
+texture = ExtResource("11_fxhj0")
+
+[node name="Tile6" type="Sprite2D" parent="Background"]
+position = Vector2(4799, 1611)
+texture = ExtResource("12_dd82c")
+
+[node name="Tile7" type="Sprite2D" parent="Background"]
+position = Vector2(6719, 1611)
+texture = ExtResource("13_s84ox")
+
+[node name="Tile8" type="Sprite2D" parent="Background"]
+position = Vector2(8639, 1611)
+texture = ExtResource("14_ufx45")
+
+[node name="Tile9" type="Sprite2D" parent="Background"]
+position = Vector2(8641, 536)
+texture = ExtResource("15_uktxj")
+
+[node name="Tile10" type="Sprite2D" parent="Background"]
+position = Vector2(10560, 536)
+texture = ExtResource("16_jb68n")
+
+[node name="Tile11" type="Sprite2D" parent="Background"]
+position = Vector2(10560, 1610)
+texture = ExtResource("17_4q867")
+
+[node name="Tile12" type="Sprite2D" parent="Background"]
+position = Vector2(12480, 1610)
+texture = ExtResource("18_jgyof")
+
+[node name="EnemySpawner" parent="." instance=ExtResource("16_g3p4h")]
+blood_cell_spawn_rate = 1.0
+base_enemy_spawn_rate = 2.6
+max_enemy_spawn_rate = 0.8
+
+[node name="Walls" type="StaticBody2D" parent="."]
+visible = false
+top_level = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+polygon = PackedVector2Array(-8, 360, 0, 928, 648, 944, 1560, 888, 2344, 856, 2696, 904, 2832, 920, 3144, 872, 3296, 808, 3376, 704, 3464, 536, 3424, 240, 3424, 88, 3504, -88, 3696, -240, 3896, -248, 4112, -192, 4280, -104, 4384, 24, 4456, 216, 4432, 384, 4360, 688, 4264, 968, 4136, 1360, 4112, 1672, 4168, 1840, 4248, 1944, 4504, 2080, 4752, 2096, 4992, 2000, 5224, 1928, 5496, 1944, 6136, 1992, 6472, 1936, 6848, 1832, 7208, 1800, 7728, 1808, 8144, 1856, 8400, 1944, 8512, 1984, 8744, 1992, 9008, 1904, 9152, 1816, 9264, 1672, 9336, 1512, 9352, 1320, 9312, 1160, 9312, 952, 9392, 744, 9584, 584, 9744, 584, 9888, 664, 9960, 744, 10016, 864, 10016, 1064, 9928, 1464, 9984, 1672, 10120, 1816, 10328, 1936, 10592, 2024, 10952, 2056, 11280, 2040, 11600, 1976, 11848, 1904, 12000, 1888, 12256, 1920, 12480, 2000, 12664, 2080, 12720, 2152, 13440, 2152, 13440, 1064, 12472, 1072, 12208, 1256, 12104, 1352, 11936, 1408, 11608, 1408, 11376, 1344, 11272, 1192, 11232, 856, 11296, 576, 11384, 328, 11304, 144, 11112, 80, 10520, 120, 9600, 128, 8432, 176, 8160, 248, 8024, 368, 7952, 528, 7968, 752, 8056, 1032, 8000, 1208, 7840, 1312, 7616, 1336, 7432, 1312, 7160, 1256, 6880, 1256, 6536, 1328, 6160, 1392, 5904, 1392, 5648, 1320, 5528, 1216, 5464, 1120, 5392, 872, 5416, 624, 5480, 392, 5552, 144, 5576, -144, 5568, -416, 5496, -656, 5344, -848, 5000, -944, 4624, -872, 4040, -768, 3624, -736, 3352, -768, 2992, -880, 2744, -896, 2520, -800, 2360, -624, 2320, -512, 2344, -256, 2328, -56, 2232, 144, 2120, 248, 2016, 288, 1864, 240, 1608, 160, 1336, 136, 960, 152, 712, 208, 440, 296, 248, 336, -8, 360, 456, -2128, 14232, -1416, 13824, 3400, 536, 2656, -1936, 1200, -1672, -536, -352, -616)
+
+[node name="StickyTraps" type="StaticBody2D" parent="." groups=["lethal", "sticky"]]
+top_level = true
+script = ExtResource("17_wrj5u")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(1320, 904, 1304, 680, 1344, 656, 1344, 440, 1384, 408, 1424, 416, 1432, 448, 1432, 480, 1472, 504, 1504, 592, 1544, 600, 1568, 616, 1560, 880)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(3304, 792, 3200, 688, 3200, 648, 3160, 608, 3160, 560, 3192, 544, 3216, 544, 3384, 696, 3400, 656, 3336, 600, 3352, 552, 3392, 552, 3448, 592, 3416, 712)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(2328, -80, 2416, -56, 2448, -72, 2448, -120, 2584, -88, 2616, -112, 2616, -152, 2528, -184, 2512, -224, 2344, -280, 2320, -96)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(2888, -888, 2944, -664, 2976, -608, 3032, -592, 3064, -616, 3080, -728, 3120, -720, 3160, -744, 3176, -832)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(3512, -112, 3496, -184, 3544, -200, 3552, -256, 3584, -288, 3640, -280, 3712, -240)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(4136, -184, 4248, -312, 4288, -320, 4320, -288, 4296, -208, 4328, -184, 4312, -128, 4352, -104, 4360, -64, 4328, -24)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(5232, -896, 5064, -736, 5064, -688, 5032, -632, 5024, -584, 5064, -560, 5112, -576, 5360, -808)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(5488, -648, 5456, -616, 5464, -536, 5168, -352, 5152, -296, 5176, -264, 5216, -256, 5344, -304, 5368, -264, 5416, -264, 5576, -328)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(5504, 280, 5272, 376, 5248, 424, 5280, 464, 5344, 456, 5368, 448, 5392, 472, 5464, 448)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(4384, 632, 4528, 704, 4536, 752, 4632, 808, 4640, 848, 4608, 888, 4560, 888, 4336, 776)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(5464, 1136, 5440, 1200, 5448, 1256, 5432, 1312, 5440, 1352, 5480, 1392, 5552, 1376, 5624, 1312)
+
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(4256, 1952, 4360, 1864, 4416, 1848, 4448, 1880, 4488, 1872, 4568, 1792, 4616, 1784, 4640, 1816, 4640, 1864, 4520, 2080, 4240, 1960)
+
+[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(5848, 1984, 5872, 1928, 5936, 1928, 6000, 1952, 6032, 1992)
+
+[node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(6200, 1408, 6208, 1440, 6264, 1448, 6304, 1464, 6352, 1472, 6392, 1368)
+
+[node name="CollisionPolygon2D15" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(6816, 1840, 6832, 1752, 6872, 1728, 6920, 1728, 6960, 1816)
+
+[node name="CollisionPolygon2D16" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(7312, 1280, 7320, 1352, 7352, 1376, 7400, 1360, 7440, 1304)
+
+[node name="CollisionPolygon2D17" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(8744, 1976, 8712, 1760, 8744, 1728, 8768, 1720, 8768, 1608, 8800, 1568, 8856, 1576, 8880, 1608, 8928, 1928)
+
+[node name="CollisionPolygon2D18" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(9056, 1864, 9016, 1744, 9056, 1696, 9104, 1704, 9160, 1808)
+
+[node name="CollisionPolygon2D19" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(8208, 232, 8360, 480, 8408, 512, 8464, 480, 8464, 440, 8424, 360, 8456, 328, 8448, 184)
+
+[node name="CollisionPolygon2D20" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(9400, 752, 9336, 672, 9352, 616, 9336, 568, 9360, 520, 9408, 520, 9440, 552, 9512, 624)
+
+[node name="CollisionPolygon2D21" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(10216, 136, 10240, 176, 10352, 192, 10384, 232, 10448, 240, 10496, 216, 10536, 136)
+
+[node name="CollisionPolygon2D22" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(10016, 888, 10264, 840, 10304, 872, 10304, 912, 10216, 952, 10192, 992, 10016, 1016)
+
+[node name="CollisionPolygon2D23" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(10152, 1824, 10304, 1664, 10352, 1656, 10376, 1688, 10384, 1720, 10344, 1760, 10368, 1824, 10336, 1936)
+
+[node name="CollisionPolygon2D24" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(11256, 1200, 11112, 1320, 11112, 1368, 11072, 1416, 11080, 1480, 11136, 1488, 11376, 1352)
+
+[node name="CollisionPolygon2D25" type="CollisionPolygon2D" parent="StickyTraps"]
+polygon = PackedVector2Array(11848, 1888, 11880, 1800, 11952, 1792, 11984, 1832, 12008, 1880, 11864, 1888)
+
+[node name="Heart" type="StaticBody2D" parent="." groups=["sticky", "win"]]
+top_level = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Heart"]
+polygon = PackedVector2Array(12824, 2144, 12848, 1968, 12912, 1824, 12992, 1688, 13088, 1584, 13072, 1488, 13040, 1416, 13080, 1360, 13112, 1352, 13168, 1360, 13232, 1312, 13272, 1264, 13312, 1248, 13368, 1272, 13384, 1304, 13376, 1392, 13440, 1368, 13432, 2144)
+
+[node name="ProgressPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_q1k00")
+script = SubResource("GDScript_ui4mo")
+
+[node name="CameraProgress" type="PathFollow2D" parent="ProgressPath"]
+position = Vector2(-243, 540)
+
+[node name="Camera2D" type="Camera2D" parent="ProgressPath/CameraProgress"]
+limit_right = 13440
+
+[node name="SpawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
+position = Vector2(-243, 540)
+
+[node name="Sprite2D" type="Sprite2D" parent="ProgressPath/SpawnProgress"]
+visible = false
+z_index = 5
+scale = Vector2(0.176427, 1.94073)
+texture = ExtResource("18_gqgwl")
+
+[node name="DespawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
+position = Vector2(-243, 540)
+
+[node name="Sprite2D" type="Sprite2D" parent="ProgressPath/DespawnProgress"]
+z_index = 5
+position = Vector2(-17.6763, -4.372)
+scale = Vector2(0.232768, 0.927688)
+texture = ExtResource("18_gqgwl")
+
+[node name="Area2D" type="Area2D" parent="ProgressPath/DespawnProgress/Sprite2D" groups=["despawner"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProgressPath/DespawnProgress/Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_mrklr")
+
+[node name="GameFlow" type="AnimationPlayer" parent="ProgressPath"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_8uny0")
+}
+autoplay = "new_animation"
+speed_scale = 0.008
+
+[node name="PlayerStartPosition" type="Marker2D" parent="."]
+position = Vector2(568, 536)
+
+[node name="Hud" parent="." instance=ExtResource("19_tqass")]
+
+[node name="BloodSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_t7piw")
+autoplay = true
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="HeartbeatSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_tgvca")
