@@ -1,0 +1,137 @@
+[gd_scene load_steps=29 format=3 uid="uid://dpeaeweec6ctl"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/ImmunityBoosterEnemy.gd" id="1_t60p5"]
+[ext_resource type="AudioStream" uid="uid://c1qcfi2efjxwk" path="res://Audio/sfx_character_hit_01.wav" id="2_btgel"]
+[ext_resource type="AudioStream" uid="uid://c3hefghrn4r22" path="res://Audio/sfx_character_hit_02.wav" id="3_ogvet"]
+[ext_resource type="AudioStream" uid="uid://ceykrempdt1bx" path="res://Audio/sfx_character_hit_03.wav" id="4_yeq3n"]
+[ext_resource type="AudioStream" uid="uid://lobs8xjxks0n" path="res://Audio/sfx_character_hit_04.wav" id="5_dyud3"]
+[ext_resource type="AudioStream" uid="uid://b0mflapcrok8h" path="res://Audio/01. Basic/sfx_basic_enemy_dies_01.wav" id="6_q18to"]
+[ext_resource type="AudioStream" uid="uid://clvje8pcr20mk" path="res://Audio/01. Basic/sfx_basic_enemy_dies_02.wav" id="7_lbp3h"]
+[ext_resource type="AudioStream" uid="uid://tcmmaguiaskv" path="res://Audio/01. Basic/sfx_basic_enemy_dies_03.wav" id="8_hoggo"]
+[ext_resource type="AudioStream" uid="uid://d4ddkehhwhuq6" path="res://Audio/02 AOE/sfx_AOE_enemy_load_01.wav" id="9_jr2x2"]
+[ext_resource type="AudioStream" uid="uid://dvv7uy4rt324o" path="res://Audio/02 AOE/sfx_AOE_enemy_load_02.wav" id="10_x7x3i"]
+[ext_resource type="AudioStream" uid="uid://ddrks765jx8rb" path="res://Audio/02 AOE/sfx_AOE_enemy_load_03.wav" id="11_eshgq"]
+[ext_resource type="AudioStream" uid="uid://cqkm0hdwyxbuo" path="res://Audio/02 AOE/sfx_AOE_enemy_hit_01.wav" id="12_l7yk2"]
+[ext_resource type="AudioStream" uid="uid://dojov4mlfcq5r" path="res://Audio/02 AOE/sfx_AOE_enemy_hit_02.wav" id="13_u2wbj"]
+[ext_resource type="AudioStream" uid="uid://hgd6wc5xbdup" path="res://Audio/02 AOE/sfx_AOE_enemy_hit_03.wav" id="14_eoden"]
+[ext_resource type="AudioStream" uid="uid://dfbe7atpbs4vt" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_01.wav" id="15_lhl6n"]
+[ext_resource type="AudioStream" uid="uid://boovqa6hp2hup" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_02.wav" id="16_5fs0k"]
+[ext_resource type="AudioStream" uid="uid://dr3rjyhsjnc57" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_03.wav" id="17_kg3ub"]
+[ext_resource type="AudioStream" uid="uid://rh2i8ykdilgb" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_04.wav" id="18_y4rin"]
+[ext_resource type="AudioStream" uid="uid://ctqqb1echfe0h" path="res://Audio/04. Freezer/sfx_freezer_enemy_loop_01.wav" id="19_8i1h8"]
+[ext_resource type="AudioStream" uid="uid://cr4xhc72qidp2" path="res://Audio/04. Freezer/sfx_freezer_enemy_loop_02.wav" id="20_t3kw8"]
+[ext_resource type="Texture2D" uid="uid://deial0f7s1gsq" path="res://Assets/Enemies/enemy sheet 5.png" id="21_18jgp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
+radius = 21.095
+
+[sub_resource type="Animation" id="Animation_tk0qw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_s1b57"]
+resource_name = "default"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8ca3t"]
+resource_name = "die"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_m21if"]
+resource_name = "hit"
+length = 0.001
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x6ugk"]
+_data = {
+"RESET": SubResource("Animation_tk0qw"),
+"default": SubResource("Animation_s1b57"),
+"die": SubResource("Animation_8ca3t"),
+"hit": SubResource("Animation_m21if")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hdmji"]
+radius = 43.9318
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_t60p5")
+max_health = 2
+movement_speed = 120.0
+hit_sounds = Array[AudioStream]([ExtResource("2_btgel"), ExtResource("3_ogvet"), ExtResource("4_yeq3n"), ExtResource("5_dyud3")])
+death_sounds = Array[AudioStream]([ExtResource("6_q18to"), ExtResource("7_lbp3h"), ExtResource("8_hoggo")])
+aoe_charge_sounds = Array[AudioStream]([ExtResource("9_jr2x2"), ExtResource("10_x7x3i"), ExtResource("11_eshgq")])
+aoe_hit_sounds = Array[AudioStream]([ExtResource("12_l7yk2"), ExtResource("13_u2wbj"), ExtResource("14_eoden")])
+shoot_sounds = Array[AudioStream]([ExtResource("15_lhl6n"), ExtResource("16_5fs0k"), ExtResource("17_kg3ub"), ExtResource("18_y4rin")])
+freezer_loop_sounds = Array[AudioStream]([ExtResource("19_8i1h8"), ExtResource("20_t3kw8")])
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("21_18jgp")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0ngu5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x6ugk")
+}
+
+[node name="despawn" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="despawn"]
+shape = SubResource("CircleShape2D_hdmji")
+
+[node name="GeneralAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="SpecializedAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="area_entered" from="despawn" to="." method="_on_despawn_area_entered"]

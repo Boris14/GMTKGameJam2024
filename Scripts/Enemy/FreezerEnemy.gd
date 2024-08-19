@@ -1,18 +1,21 @@
 extends Enemy
 class_name FreezerEnemy
 
-var aura_radius: float
+@export var aura_radius: float = 200.
 var slowed_bacteria : Array[Bacterium]
 
 func _ready():
 	super._ready()
-	sprite.texture = preload("res://Assets/Enemies/enemy_freezer.png")
-	health = 4
-	max_health = health
-	movement_speed = 30.0
-	radius = 30.0
-	aura_radius = radius * 8
 	create_aura_visual()
+
+func set_freeze_sound_playing(is_playing):
+	if is_playing and spec_audio_player.playing or not is_playing and not spec_audio_player.playing:
+		return
+	if is_playing:
+		spec_audio_player.stream = freezer_loop_sounds.pick_random()
+		spec_audio_player.play()
+	else:
+		spec_audio_player.stop()
 
 func create_aura_visual():
 	var aura = ColorRect.new()
@@ -41,6 +44,7 @@ func create_aura_visual():
 	add_child(aura)
 
 func step(delta):
+	set_freeze_sound_playing(not slowed_bacteria.is_empty())
 	var target = get_closest_bacterium_position()
 	if target != Vector2.ZERO:
 		velocity = (target - global_position).normalized() * movement_speed
@@ -54,14 +58,12 @@ func step(delta):
 			#print(position.distance_to(b.position) >= aura_radius, " ", is_queued_for_deletion())
 			b.curr_max_speed = b.max_speed
 			slowed_bacteria.erase(b)
+			
 func die():
 	for b in slowed_bacteria:
-		#print("must unslow")
 		if is_instance_valid(b):
 			b.curr_max_speed = b.max_speed
 			slowed_bacteria.erase(b)
-			#print("success unslow")
-
 	super.die()
 
 func slow_bacterium(bacterium : Bacterium, delta : float):

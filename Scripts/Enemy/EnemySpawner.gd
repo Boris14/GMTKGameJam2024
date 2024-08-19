@@ -5,13 +5,12 @@ class_name EnemySpawner
 
 # Preload enemy scenes
 var BasicEnemyScene = preload("res://Scenes/Enemy/enemy.tscn")
-var ShooterEnemyScript = preload("res://Scripts/Enemy/ShooterEnemy.gd")
-var AOEEnemyScript = preload("res://Scripts/Enemy/AOEEnemy.gd")
-var TankEnemyScript = preload("res://Scripts/Enemy/TankEnemy.gd")
-var FreezerEnemyScript = preload("res://Scripts/Enemy/FreezerEnemy.gd")
-var SplitterEnemyScript = preload("res://Scripts/Enemy/SplitterEnemy.gd")
-
-var ImmunityBoosterEnemyScript = preload("res://Scripts/Enemy/ImmunityBoosterEnemy.gd")
+var ShooterEnemyScene = preload("res://Scenes/Enemy/ShooterEnemy.tscn")
+var AOEEnemyScene = preload("res://Scenes/Enemy/AOEEnemy.tscn")
+var TankEnemyScene = preload("res://Scenes/Enemy/TankEnemy.tscn")
+var FreezerEnemyScene = preload("res://Scenes/Enemy/FreezerEnemy.tscn")
+var SplitterEnemyScene = preload("res://Scenes/Enemy/SplitterEnemy.tscn")
+var BloodCellEnemyScene = preload("res://Scenes/Enemy/BloodCellEnemy.tscn")
 
 @onready var blood_cell_timer : Timer = Timer.new()
 
@@ -34,21 +33,18 @@ func spawn_chances():
 	}
 
 func blood_cell_timer_handler():
-	var spawn_position = get_spawn_position()
-	if spawn_position == null:
-		return  # No valid spawn position found
-
-	var enemy_instance = BasicEnemyScene.instantiate()
-	enemy_instance.set_script(ImmunityBoosterEnemyScript)
-
-	enemy_instance.position = spawn_position
+	var enemy_instance = BloodCellEnemyScene.instantiate()
 	add_child(enemy_instance)
-	enemy_instance._ready()
+	
+	var spawn_position = get_spawn_position(enemy_instance)
+	if spawn_position == null:
+		enemy_instance.queue_free()
+	else:
+		enemy_instance.position = spawn_position
+		enemy_instance.adjust_movement_dir()
 
 func set_next_spawn_time():
-	# Decrease spawn time as progress increases
 	time_to_next_spawn = lerp(3., 0.5, Globals.immunity_response / 100.0)
-	
 
 func _ready():
 	add_child(blood_cell_timer)
@@ -82,37 +78,54 @@ func stop():
 
 
 func spawn_enemy():
-	var spawn_position = get_spawn_position()
-	if spawn_position == null:
-		return  # No valid spawn position found
-
 	var enemy_type = choose_enemy_type()
-	var enemy_instance = BasicEnemyScene.instantiate()
-
+	var enemy_instance
+	
 	match enemy_type:
 		"Splitter":
-			enemy_instance.set_script(SplitterEnemyScript)
+			enemy_instance = SplitterEnemyScene.instantiate()
 		"Basic":
-			pass  # BasicEnemy is already the default
+			enemy_instance = BasicEnemyScene.instantiate()
 		"Shooter":
-			enemy_instance.set_script(ShooterEnemyScript)
+			enemy_instance = ShooterEnemyScene.instantiate()
 		"AOE":
-			enemy_instance.set_script(AOEEnemyScript)
+			enemy_instance = AOEEnemyScene.instantiate()
 		"Tank":
-			enemy_instance.set_script(TankEnemyScript)
+			enemy_instance = TankEnemyScene.instantiate()
 		"Freezer":
-			enemy_instance.set_script(FreezerEnemyScript)
+			enemy_instance = FreezerEnemyScene.instantiate()
 
-	enemy_instance.position = spawn_position
 	add_child(enemy_instance)
-	enemy_instance._ready()  # Call _ready manually to ensure proper initialization
+	
+	var spawn_position = get_spawn_position(enemy_instance)
+	if spawn_position == null:
+		enemy_instance.queue_free()
+	else:	
+		enemy_instance.position = spawn_position
 
-func get_spawn_position():
+func get_spawn_position(enemy : Enemy):
+	var max_tries := 50
+	var is_found := false
+	var result := Vector2.ZERO
+	var spawn_progress_pos = get_tree().get_first_node_in_group("spawn_progress").position
+	while not is_found and max_tries > 0:	
+		var spawn_distance = randf_range(50, 300)
+		var spawn_angle = randf() * 2 * PI
+		result = spawn_progress_pos + Vector2(cos(spawn_angle), sin(spawn_angle)) * spawn_distance
+		max_tries -= 1
+		if can_spawn(enemy.radius, result):
+			return result
+	return null
+
+func can_spawn(body_radius : float, position : Vector2) -> bool:
+	var params := PhysicsShapeQueryParameters2D.new()
+	var circle_shape := CircleShape2D.new()
+	circle_shape.radius = body_radius
+	params.shape = circle_shape
+	params.transform = Transform2D(0, position)
+	var hits : Array = get_world_2d().direct_space_state.intersect_shape(params)
 	
-	var spawn_distance = randf_range(50, 300)
-	var spawn_angle = randf() * 2 * PI
-	
-	return get_tree().get_first_node_in_group("spawn_progress").position + Vector2(cos(spawn_angle), sin(spawn_angle)) * spawn_distance
+	return hits.size() == 0
 
 func choose_enemy_type():
 	var roll = randi() % total_spawn_chance

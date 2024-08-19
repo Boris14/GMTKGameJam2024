@@ -151,6 +151,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5glqf"]
+radius = 12.0416
 
 [node name="Bacterium" type="CharacterBody2D" groups=["bacterium"]]
 script = ExtResource("1_r1wcf")

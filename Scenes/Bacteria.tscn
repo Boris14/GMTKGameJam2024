@@ -18,6 +18,7 @@
 [node name="Bacteria" type="Node2D"]
 script = ExtResource("1_tx7fs")
 bacterium_scene = ExtResource("2_xf4yk")
+max_bacteria_count = 100
 spawn_sounds = Array[AudioStream]([ExtResource("4_0phlm"), ExtResource("5_5u7mv"), ExtResource("5_44roj"), ExtResource("6_clh5i"), ExtResource("7_gwny8")])
 remove_sounds = Array[AudioStream]([ExtResource("6_iy35o"), ExtResource("7_pwi2v"), ExtResource("8_ct075")])
 death_sounds = Array[AudioStream]([ExtResource("11_bfbm6"), ExtResource("12_h47h8"), ExtResource("13_hpnra")])

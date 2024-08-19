@@ -52,20 +52,11 @@ var attack_timer_max: float = 3.0
 	return rect
 ).call()
 
-
-	
-func _ready():
-	super._ready()
-	radius=randf_range(50, 100)
-	health = 35
-	max_health = 35
-	$Icon.modulate=Color.YELLOW
-
-	#$CollisionShape2D.shape.radius = radius
+#$CollisionShape2D.shape.radius = radius
 func aoe_radius():
 	return radius*1.2+radius*2*attack_timer/attack_timer_max if current_state == State.PREPARE_ATTACK else radius*1.2+radius*2 if current_state==State.ATTACK else 0
+
 func step(delta):
-	
 	aoe_visual.size = Vector2.ONE * aoe_radius()*2.0
 	aoe_visual.position = -aoe_visual.size/2
 	var color_progress = 0.0
@@ -85,16 +76,26 @@ func step(delta):
 			velocity = (player_pos - global_position).normalized() * movement_speed
 			if global_position.distance_to(player_pos) < radius*2:  # Adjust this value as needed
 				current_state = State.PREPARE_ATTACK
+				attack_timer_max = play_aoe_charge_audio()
 				velocity = Vector2.ZERO
 		State.PREPARE_ATTACK:
 			attack_timer += delta
-			
 			if attack_timer >= attack_timer_max:
 				current_state = State.ATTACK
 				attack_timer = 0.0
 		State.ATTACK:
+			play_aoe_hit_audio()
 			for b in get_tree().get_nodes_in_group("bacterium"):
 				if position.distance_to(b.position) < aoe_radius():
 					b.die(true)
 					
 			current_state = State.MOVE
+
+func play_aoe_charge_audio():
+	spec_audio_player.stream = aoe_charge_sounds.pick_random()
+	spec_audio_player.play()
+	return spec_audio_player.stream.get_length()
+
+func play_aoe_hit_audio():
+	spec_audio_player.stream = aoe_hit_sounds.pick_random()
+	spec_audio_player.play()

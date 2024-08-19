@@ -23,6 +23,7 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
+	$Sprite2D.scale.x = abs($Sprite2D.scale.x) if velocity.x >= 0 else -abs($Sprite2D.scale.x)
 	var mouse_offset = get_global_mouse_position() - global_position
 	var max_speed_distance = get_viewport_rect().size.length() / 6
 	var speed = min(remap(mouse_offset.length(), 0, max_speed_distance, 0, curr_max_speed), curr_max_speed)

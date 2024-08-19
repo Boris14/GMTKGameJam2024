@@ -1,0 +1,136 @@
+[gd_scene load_steps=29 format=3 uid="uid://b1jepdhv1dnbh"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/AOEEnemy.gd" id="1_wruyv"]
+[ext_resource type="AudioStream" uid="uid://c1qcfi2efjxwk" path="res://Audio/sfx_character_hit_01.wav" id="2_iucaq"]
+[ext_resource type="AudioStream" uid="uid://c3hefghrn4r22" path="res://Audio/sfx_character_hit_02.wav" id="3_6grxw"]
+[ext_resource type="AudioStream" uid="uid://ceykrempdt1bx" path="res://Audio/sfx_character_hit_03.wav" id="4_fhnb5"]
+[ext_resource type="AudioStream" uid="uid://lobs8xjxks0n" path="res://Audio/sfx_character_hit_04.wav" id="5_0j77l"]
+[ext_resource type="AudioStream" uid="uid://b0mflapcrok8h" path="res://Audio/01. Basic/sfx_basic_enemy_dies_01.wav" id="6_kiphs"]
+[ext_resource type="AudioStream" uid="uid://clvje8pcr20mk" path="res://Audio/01. Basic/sfx_basic_enemy_dies_02.wav" id="7_nx5xw"]
+[ext_resource type="AudioStream" uid="uid://tcmmaguiaskv" path="res://Audio/01. Basic/sfx_basic_enemy_dies_03.wav" id="8_tr87t"]
+[ext_resource type="AudioStream" uid="uid://d4ddkehhwhuq6" path="res://Audio/02 AOE/sfx_AOE_enemy_load_01.wav" id="9_bc4ot"]
+[ext_resource type="AudioStream" uid="uid://dvv7uy4rt324o" path="res://Audio/02 AOE/sfx_AOE_enemy_load_02.wav" id="10_wv10f"]
+[ext_resource type="AudioStream" uid="uid://ddrks765jx8rb" path="res://Audio/02 AOE/sfx_AOE_enemy_load_03.wav" id="11_qvwdf"]
+[ext_resource type="AudioStream" uid="uid://cqkm0hdwyxbuo" path="res://Audio/02 AOE/sfx_AOE_enemy_hit_01.wav" id="12_3ybyn"]
+[ext_resource type="AudioStream" uid="uid://dojov4mlfcq5r" path="res://Audio/02 AOE/sfx_AOE_enemy_hit_02.wav" id="13_po3ms"]
+[ext_resource type="AudioStream" uid="uid://hgd6wc5xbdup" path="res://Audio/02 AOE/sfx_AOE_enemy_hit_03.wav" id="14_pgv6g"]
+[ext_resource type="AudioStream" uid="uid://dfbe7atpbs4vt" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_01.wav" id="15_rfci7"]
+[ext_resource type="AudioStream" uid="uid://boovqa6hp2hup" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_02.wav" id="16_3lvi0"]
+[ext_resource type="AudioStream" uid="uid://dr3rjyhsjnc57" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_03.wav" id="17_1vlqg"]
+[ext_resource type="AudioStream" uid="uid://rh2i8ykdilgb" path="res://Audio/03. Shooter/sfx_shooter_enemy_shot_04.wav" id="18_kd1h6"]
+[ext_resource type="AudioStream" uid="uid://ctqqb1echfe0h" path="res://Audio/04. Freezer/sfx_freezer_enemy_loop_01.wav" id="19_clffj"]
+[ext_resource type="AudioStream" uid="uid://cr4xhc72qidp2" path="res://Audio/04. Freezer/sfx_freezer_enemy_loop_02.wav" id="20_pxqs7"]
+[ext_resource type="Texture2D" uid="uid://do55jynug1g0c" path="res://Assets/Enemies/enemy sheet 2.png" id="21_ljw06"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
+radius = 45.1774
+
+[sub_resource type="Animation" id="Animation_tk0qw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_s1b57"]
+resource_name = "default"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8ca3t"]
+resource_name = "die"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_m21if"]
+resource_name = "hit"
+length = 0.001
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x6ugk"]
+_data = {
+"RESET": SubResource("Animation_tk0qw"),
+"default": SubResource("Animation_s1b57"),
+"die": SubResource("Animation_8ca3t"),
+"hit": SubResource("Animation_m21if")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hdmji"]
+radius = 43.9318
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_wruyv")
+max_health = 5
+hit_sounds = Array[AudioStream]([ExtResource("2_iucaq"), ExtResource("3_6grxw"), ExtResource("4_fhnb5"), ExtResource("5_0j77l")])
+death_sounds = Array[AudioStream]([ExtResource("6_kiphs"), ExtResource("7_nx5xw"), ExtResource("8_tr87t")])
+aoe_charge_sounds = Array[AudioStream]([ExtResource("9_bc4ot"), ExtResource("10_wv10f"), ExtResource("11_qvwdf")])
+aoe_hit_sounds = Array[AudioStream]([ExtResource("12_3ybyn"), ExtResource("13_po3ms"), ExtResource("14_pgv6g")])
+shoot_sounds = Array[AudioStream]([ExtResource("15_rfci7"), ExtResource("16_3lvi0"), ExtResource("17_1vlqg"), ExtResource("18_kd1h6")])
+freezer_loop_sounds = Array[AudioStream]([ExtResource("19_clffj"), ExtResource("20_pxqs7")])
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("21_ljw06")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0ngu5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x6ugk")
+}
+
+[node name="despawn" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="despawn"]
+shape = SubResource("CircleShape2D_hdmji")
+
+[node name="GeneralAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="SpecializedAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="area_entered" from="despawn" to="." method="_on_despawn_area_entered"]
