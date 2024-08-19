@@ -101,8 +101,9 @@ _data = {
 radius = 43.9318
 
 [node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_wruyv")
-max_health = 5
+max_health = 13
 hit_sounds = Array[AudioStream]([ExtResource("2_iucaq"), ExtResource("3_6grxw"), ExtResource("4_fhnb5"), ExtResource("5_0j77l")])
 death_sounds = Array[AudioStream]([ExtResource("6_kiphs"), ExtResource("7_nx5xw"), ExtResource("8_tr87t")])
 aoe_charge_sounds = Array[AudioStream]([ExtResource("9_bc4ot"), ExtResource("10_wv10f"), ExtResource("11_qvwdf")])

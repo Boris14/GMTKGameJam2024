@@ -4,8 +4,8 @@ class_name ShooterEnemy
 enum State { MOVE, SHOOT }
 
 var current_state = State.MOVE
-var max_state_timer : float = 5.0
-var state_timer: float = 0.0
+var max_state_timer : float = 3.0
+var state_timer: float = 0.
 var move_away_timer: float = 0.
 var move_away_duration: float = 2.
 var shots_fired: int = 0
@@ -28,9 +28,9 @@ func step(delta):
 			else:
 				move_away_timer -= delta
 				
-			#velocity = ((1 if distance_to_closest_bacterium < 200 else -1)*get_closest_bacterium_position().direction_to(position)).normalized().rotated((-1 if len(get_tree().get_nodes_in_group("bacterium")) % 5 == 0 else 1)*PI/3) * movement_speed
 			if state_timer >= max_state_timer:
 				current_state = State.SHOOT
+				move_away_timer = 0.
 				state_timer = 0.0
 				velocity = Vector2.ZERO
 				shots_fired = 0

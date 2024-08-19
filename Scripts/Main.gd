@@ -1,14 +1,12 @@
 extends Node2D
 
 @export var camera_speed := 70.0
-@export var start_delay := 2.0
+@export var start_delay := 0.0
 @export var game_flow_speed := Vector2(0.008, 0.017)
 @export var game_speed_at_max := 2.
 @export var camera_initial_direction := Vector2(1, 0)
 @export var camera_marker_detection_radius := 10
 @export var bacteria_scene : PackedScene
-@export var win_screen_scene : PackedScene
-@export var loose_screen_scene : PackedScene
 @export var music_start_sound : AudioStream
 @export var music_loop_sound : AudioStream
 @export var win_sound : AudioStream
@@ -16,8 +14,9 @@ extends Node2D
 
 @onready var enemy_spawner := $EnemySpawner
 @onready var music_player := $MusicPlayer
+@onready var heartbeat_player := $HeartbeatSoundPlayer
 @onready var game_flow := %GameFlow
-@onready var HUD := %Hud
+@onready var HUD := $Hud
 
 var loose_screen : PopUp
 var win_screen : PopUp
@@ -26,10 +25,12 @@ var bacteria : Bacteria
 var has_won := false
 
 func _ready():
+	var loose_screen_scene = preload("res://Scenes/UI/LooseScreen.tscn")
 	loose_screen = loose_screen_scene.instantiate()
 	add_child(loose_screen)
 	loose_screen.visible = false
 	
+	var win_screen_scene = preload("res://Scenes/UI/WinScreen.tscn")
 	win_screen = win_screen_scene.instantiate()
 	add_child(win_screen)
 	win_screen.visible = false
@@ -42,14 +43,20 @@ func _ready():
 	bacteria.initial_bacteria_position = $PlayerStartPosition.position
 	bacteria.win_method = win_game
 	add_child(bacteria)
+	bacteria.start_bacteria()
 	
 	music_player.finished.connect(_on_music_start_sound_finished)
 	game_flow.speed_scale = 0.0
-
-	start_game()
+	
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed() and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
+			start_game()
 	
 func _physics_process(delta):
 	if game_flow.speed_scale > 0:
+		music_player.volume_db = lerp(0., -10., Globals.immunity_response / 100.)
+		heartbeat_player.volume_db = lerp(-15., 3.5, Globals.immunity_response / 100.)
 		game_flow.speed_scale = lerp(game_flow_speed.x, game_flow_speed.y, Globals.progress)
 		Engine.time_scale = lerp(1., game_speed_at_max, Globals.progress)
 
@@ -58,12 +65,12 @@ func start_game():
 	Globals.immunity_response = 0.0
 	has_won = false
 	enemy_spawner.stop()
-	bacteria.start_bacteria()
 	
 	await get_tree().create_timer(start_delay).timeout
 	game_flow.speed_scale = game_flow_speed.x
 	music_player.stream = music_start_sound
 	music_player.play()
+	heartbeat_player.play()
 	enemy_spawner.start()
 	
 func _on_music_start_sound_finished():

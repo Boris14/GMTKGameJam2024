@@ -23,6 +23,10 @@ func _ready() -> void:
 	health = max_health
 	$AnimationPlayer.play("default")
 
+func set_max_health(in_health):
+	max_health = in_health
+	health = in_health
+
 func adjust_movement_dir():
 	velocity = position.direction_to(get_closest_bacterium_position()) * movement_speed
 	
@@ -58,6 +62,12 @@ func _physics_process(delta):
 	
 	step(delta)
 	move_and_slide()
+	
+	for i in get_slide_collision_count():
+		var body = get_slide_collision(i).get_collider() as Node
+		if not body.is_in_group("bacterium"):
+			velocity = get_slide_collision(i).get_normal().normalized() * movement_speed
+	
 	var tree = get_tree()
 	if tree:
 		for b in tree.get_nodes_in_group("bacterium"):

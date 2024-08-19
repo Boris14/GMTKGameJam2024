@@ -1,11 +1,19 @@
 extends Enemy
 class_name FreezerEnemy
 
-@export var aura_radius: float = 200.
+@export var speed_multiplier := 0.3
+
+@onready var freeze_area := $FreezeArea
+@onready var freeze_shape := $FreezeArea/CollisionShape2D
+
+var aura_radius: float = 200.
 var slowed_bacteria : Array[Bacterium]
 
 func _ready():
 	super._ready()
+	freeze_area.body_entered.connect(on_body_entered)
+	freeze_area.body_exited.connect(on_body_exited)
+	aura_radius = (freeze_shape.shape as CircleShape2D).radius
 	create_aura_visual()
 
 func set_freeze_sound_playing(is_playing):
@@ -16,6 +24,20 @@ func set_freeze_sound_playing(is_playing):
 		spec_audio_player.play()
 	else:
 		spec_audio_player.stop()
+
+func on_body_entered(body: Node2D):
+	if body in slowed_bacteria:
+		return
+	if body is Bacterium and body.is_in_group("bacterium"):
+		body.curr_max_speed = body.max_speed * speed_multiplier
+		slowed_bacteria.append(body)
+	
+func on_body_exited(body: Node2D):
+	if body not in slowed_bacteria:
+		return
+	if body is Bacterium and body.is_in_group("bacterium"):
+		body.curr_max_speed = body.max_speed
+		slowed_bacteria.erase(body)
 
 func create_aura_visual():
 	var aura = ColorRect.new()
@@ -51,22 +73,9 @@ func step(delta):
 	else:
 		velocity = Vector2.ZERO
 
-	for b in get_tree().get_nodes_in_group("bacterium"):
-		if position.distance_to(b.position) < aura_radius and !is_queued_for_deletion():
-			slow_bacterium(b, delta)
-		elif b in slowed_bacteria:
-			#print(position.distance_to(b.position) >= aura_radius, " ", is_queued_for_deletion())
-			b.curr_max_speed = b.max_speed
-			slowed_bacteria.erase(b)
 			
 func die():
 	for b in slowed_bacteria:
 		if is_instance_valid(b):
 			b.curr_max_speed = b.max_speed
-			slowed_bacteria.erase(b)
 	super.die()
-
-func slow_bacterium(bacterium : Bacterium, delta : float):
-	if not bacterium in slowed_bacteria:
-		slowed_bacteria.append(bacterium)
-	bacterium.curr_max_speed = max(20, bacterium.max_speed * 0.3)

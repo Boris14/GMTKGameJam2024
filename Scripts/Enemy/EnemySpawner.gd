@@ -1,7 +1,25 @@
 extends Node2D
 class_name EnemySpawner
 
-@export var blood_cell_spawn_rate := 1
+#	"Basic": {"base": 10, "max":3},
+#	"Shooter": {"base": 8, "max":3},
+#	"Tank": {"base": 3, "max":3},
+#	"Splitter": {"base": 1, "max":4},
+#	"Freezer": {"base": 0, "max":5},
+#	"AOE": {"base": 0, "max":5},
+
+@export var blood_cell_spawn_rate := 1.
+@export var base_enemy_spawn_rate := 3.
+@export var max_enemy_spawn_rate := 1.
+@export var max_enemy_health_boost := 2.
+@export var enemy_probabilities : Dictionary = {
+	"Basic": {"base": 5, "max":3},
+	"Shooter": {"base": 2, "max":3},
+	"Tank": {"base": 1, "max":3},
+	"Splitter": {"base": 0, "max":3},
+	"Freezer": {"base": 0, "max":1},
+	"AOE": {"base": 0, "max":0},
+}
 
 # Preload enemy scenes
 var BasicEnemyScene = preload("res://Scenes/Enemy/enemy.tscn")
@@ -18,18 +36,22 @@ var total_spawn_chance: int = 0
 var spawn_timer: float = 0.0
 var time_to_next_spawn: float = -1.0
 
+func calculate_probability(entry, difficulty) -> int:
+	return int(lerp(entry["base"], entry["max"], difficulty))
+
 # Update spawn chances
 func spawn_chances():
 	# Reaches 1 at 60% progress
-	var difficulty_factor = min(Globals.progress / 0.6, 1.0) 
+	#var difficulty_factor = min(Globals.progress / 0.6, 1.0) 
+	var difficulty_factor = Globals.immunity_response / 100.
 
 	return {
-		"Basic": 10,
-		"Splitter": int(lerp(5, 10, difficulty_factor)),
-		"Shooter": int(lerp(5, 10, difficulty_factor)),
-		"AOE": int(lerp(3, 10, difficulty_factor)),
-		"Tank": int(lerp(2, 10, difficulty_factor)),
-		"Freezer": int(lerp(1, 10, difficulty_factor)),
+		"Basic": calculate_probability(enemy_probabilities["Basic"], difficulty_factor),
+		"Shooter": calculate_probability(enemy_probabilities["Shooter"], difficulty_factor),
+		"Splitter": calculate_probability(enemy_probabilities["Splitter"], difficulty_factor),
+		"AOE": calculate_probability(enemy_probabilities["AOE"], difficulty_factor),
+		"Tank": calculate_probability(enemy_probabilities["Tank"], difficulty_factor),
+		"Freezer": calculate_probability(enemy_probabilities["Freezer"], difficulty_factor),
 	}
 
 func blood_cell_timer_handler():
@@ -44,7 +66,8 @@ func blood_cell_timer_handler():
 		enemy_instance.adjust_movement_dir()
 
 func set_next_spawn_time():
-	time_to_next_spawn = lerp(3., 0.5, Globals.immunity_response / 100.0)
+	var difficulty_factor = min(Globals.progress / 0.6, 1.0) 
+	time_to_next_spawn = lerp(base_enemy_spawn_rate, max_enemy_spawn_rate, difficulty_factor)
 
 func _ready():
 	add_child(blood_cell_timer)
@@ -76,7 +99,6 @@ func stop():
 	time_to_next_spawn = -1
 	spawn_timer = 0
 
-
 func spawn_enemy():
 	var enemy_type = choose_enemy_type()
 	var enemy_instance
@@ -101,6 +123,8 @@ func spawn_enemy():
 	if spawn_position == null:
 		enemy_instance.queue_free()
 	else:	
+		var health_mult = lerp(1., max_enemy_health_boost, Globals.progress)
+		enemy_instance.set_max_health(enemy_instance.max_health * health_mult)
 		enemy_instance.position = spawn_position
 
 func get_spawn_position(enemy : Enemy):

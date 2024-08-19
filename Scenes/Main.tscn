@@ -1,27 +1,26 @@
-[gd_scene load_steps=29 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=28 format=3 uid="uid://cypu6v8555nk4"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
-[ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/enemy_spawner.tscn" id="3_4guve"]
-[ext_resource type="PackedScene" uid="uid://bjm6e6qdxmegr" path="res://Scenes/UI/WinScreen.tscn" id="3_cy5hu"]
+[ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/EnemySpawner1.tscn" id="3_4guve"]
 [ext_resource type="AudioStream" uid="uid://dy0q5r2d8i2fh" path="res://Audio/Music/mx_game_music_one_shot_intro.wav" id="3_den0g"]
 [ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="3_kpg0x"]
-[ext_resource type="Texture2D" uid="uid://clmgi24pvhniw" path="res://Assets/first map/tile 1.png" id="3_q1n2g"]
-[ext_resource type="Texture2D" uid="uid://dwwkw08o34pit" path="res://Assets/first map/tile 2.png" id="4_45hd7"]
-[ext_resource type="PackedScene" uid="uid://bkcnyk5w2eiec" path="res://Scenes/UI/LooseScreen.tscn" id="4_afyfy"]
 [ext_resource type="AudioStream" uid="uid://dpxwfeqyoaat7" path="res://Audio/Music/mx_game_music_main_loop.wav" id="4_xb1y2"]
-[ext_resource type="Texture2D" uid="uid://cqlt1j2gmcumx" path="res://Assets/first map/tile 3.png" id="5_faqba"]
-[ext_resource type="Texture2D" uid="uid://dfbw2dbskw387" path="res://Assets/first map/tile 4.png" id="6_snfvs"]
-[ext_resource type="Texture2D" uid="uid://1bslyy67amib" path="res://Assets/first map/tile 5.png" id="7_ljom2"]
+[ext_resource type="Texture2D" uid="uid://tpuoos67gplm" path="res://Assets/level 1/tile 1.png" id="7_2skko"]
 [ext_resource type="AudioStream" uid="uid://c8hb228knwp3e" path="res://Audio/mx_win_stinger.wav" id="7_n404d"]
 [ext_resource type="AudioStream" uid="uid://dumel1hf44acy" path="res://Audio/mx_lose_stinger.wav" id="8_34f0m"]
-[ext_resource type="Texture2D" uid="uid://0cyijlqtqqi5" path="res://Assets/first map/tile 6.png" id="8_ud62q"]
-[ext_resource type="Texture2D" uid="uid://bh7uuqhttyuee" path="res://Assets/first map/tile 7.png" id="9_bom7c"]
-[ext_resource type="Texture2D" uid="uid://dkpisxv60l1u4" path="res://Assets/first map/tile 8.png" id="10_fa17k"]
-[ext_resource type="Texture2D" uid="uid://bd60wqaro2p2y" path="res://Assets/first map/tile 9.png" id="11_ui88e"]
+[ext_resource type="Texture2D" uid="uid://c0ffyg2rlp371" path="res://Assets/level 1/tile 2.png" id="8_a2tfa"]
+[ext_resource type="Texture2D" uid="uid://8a10a5mx23k8" path="res://Assets/level 1/tile 3.png" id="9_1d5q6"]
+[ext_resource type="Texture2D" uid="uid://ryjoecvxb8ic" path="res://Assets/level 1/tile 4.png" id="10_r43gt"]
+[ext_resource type="Texture2D" uid="uid://c0lrjrbwrsqx5" path="res://Assets/level 1/tile 5.png" id="11_lpjhq"]
+[ext_resource type="Texture2D" uid="uid://ovgmxxnfrfdj" path="res://Assets/level 1/tile 6.png" id="12_75i0r"]
+[ext_resource type="Texture2D" uid="uid://bryu8oq41nrs6" path="res://Assets/level 1/tile 7.png" id="13_smban"]
+[ext_resource type="Texture2D" uid="uid://khk21o037qnl" path="res://Assets/level 1/tile 8.png" id="14_5jn2r"]
 [ext_resource type="AudioStream" uid="uid://b0lm467ab888g" path="res://Audio/atm_blood_1.wav" id="14_85iis"]
+[ext_resource type="Texture2D" uid="uid://sxvwfbfnc48b" path="res://Assets/level 1/tile 9.png" id="15_8ij61"]
 [ext_resource type="Script" path="res://Scripts/StickyTraps.gd" id="15_jo04y"]
 [ext_resource type="Texture2D" uid="uid://d1tncnbn0mc5v" path="res://Assets/icon.svg" id="16_d2i1o"]
 [ext_resource type="PackedScene" uid="uid://cl3sd8f0l1by3" path="res://Scenes/UI/HUD.tscn" id="17_i7f2u"]
+[ext_resource type="AudioStream" uid="uid://b5iy8ecla6fm1" path="res://Audio/sfx_heartbeat_loop.wav" id="21_ogjq6"]
 
 [sub_resource type="Curve2D" id="Curve2D_q1k00"]
 _data = {
@@ -136,8 +135,6 @@ _data = {
 script = ExtResource("1_w3i5e")
 camera_speed = 200.0
 bacteria_scene = ExtResource("3_kpg0x")
-win_screen_scene = ExtResource("3_cy5hu")
-loose_screen_scene = ExtResource("4_afyfy")
 music_start_sound = ExtResource("3_den0g")
 music_loop_sound = ExtResource("4_xb1y2")
 win_sound = ExtResource("7_n404d")
@@ -147,39 +144,39 @@ loose_sound = ExtResource("8_34f0m")
 
 [node name="Tile1" type="Sprite2D" parent="Background"]
 position = Vector2(960, 540)
-texture = ExtResource("3_q1n2g")
+texture = ExtResource("7_2skko")
 
 [node name="Tile2" type="Sprite2D" parent="Background"]
 position = Vector2(2880, 540)
-texture = ExtResource("4_45hd7")
+texture = ExtResource("8_a2tfa")
 
 [node name="Tile3" type="Sprite2D" parent="Background"]
 position = Vector2(2880, 1616)
-texture = ExtResource("5_faqba")
+texture = ExtResource("9_1d5q6")
 
 [node name="Tile4" type="Sprite2D" parent="Background"]
 position = Vector2(2880, 2696)
-texture = ExtResource("6_snfvs")
+texture = ExtResource("10_r43gt")
 
 [node name="Tile5" type="Sprite2D" parent="Background"]
 position = Vector2(4800, 2696)
-texture = ExtResource("7_ljom2")
+texture = ExtResource("11_lpjhq")
 
 [node name="Tile6" type="Sprite2D" parent="Background"]
 position = Vector2(6720, 2696)
-texture = ExtResource("8_ud62q")
+texture = ExtResource("12_75i0r")
 
 [node name="Tile7" type="Sprite2D" parent="Background"]
 position = Vector2(6720, 1616)
-texture = ExtResource("9_bom7c")
+texture = ExtResource("13_smban")
 
 [node name="Tile8" type="Sprite2D" parent="Background"]
 position = Vector2(6720, 536)
-texture = ExtResource("10_fa17k")
+texture = ExtResource("14_5jn2r")
 
 [node name="Tile9" type="Sprite2D" parent="Background"]
 position = Vector2(8640, 534)
-texture = ExtResource("11_ui88e")
+texture = ExtResource("15_8ij61")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_4guve")]
 
@@ -227,12 +224,6 @@ top_level = true
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Brain"]
 polygon = PackedVector2Array(8976, -8, 8984, 48, 9008, 96, 9032, 120, 9016, 168, 9032, 248, 9072, 312, 9160, 360, 9168, 416, 9224, 480, 9312, 504, 9344, 512, 9368, 568, 9424, 624, 9512, 656, 9600, 680)
 
-[node name="BloodSoundPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_85iis")
-autoplay = true
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-
 [node name="ProgressPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_q1k00")
 script = SubResource("GDScript_ui4mo")
@@ -277,4 +268,12 @@ speed_scale = 0.008
 position = Vector2(492, 551)
 
 [node name="Hud" parent="." instance=ExtResource("17_i7f2u")]
-unique_name_in_owner = true
+
+[node name="BloodSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_85iis")
+autoplay = true
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="HeartbeatSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_ogjq6")

@@ -101,6 +101,7 @@ _data = {
 radius = 43.9318
 
 [node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_wp6cs")
 max_health = 35
 movement_speed = 80.0

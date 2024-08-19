@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dtyp2yco8vnlu"]
+[gd_scene load_steps=30 format=3 uid="uid://dtyp2yco8vnlu"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/FreezerEnemy.gd" id="1_5aggl"]
 [ext_resource type="AudioStream" uid="uid://c1qcfi2efjxwk" path="res://Audio/sfx_character_hit_01.wav" id="2_dvfvq"]
@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cna3caprtkqr6" path="res://Assets/Enemies/enemy sheet 1.png" id="21_j4pf1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
-radius = 38.0132
+radius = 34.0147
 
 [sub_resource type="Animation" id="Animation_tk0qw"]
 length = 0.001
@@ -100,9 +100,13 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_hdmji"]
 radius = 43.9318
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4xje3"]
+radius = 375.225
+
 [node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_5aggl")
-aura_radius = 300.0
+speed_multiplier = 0.25
 max_health = 10
 hit_sounds = Array[AudioStream]([ExtResource("2_dvfvq"), ExtResource("3_5he4a"), ExtResource("4_rhuef"), ExtResource("5_foh5q")])
 death_sounds = Array[AudioStream]([ExtResource("6_ovcoy"), ExtResource("7_tda1g"), ExtResource("8_tsi3p")])
@@ -112,7 +116,7 @@ shoot_sounds = Array[AudioStream]([ExtResource("15_0kdjv"), ExtResource("16_tm8p
 freezer_loop_sounds = Array[AudioStream]([ExtResource("19_2ltqg"), ExtResource("20_lvvot")])
 
 [node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.22, 0.22)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("21_j4pf1")
 hframes = 4
 
@@ -133,5 +137,10 @@ shape = SubResource("CircleShape2D_hdmji")
 [node name="GeneralAudioPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="SpecializedAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="FreezeArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FreezeArea"]
+shape = SubResource("CircleShape2D_4xje3")
 
 [connection signal="area_entered" from="despawn" to="." method="_on_despawn_area_entered"]

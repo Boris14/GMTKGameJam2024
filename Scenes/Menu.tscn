@@ -1,12 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bl8gncckmp5bt"]
+[gd_scene load_steps=8 format=3 uid="uid://bl8gncckmp5bt"]
 
 [ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_ouupq"]
+[ext_resource type="PackedScene" uid="uid://cypu6v8555nk4" path="res://Scenes/Main.tscn" id="2_5ty1d"]
 [ext_resource type="Texture2D" uid="uid://cl30fu4p3nem7" path="res://Assets/1920x1080-black-solid-color-background.jpg" id="2_ccvbu"]
+[ext_resource type="AudioStream" uid="uid://cb5s1fj1t1qwv" path="res://Audio/sfx_UI_click_01.wav" id="2_fjbvr"]
+[ext_resource type="AudioStream" uid="uid://bsnkfoxsholq4" path="res://Audio/sfx_UI_click_02.wav" id="3_867g1"]
 [ext_resource type="Texture2D" uid="uid://bwkh6xmr10k8j" path="res://Assets/UI/Rectangle_1_copy.png" id="3_pyihc"]
 [ext_resource type="Texture2D" uid="uid://c4fhorflxm7lb" path="res://Assets/UI/Rectangle_1.png" id="4_hsixq"]
 
 [node name="Menu" type="CanvasLayer"]
 script = ExtResource("1_ouupq")
+click_sounds = Array[AudioStream]([ExtResource("2_fjbvr"), ExtResource("3_867g1")])
+play_scene = ExtResource("2_5ty1d")
 
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 40.0
@@ -54,3 +59,5 @@ offset_bottom = 219.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("4_hsixq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

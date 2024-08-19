@@ -1,14 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjm6e6qdxmegr"]
+[gd_scene load_steps=11 format=3 uid="uid://cmwvu6yjwd130"]
 
-[ext_resource type="Script" path="res://Scripts/UI/PopUp.gd" id="1_5oeh0"]
-[ext_resource type="Texture2D" uid="uid://bwkh6xmr10k8j" path="res://Assets/UI/Rectangle_1_copy.png" id="1_dukpj"]
-[ext_resource type="Texture2D" uid="uid://cl30fu4p3nem7" path="res://Assets/1920x1080-black-solid-color-background.jpg" id="2_7xkff"]
-[ext_resource type="Texture2D" uid="uid://c4fhorflxm7lb" path="res://Assets/UI/Rectangle_1.png" id="2_kis60"]
+[ext_resource type="Script" path="res://Scripts/UI/PopUp.gd" id="1_yxqx6"]
+[ext_resource type="AudioStream" uid="uid://cb5s1fj1t1qwv" path="res://Audio/sfx_UI_click_01.wav" id="2_e6r71"]
+[ext_resource type="Texture2D" uid="uid://cl30fu4p3nem7" path="res://Assets/1920x1080-black-solid-color-background.jpg" id="2_groom"]
+[ext_resource type="Texture2D" uid="uid://bwkh6xmr10k8j" path="res://Assets/UI/Rectangle_1_copy.png" id="3_80bu3"]
+[ext_resource type="AudioStream" uid="uid://bsnkfoxsholq4" path="res://Audio/sfx_UI_click_02.wav" id="3_bsmyu"]
+[ext_resource type="Texture2D" uid="uid://c4fhorflxm7lb" path="res://Assets/UI/Rectangle_1.png" id="4_o4hmk"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_5tncs"]
+[sub_resource type="LabelSettings" id="LabelSettings_g6khm"]
 font_size = 60
 
-[sub_resource type="Animation" id="Animation_gygsy"]
+[sub_resource type="Animation" id="Animation_mre2g"]
 resource_name = "PopUp"
 length = 0.2
 tracks/0/type = "value"
@@ -21,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(1, 1)]
+"values": [Vector2(0, 0), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -36,7 +38,7 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_vdlwa"]
+[sub_resource type="Animation" id="Animation_o8q8b"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -48,7 +50,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1e-05, 1e-05)]
+"values": [Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -63,14 +65,16 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_banoc"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xriuc"]
 _data = {
-"PopUp": SubResource("Animation_gygsy"),
-"RESET": SubResource("Animation_vdlwa")
+"PopUp": SubResource("Animation_mre2g"),
+"RESET": SubResource("Animation_o8q8b")
 }
 
 [node name="WinScreen" type="CanvasLayer"]
-script = ExtResource("1_5oeh0")
+script = ExtResource("1_yxqx6")
+click_sounds = Array[AudioStream]([ExtResource("2_e6r71"), ExtResource("3_bsmyu")])
+right_button_action = 1
 
 [node name="FadedBackground" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.329412)
@@ -79,7 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_7xkff")
+texture = ExtResource("2_groom")
 expand_mode = 1
 
 [node name="PopUpBackground" type="TextureRect" parent="."]
@@ -94,9 +98,8 @@ offset_right = 500.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(500, 300)
-texture = ExtResource("1_dukpj")
+texture = ExtResource("3_80bu3")
 expand_mode = 1
 
 [node name="Control" type="Control" parent="PopUpBackground"]
@@ -111,28 +114,48 @@ offset_right = 1000.0
 offset_bottom = 133.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "You Won!
-"
-label_settings = SubResource("LabelSettings_5tncs")
+text = "You Win!"
+label_settings = SubResource("LabelSettings_g6khm")
 horizontal_alignment = 1
 
-[node name="ContinueButton" type="TextureButton" parent="PopUpBackground/Control"]
+[node name="RightButton" type="TextureButton" parent="PopUpBackground/Control"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -354.0
-offset_top = -120.0
-offset_right = 354.0
-offset_bottom = -61.0
-grow_horizontal = 2
+offset_left = -400.0
+offset_top = -100.0
+offset_right = -100.0
+offset_bottom = -41.0
+grow_horizontal = 0
 grow_vertical = 0
-texture_normal = ExtResource("2_kis60")
+texture_normal = ExtResource("4_o4hmk")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LeftButton" type="TextureButton" parent="PopUpBackground/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -100.0
+offset_right = 400.0
+offset_bottom = -41.0
+grow_vertical = 0
+texture_normal = ExtResource("4_o4hmk")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_banoc")
+"": SubResource("AnimationLibrary_xriuc")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="PopUpBackground/Control/LeftButton" to="." method="_on_quit_button_pressed"]
