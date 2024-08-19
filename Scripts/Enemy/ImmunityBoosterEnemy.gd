@@ -17,5 +17,5 @@ func step(delta):
 func take_damage(amount: int = 1):
 	health -= amount
 	if health <= 0:
-		Globals.increase_immunity_response(30)
+		Globals.increase_immunity_response(20)
 		queue_free()

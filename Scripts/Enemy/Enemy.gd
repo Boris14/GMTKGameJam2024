@@ -6,6 +6,7 @@ class_name Enemy
 @export var movement_speed: float = 100.0
 @export var radius: float = 30.0
 @export var hit_sounds : Array[AudioStream]
+@export var texture_scale := 0.3
 
 
 @onready var sprite := $Icon
@@ -13,22 +14,26 @@ class_name Enemy
 
 func _ready() -> void:
 	sprite.texture = preload("res://Assets/Enemies/enemy_basic.png")
-	$Icon.scale = Vector2.ONE * radius/66 * 0.3
+	$Icon.scale = Vector2.ONE * radius/66 * texture_scale
 
 func take_damage(amount: int = 1):
 	health -= amount
 	if health <= 0:
 		$AnimationPlayer.play("die")
+		await get_tree().create_timer($AnimationPlayer.current_animation_length).timeout
+		die()
 
 func die():
 	queue_free()
+
 func _physics_process(delta):
+	if health <= 0:
+		return
 	step(delta)
-	#$Icon.scale = Vector2.ONE * radius/66 * 0.3
 	move_and_slide()
 	var tree = get_tree()
 	if tree:
-		for b in get_tree().get_nodes_in_group("bacterium"):
+		for b in tree.get_nodes_in_group("bacterium"):
 			if position.distance_to(b.position) < radius:
 				$AnimationPlayer.play("hit")
 				play_hit_sound()
@@ -38,7 +43,6 @@ func _physics_process(delta):
 
 func step(delta):
 	velocity = position.direction_to(get_closest_bacterium_position()) * movement_speed
-
 
 func get_closest_bacterium_position() -> Vector2:
 	var bacteria = get_tree().get_nodes_in_group("bacterium")

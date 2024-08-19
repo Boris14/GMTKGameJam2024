@@ -25,7 +25,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_q1k00"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -243, 516, 0, 0, 0, 0, 938, 543, 0, 0, 0, 0, 2880, 540, 0, 0, 0, 0, 2880, 2696, 0, 0, 0, 0, 6720, 2696, 0, 0, 0, 0, 6720, 536, 0, 0, 0, 0, 8640, 534)
+"points": PackedVector2Array(0, 0, 0, 0, -243, 540, 0, 0, 0, 0, 938, 540, 0, 0, 0, 0, 2880, 540, 0, 0, 0, 0, 2880, 2696, 0, 0, 0, 0, 6720, 2696, 0, 0, 0, 0, 6720, 536, 0, 0, 0, 0, 8640, 534)
 }
 point_count = 7
 
@@ -238,14 +238,12 @@ curve = SubResource("Curve2D_q1k00")
 script = SubResource("GDScript_ui4mo")
 
 [node name="CameraProgress" type="PathFollow2D" parent="ProgressPath"]
-position = Vector2(-243, 516)
-rotation = 0.022858
+position = Vector2(-243, 540)
 
 [node name="Camera2D" type="Camera2D" parent="ProgressPath/CameraProgress"]
 
 [node name="SpawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
-position = Vector2(-243, 516)
-rotation = 0.022858
+position = Vector2(-243, 540)
 
 [node name="Sprite2D" type="Sprite2D" parent="ProgressPath/SpawnProgress"]
 visible = false
@@ -254,8 +252,7 @@ scale = Vector2(0.176427, 1.94073)
 texture = ExtResource("16_d2i1o")
 
 [node name="DespawnProgress" type="PathFollow2D" parent="ProgressPath" groups=["spawn_progress"]]
-position = Vector2(-243, 516)
-rotation = 0.022858
+position = Vector2(-243, 540)
 
 [node name="Sprite2D" type="Sprite2D" parent="ProgressPath/DespawnProgress"]
 z_index = 5

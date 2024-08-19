@@ -2,6 +2,8 @@ extends Node2D
 
 @export var camera_speed := 70.0
 @export var start_delay := 2.0
+@export var game_flow_speed := Vector2(0.008, 0.017)
+@export var game_speed_at_max := 2.
 @export var camera_initial_direction := Vector2(1, 0)
 @export var camera_marker_detection_radius := 10
 @export var bacteria_scene : PackedScene
@@ -34,20 +36,22 @@ func _ready():
 	
 	sfx_player = AudioStreamPlayer.new()
 	add_child(sfx_player)
+	
 	bacteria = bacteria_scene.instantiate()
 	bacteria.died.connect(_on_bacteria_died)
 	bacteria.initial_bacteria_position = $PlayerStartPosition.position
 	bacteria.win_method = win_game
 	add_child(bacteria)
-	bacteria.z_index = 1
 	
 	music_player.finished.connect(_on_music_start_sound_finished)
+	game_flow.speed_scale = 0.0
 
 	start_game()
 	
 func _physics_process(delta):
-	game_flow.speed_scale = lerp(0.008, 0.015, Globals.progress)
-	Engine.time_scale = lerp(1, 2, Globals.progress)
+	if game_flow.speed_scale > 0:
+		game_flow.speed_scale = lerp(game_flow_speed.x, game_flow_speed.y, Globals.progress)
+		Engine.time_scale = lerp(1., game_speed_at_max, Globals.progress)
 
 func start_game():
 	Engine.time_scale = 1.0
@@ -57,7 +61,7 @@ func start_game():
 	bacteria.start_bacteria()
 	
 	await get_tree().create_timer(start_delay).timeout
-	game_flow.active = true
+	game_flow.speed_scale = game_flow_speed.x
 	music_player.stream = music_start_sound
 	music_player.play()
 	enemy_spawner.start()
@@ -72,7 +76,7 @@ func stop_game_flow():
 	if HUD:
 		HUD.queue_free()
 	music_player.stop()
-	game_flow.active = false
+	game_flow.speed_scale = 0.
 	enemy_spawner.stop()
 
 func win_game():

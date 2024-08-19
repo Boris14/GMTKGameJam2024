@@ -8,7 +8,6 @@ var BasicEnemyScene = preload("res://Scenes/Enemy/enemy.tscn")
 var ShooterEnemyScript = preload("res://Scripts/Enemy/ShooterEnemy.gd")
 var AOEEnemyScript = preload("res://Scripts/Enemy/AOEEnemy.gd")
 var TankEnemyScript = preload("res://Scripts/Enemy/TankEnemy.gd")
-var AbsorberEnemyScript = preload("res://Scripts/Enemy/AbsorberEnemy.gd")
 var FreezerEnemyScript = preload("res://Scripts/Enemy/FreezerEnemy.gd")
 var SplitterEnemyScript = preload("res://Scripts/Enemy/SplitterEnemy.gd")
 
@@ -31,7 +30,6 @@ func spawn_chances():
 		"Shooter": int(lerp(5, 10, difficulty_factor)),
 		"AOE": int(lerp(3, 10, difficulty_factor)),
 		"Tank": int(lerp(2, 10, difficulty_factor)),
-		"Absorber": int(lerp(0, 0, difficulty_factor)), # Needs to be fixed (doesn't change size and it's too strong)
 		"Freezer": int(lerp(1, 10, difficulty_factor)),
 	}
 
@@ -102,8 +100,6 @@ func spawn_enemy():
 			enemy_instance.set_script(AOEEnemyScript)
 		"Tank":
 			enemy_instance.set_script(TankEnemyScript)
-		"Absorber":
-			enemy_instance.set_script(AbsorberEnemyScript)
 		"Freezer":
 			enemy_instance.set_script(FreezerEnemyScript)
 

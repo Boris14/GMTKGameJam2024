@@ -36,15 +36,12 @@ func step(delta):
 					current_state = State.MOVE
 
 func shoot():
-	#print("Shoot Tank cell")  # Replace with actual shooting logic
-
-
 	# Instance the scene
-	var enemy_instance = EnemyScene.instantiate()
+	var enemy_instance = EnemyScene.instantiate() as Enemy
 
 	# Load and set the script
-	var TankEnemyScript = load("res://Scripts/Enemy/TankEnemy.gd")
-	enemy_instance.set_script(TankEnemyScript)
+	#var TankEnemyScript = load("res://Scripts/Enemy/TankEnemy.gd")
+	#enemy_instance.set_script(TankEnemyScript)
 	# Add the instance to the scene tree
 	get_parent().add_child(enemy_instance)
 	enemy_instance._ready()
@@ -52,4 +49,4 @@ func shoot():
 	enemy_instance.movement_speed = randf_range(100,300)
 	# Optionally, set the position of the new enemy
 	enemy_instance.position = position + position.direction_to(get_closest_bacterium_position()) * (radius + enemy_instance.radius) # Or wherever you want it
-	enemy_instance.direction = enemy_instance.position.direction_to(get_closest_bacterium_position())
+	#enemy_instance.direction = enemy_instance.position.direction_to(get_closest_bacterium_position())
