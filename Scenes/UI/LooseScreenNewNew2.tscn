@@ -139,5 +139,6 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
 
 [connection signal="pressed" from="PopUpBackground/Control/LeftButton" to="." method="_on_quit_button_pressed"]

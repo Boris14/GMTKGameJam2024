@@ -58,7 +58,8 @@ func play_music(start_music, music_loop, music_loop_delay):
 	music_start_player.play()
 	var delay = music_delay if music_delay > 0 else start_music.get_length()
 	await get_tree().create_timer(delay).timeout 
-	music_player.play()
+	if not is_ended:
+		music_player.play()
 	
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -72,7 +73,7 @@ func _input(event):
 	
 func _physics_process(delta):
 	if game_flow.speed_scale > 0:
-		music_player.volume_db = lerp(0., -10., Globals.immunity_response / 100.)
+		music_player.volume_db = lerp(-3., -6., Globals.immunity_response / 100.)
 		heartbeat_player.volume_db = lerp(-15., 3.5, Globals.immunity_response / 100.)
 		game_flow.speed_scale = lerp(game_flow_speed.x, game_flow_speed.y, Globals.progress)
 		Engine.time_scale = lerp(1., game_speed_at_max, Globals.progress)
@@ -94,6 +95,7 @@ func stop_game_flow():
 	bacteria.queue_free()
 	if HUD:
 		HUD.queue_free()
+	music_start_player.stop()
 	music_player.stop()
 	game_flow.speed_scale = 0.
 	enemy_spawner.stop()

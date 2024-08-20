@@ -131,7 +131,11 @@ libraries = {
 shape = SubResource("CircleShape2D_hdmji")
 
 [node name="GeneralAudioPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
+bus = &"Enemies"
 
 [node name="SpecializedAudioPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
+bus = &"Enemies"
 
 [connection signal="area_entered" from="despawn" to="." method="_on_despawn_area_entered"]

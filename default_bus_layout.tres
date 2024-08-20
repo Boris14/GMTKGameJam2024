@@ -1,0 +1,42 @@
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://b2i5ngyeqs2ia"]
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_grokr"]
+resource_name = "EQ"
+band_db/32_hz = -5.0
+band_db/100_hz = -6.0
+band_db/320_hz = -5.0
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_rqylu"]
+resource_name = "EQ"
+band_db/3200_hz = -3.2
+band_db/10000_hz = -4.8
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectEQ_grokr")
+bus/0/effect/0/enabled = true
+bus/1/name = &"Heartbeat"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = -5.93075
+bus/1/send = &"Master"
+bus/2/name = &"Bacteria"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectEQ_rqylu")
+bus/2/effect/0/enabled = true
+bus/3/name = &"Music 2"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -2.51026
+bus/3/send = &"Master"
+bus/4/name = &"Enemies"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = -2.91905
+bus/4/send = &"Master"

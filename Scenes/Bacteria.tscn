@@ -29,3 +29,5 @@ position = Vector2(0, -1)
 texture = ExtResource("3_0ul33")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -6.0
+bus = &"Bacteria"

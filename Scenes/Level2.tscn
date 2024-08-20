@@ -347,8 +347,11 @@ stream = ExtResource("20_t7piw")
 autoplay = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music 2"
 
 [node name="MusicIntroPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music 2"
 
 [node name="HeartbeatSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_tgvca")
+bus = &"Heartbeat"

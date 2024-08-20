@@ -134,8 +134,12 @@ visible = false
 shape = SubResource("CircleShape2D_hdmji")
 
 [node name="GeneralAudioPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
+bus = &"Enemies"
 
 [node name="SpecializedAudioPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
+bus = &"Enemies"
 
 [node name="FreezeArea" type="Area2D" parent="."]
 

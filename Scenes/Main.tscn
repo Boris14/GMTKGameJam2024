@@ -283,3 +283,4 @@ autoplay = true
 
 [node name="HeartbeatSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_ogjq6")
+bus = &"Heartbeat"
