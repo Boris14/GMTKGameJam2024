@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bex5joehvrksq" path="res://Assets/Enemies/enemy sheet 3.png" id="21_001xd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
-radius = 24.0
+radius = 36.0555
 
 [sub_resource type="Animation" id="Animation_tk0qw"]
 length = 0.001
@@ -112,7 +112,7 @@ shoot_sounds = Array[AudioStream]([ExtResource("15_uv7ue"), ExtResource("16_8s2u
 freezer_loop_sounds = Array[AudioStream]([ExtResource("19_ej2tw"), ExtResource("20_wv2an")])
 
 [node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("21_001xd")
 hframes = 4
 frame = 1

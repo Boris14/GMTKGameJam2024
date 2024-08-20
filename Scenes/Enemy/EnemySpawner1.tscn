@@ -4,4 +4,29 @@
 
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource("1_pvj73")
-blood_cell_spawn_rate = 1.2
+enemy_probabilities = {
+"AOE": {
+"base": 0,
+"max": 0
+},
+"Basic": {
+"base": 10,
+"max": 3
+},
+"Freezer": {
+"base": 0,
+"max": 1
+},
+"Shooter": {
+"base": 5,
+"max": 3
+},
+"Splitter": {
+"base": 0,
+"max": 3
+},
+"Tank": {
+"base": 2,
+"max": 4
+}
+}

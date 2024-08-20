@@ -1,7 +1,9 @@
-[gd_scene load_steps=31 format=3 uid="uid://bg4qvqi413d8a"]
+[gd_scene load_steps=33 format=3 uid="uid://bg4qvqi413d8a"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_4m6fa"]
+[ext_resource type="PackedScene" uid="uid://iyr3h854m1is" path="res://Scenes/UI/WinScreenNewNewLevel2.tscn" id="2_6bb3b"]
 [ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="2_ig6s1"]
+[ext_resource type="PackedScene" uid="uid://du1ottu53fsdi" path="res://Scenes/UI/LooseScreenNewNew2.tscn" id="3_5uuqm"]
 [ext_resource type="AudioStream" uid="uid://b08g4nstnp27v" path="res://Audio/Music/mx_game_music_hard_lvl_intro.wav" id="3_os7gf"]
 [ext_resource type="AudioStream" uid="uid://cnb4yjmc3023k" path="res://Audio/Music/mx_game_music_hard_lvl_loop.wav" id="4_1fbpk"]
 [ext_resource type="AudioStream" uid="uid://c8hb228knwp3e" path="res://Audio/mx_win_stinger.wav" id="5_st1d1"]
@@ -15,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://csy2de0p3t1xx" path="res://Assets/level 2/map 2 7.png" id="13_s84ox"]
 [ext_resource type="Texture2D" uid="uid://db6xl7yjppao1" path="res://Assets/level 2/map 2 8.png" id="14_ufx45"]
 [ext_resource type="Texture2D" uid="uid://c4kkvjq41uegm" path="res://Assets/level 2/map 2 9.png" id="15_uktxj"]
-[ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/EnemySpawner1.tscn" id="16_g3p4h"]
 [ext_resource type="Texture2D" uid="uid://dymp8q2b0ivfk" path="res://Assets/level 2/map 2 10.png" id="16_jb68n"]
 [ext_resource type="Texture2D" uid="uid://bwqklbcn0qqft" path="res://Assets/level 2/map 2 11.png" id="17_4q867"]
 [ext_resource type="Script" path="res://Scripts/StickyTraps.gd" id="17_wrj5u"]
@@ -23,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://d3xxx4i8hqx26" path="res://Assets/level 2/map 2 12.png" id="18_jgyof"]
 [ext_resource type="PackedScene" uid="uid://cl3sd8f0l1by3" path="res://Scenes/UI/HUD.tscn" id="19_tqass"]
 [ext_resource type="AudioStream" uid="uid://b0lm467ab888g" path="res://Audio/atm_blood_1.wav" id="20_t7piw"]
+[ext_resource type="PackedScene" uid="uid://dtoyfmahcqs85" path="res://Scenes/Enemy/EnemySpawnerLevel2.tscn" id="21_7x0xf"]
 [ext_resource type="AudioStream" uid="uid://b5iy8ecla6fm1" path="res://Audio/sfx_heartbeat_loop.wav" id="21_tgvca"]
 
 [sub_resource type="Curve2D" id="Curve2D_q1k00"]
@@ -122,10 +124,10 @@ tracks/2/path = NodePath("DespawnProgress:progress_ratio")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.566667, 0.633333, 1.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, 0.3257, 0.4458, 0.9]
+"values": [0.0, 0.9]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8uny0"]
@@ -138,9 +140,12 @@ _data = {
 script = ExtResource("1_4m6fa")
 camera_speed = 200.0
 game_flow_speed = Vector2(0.008, 0.012)
+win_screen_scene = ExtResource("2_6bb3b")
+loose_screen_scene = ExtResource("3_5uuqm")
 bacteria_scene = ExtResource("2_ig6s1")
 music_start_sound = ExtResource("3_os7gf")
 music_loop_sound = ExtResource("4_1fbpk")
+music_delay = 0.9
 win_sound = ExtResource("5_st1d1")
 loose_sound = ExtResource("6_j4j0p")
 
@@ -194,7 +199,7 @@ texture = ExtResource("17_4q867")
 position = Vector2(12480, 1610)
 texture = ExtResource("18_jgyof")
 
-[node name="EnemySpawner" parent="." instance=ExtResource("16_g3p4h")]
+[node name="EnemySpawner" parent="." instance=ExtResource("21_7x0xf")]
 blood_cell_spawn_rate = 1.0
 base_enemy_spawn_rate = 2.6
 max_enemy_spawn_rate = 0.8
@@ -342,6 +347,8 @@ stream = ExtResource("20_t7piw")
 autoplay = true
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="MusicIntroPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="HeartbeatSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_tgvca")

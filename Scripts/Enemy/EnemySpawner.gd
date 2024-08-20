@@ -20,7 +20,6 @@ class_name EnemySpawner
 @export var blood_cell_spawn_rate := 1.
 @export var base_enemy_spawn_rate := 3.
 @export var max_enemy_spawn_rate := 1.
-@export var max_enemy_health_boost := 2.
 @export var enemy_probabilities : Dictionary = {
 	"Basic": {"base": 10, "max":3},
 	"Shooter": {"base": 8, "max":3},
@@ -51,8 +50,7 @@ func calculate_probability(entry, difficulty) -> int:
 # Update spawn chances
 func spawn_chances():
 	# Reaches 1 at 60% progress
-	#var difficulty_factor = min(Globals.progress / 0.6, 1.0) 
-	var difficulty_factor = Globals.immunity_response / 100.
+	var difficulty_factor = get_difficulty_mult(true, false)
 
 	return {
 		"Basic": calculate_probability(enemy_probabilities["Basic"], difficulty_factor),
@@ -75,7 +73,7 @@ func blood_cell_timer_handler():
 		enemy_instance.adjust_movement_dir()
 
 func set_next_spawn_time():
-	var difficulty_factor = min(Globals.progress / 0.6, 1.0) 
+	var difficulty_factor = get_difficulty_mult(true, true)
 	time_to_next_spawn = lerp(base_enemy_spawn_rate, max_enemy_spawn_rate, difficulty_factor)
 
 func _ready():
@@ -132,9 +130,18 @@ func spawn_enemy():
 	if spawn_position == null:
 		enemy_instance.queue_free()
 	else:	
-		var health_mult = lerp(1., max_enemy_health_boost, Globals.progress)
-		enemy_instance.set_max_health(enemy_instance.max_health * health_mult)
+		enemy_instance.set_strength(get_difficulty_mult(true, true))
 		enemy_instance.position = spawn_position
+
+func get_difficulty_mult(immunity: bool, progress: bool) -> float:
+	if not immunity and not progress: 
+		return 0.
+	elif immunity and not progress:
+		return Globals.immunity_response / 100.
+	elif progress and not immunity:
+		return min(Globals.progress / 0.8, 1.0)
+	else:
+		return (Globals.immunity_response / 100. + min(Globals.progress / 0.8, 1.0)) / 2.
 
 func get_spawn_position(enemy : Enemy):
 	var max_tries := 50

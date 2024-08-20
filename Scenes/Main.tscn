@@ -1,9 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://cypu6v8555nk4"]
+[gd_scene load_steps=30 format=3 uid="uid://cypu6v8555nk4"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_w3i5e"]
+[ext_resource type="PackedScene" uid="uid://cmwvu6yjwd130" path="res://Scenes/UI/WinScreen.tscn" id="2_g38f5"]
 [ext_resource type="PackedScene" uid="uid://cdesohqtr0jpy" path="res://Scenes/Enemy/EnemySpawner1.tscn" id="3_4guve"]
 [ext_resource type="AudioStream" uid="uid://dy0q5r2d8i2fh" path="res://Audio/Music/mx_game_music_one_shot_intro.wav" id="3_den0g"]
 [ext_resource type="PackedScene" uid="uid://2am0ed8ir5co" path="res://Scenes/Bacteria.tscn" id="3_kpg0x"]
+[ext_resource type="PackedScene" uid="uid://c51mmsti3fprt" path="res://Scenes/UI/LooseScreenNewNew.tscn" id="3_wlni4"]
 [ext_resource type="AudioStream" uid="uid://dpxwfeqyoaat7" path="res://Audio/Music/mx_game_music_main_loop.wav" id="4_xb1y2"]
 [ext_resource type="Texture2D" uid="uid://tpuoos67gplm" path="res://Assets/level 1/tile 1.png" id="7_2skko"]
 [ext_resource type="AudioStream" uid="uid://c8hb228knwp3e" path="res://Audio/mx_win_stinger.wav" id="7_n404d"]
@@ -134,6 +136,8 @@ _data = {
 [node name="Main" type="Node2D"]
 script = ExtResource("1_w3i5e")
 camera_speed = 200.0
+win_screen_scene = ExtResource("2_g38f5")
+loose_screen_scene = ExtResource("3_wlni4")
 bacteria_scene = ExtResource("3_kpg0x")
 music_start_sound = ExtResource("3_den0g")
 music_loop_sound = ExtResource("4_xb1y2")
@@ -272,6 +276,8 @@ position = Vector2(492, 551)
 [node name="BloodSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_85iis")
 autoplay = true
+
+[node name="MusicIntroPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 

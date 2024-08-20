@@ -3,14 +3,21 @@ class_name ShooterEnemy
 
 enum State { MOVE, SHOOT }
 
+@export var base_shoot_time := 3.
+@export var max_shoot_time := 1.5
+
 var current_state = State.MOVE
-var max_state_timer : float = 3.0
+var max_state_timer : float = base_shoot_time
 var state_timer: float = 0.
 var move_away_timer: float = 0.
 var move_away_duration: float = 2.
 var shots_fired: int = 0
 
 var ShotEnemyScene = preload("res://Scenes/Enemy/ShotEnemy.tscn")
+
+func set_strength(strength):
+	super.set_strength(strength)
+	max_state_timer = lerp(base_shoot_time, max_shoot_time, strength)
 
 func step(delta):
 	state_timer += delta

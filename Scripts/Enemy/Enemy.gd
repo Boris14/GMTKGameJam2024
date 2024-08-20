@@ -4,6 +4,9 @@ class_name Enemy
 @export var max_health: int = 1
 @export var movement_speed: float = 100.0
 
+@export var strength_max_health_multiplier: float = 2.
+@export var strength_speed_multiplier: float = 1.3
+
 @export var hit_sounds : Array[AudioStream]
 @export var death_sounds : Array[AudioStream]
 @export var aoe_charge_sounds: Array[AudioStream]
@@ -22,6 +25,11 @@ var is_dead := false
 func _ready() -> void:
 	health = max_health
 	$AnimationPlayer.play("default")
+
+func set_strength(strength: float):
+	max_health *= lerp(1., strength_max_health_multiplier, strength)
+	health = max_health
+	movement_speed *= lerp(1., strength_speed_multiplier, strength)
 
 func set_max_health(in_health):
 	max_health = in_health

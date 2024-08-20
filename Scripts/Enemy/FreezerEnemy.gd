@@ -1,13 +1,19 @@
 extends Enemy
 class_name FreezerEnemy
 
-@export var speed_multiplier := 0.3
+@export var base_speed_mult := 0.35
+@export var max_speed_multiplier := 0.15
 
 @onready var freeze_area := $FreezeArea
 @onready var freeze_shape := $FreezeArea/CollisionShape2D
 
+var speed_multiplier := base_speed_mult
 var aura_radius: float = 200.
 var slowed_bacteria : Array[Bacterium]
+
+func set_strength(strength):
+	super.set_strength(strength)
+	speed_multiplier = lerp(base_speed_mult, max_speed_multiplier, strength)
 
 func _ready():
 	super._ready()
@@ -26,14 +32,14 @@ func set_freeze_sound_playing(is_playing):
 		spec_audio_player.stop()
 
 func on_body_entered(body: Node2D):
-	if body in slowed_bacteria:
+	if not body is Bacterium or body in slowed_bacteria:
 		return
 	if body is Bacterium and body.is_in_group("bacterium"):
 		body.curr_max_speed = body.max_speed * speed_multiplier
 		slowed_bacteria.append(body)
 	
 func on_body_exited(body: Node2D):
-	if body not in slowed_bacteria:
+	if not body is Bacterium or body not in slowed_bacteria:
 		return
 	if body is Bacterium and body.is_in_group("bacterium"):
 		body.curr_max_speed = body.max_speed

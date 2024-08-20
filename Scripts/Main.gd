@@ -6,13 +6,17 @@ extends Node2D
 @export var game_speed_at_max := 2.
 @export var camera_initial_direction := Vector2(1, 0)
 @export var camera_marker_detection_radius := 10
+@export var win_screen_scene : PackedScene
+@export var loose_screen_scene : PackedScene
 @export var bacteria_scene : PackedScene
 @export var music_start_sound : AudioStream
 @export var music_loop_sound : AudioStream
+@export var music_delay : float = -1.
 @export var win_sound : AudioStream
 @export var loose_sound : AudioStream
 
 @onready var enemy_spawner := $EnemySpawner
+@onready var music_start_player := $MusicIntroPlayer
 @onready var music_player := $MusicPlayer
 @onready var heartbeat_player := $HeartbeatSoundPlayer
 @onready var game_flow := %GameFlow
@@ -23,15 +27,14 @@ var win_screen : PopUp
 var sfx_player : AudioStreamPlayer
 var bacteria : Bacteria
 var has_won := false
+var is_ended := false
 var is_idle := true
 
 func _ready():
-	var loose_screen_scene = preload("res://Scenes/UI/LooseScreen.tscn")
 	loose_screen = loose_screen_scene.instantiate()
 	add_child(loose_screen)
 	loose_screen.visible = false
 	
-	var win_screen_scene = preload("res://Scenes/UI/WinScreen.tscn")
 	win_screen = win_screen_scene.instantiate()
 	add_child(win_screen)
 	win_screen.visible = false
@@ -46,11 +49,18 @@ func _ready():
 	add_child(bacteria)
 	bacteria.start_bacteria($PlayerStartPosition.position)
 	
-	music_player.finished.connect(_on_music_start_sound_finished)
 	game_flow.speed_scale = 0.0
+
+func play_music(start_music, music_loop, music_loop_delay):
+	music_start_player.stream = start_music
+	music_player.stream = music_loop
+	music_start_player.play()
+	var delay = music_delay if music_delay > 0 else start_music.get_length()
+	await get_tree().create_timer(delay).timeout 
+	music_player.play()
 	
 func _input(event):
-	if not is_idle:
+	if not is_idle or is_ended:
 		return
 	if event is InputEventMouseButton:
 		if event.is_pressed() and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
@@ -72,15 +82,9 @@ func start_game():
 	
 	await get_tree().create_timer(start_delay).timeout
 	game_flow.speed_scale = game_flow_speed.x
-	music_player.stream = music_start_sound
-	music_player.play()
+	play_music(music_start_sound, music_loop_sound, music_delay)
 	heartbeat_player.play()
 	enemy_spawner.start()
-	
-func _on_music_start_sound_finished():
-	if music_player.stream == music_start_sound:
-		music_player.stream = music_loop_sound
-		music_player.play()
 	
 func stop_game_flow():
 	bacteria.queue_free()
@@ -95,6 +99,7 @@ func win_game():
 		return
 		
 	has_won = true
+	is_ended = true
 	stop_game_flow()
 	
 	await get_tree().create_timer(0.2).timeout
@@ -110,6 +115,7 @@ func _on_bacteria_died():
 	if has_won:
 		return
 	
+	is_ended = true
 	stop_game_flow()	
 	
 	await get_tree().create_timer(0.2).timeout

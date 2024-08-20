@@ -1,9 +1,15 @@
 extends Enemy
 class_name SplitterEnemy
 
-@export var max_splits: int = 2
+@export var base_max_splits: int = 2
+@export var max_max_splits: int = 4
 
+var max_splits := base_max_splits
 var split_count: int = 0
+
+func set_strength(strength):
+	super.set_strength(strength)
+	max_splits = int(lerp(float(base_max_splits), float(max_max_splits), strength))
 
 func step(delta):
 	var target = get_closest_bacterium_position()

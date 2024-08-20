@@ -106,7 +106,6 @@ radius = 375.225
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_5aggl")
-speed_multiplier = 0.25
 max_health = 10
 hit_sounds = Array[AudioStream]([ExtResource("2_dvfvq"), ExtResource("3_5he4a"), ExtResource("4_rhuef"), ExtResource("5_foh5q")])
 death_sounds = Array[AudioStream]([ExtResource("6_ovcoy"), ExtResource("7_tda1g"), ExtResource("8_tsi3p")])

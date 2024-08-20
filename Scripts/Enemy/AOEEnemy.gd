@@ -38,7 +38,7 @@ var attack_timer_max: float = 3.0
 	# Create and setup the ShaderMaterial
 	var material = ShaderMaterial.new()
 	material.shader = shader
-	var color = Color.YELLOW
+	var color = Color.PURPLE
 	color.a=0.5
 	# Set initial shader parameters
 	material.set_shader_parameter("circle_color", color)
@@ -65,7 +65,7 @@ func step(delta):
 	elif current_state == State.ATTACK:
 		color_progress = 1.0
 
-	var lerped_color = Color.YELLOW.lerp(Color.RED, color_progress)
+	var lerped_color = Color.PURPLE.lerp(Color.WEB_PURPLE, color_progress)
 	lerped_color.a = 0.5  # Set alpha to 0.5 for semi-transparency
 
 	aoe_visual.material.set_shader_parameter("circle_color", lerped_color)

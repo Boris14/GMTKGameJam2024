@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bkcnyk5w2eiec"]
+[gd_scene load_steps=11 format=3 uid="uid://cp7q237f41e11"]
 
 [ext_resource type="Script" path="res://Scripts/UI/PopUp.gd" id="1_12m4w"]
 [ext_resource type="Texture2D" uid="uid://bwkh6xmr10k8j" path="res://Assets/UI/Rectangle_1_copy.png" id="1_73cy1"]

@@ -21,6 +21,7 @@ enum ButtonAction
 var action_to_play : Callable
 
 func _ready():
+	$PopUpBackground.modulate = Color.TRANSPARENT
 	right_button.pressed.connect(_on_right_button_pressed)
 	left_button.pressed.connect(_on_left_button_pressed)
 	$AudioStreamPlayer.finished.connect(on_clicked_finished)
@@ -32,7 +33,7 @@ func execute_action(action : ButtonAction):
 		ButtonAction.LEVEL1:
 			action_to_play = func():get_tree().change_scene_to_file("res://Scenes/Main.tscn")
 		ButtonAction.LEVEL2:
-			action_to_play = func():get_tree().change_scene_to_file("res://Scenes/Main.tscn")
+			action_to_play = func():get_tree().change_scene_to_file("res://Scenes/Level2.tscn")
 		ButtonAction.QUIT:
 			action_to_play = func():get_tree().quit()
 	play_click_sound()	
