@@ -26,7 +26,7 @@ func die():
 		var new_splitter = duplicate()
 		new_splitter.position = position + Vector2(randf_range(-20, 20), randf_range(-20, 20))
 		new_splitter.scale *= 0.7
-		new_splitter.health = max(1, health)
+		new_splitter.health = max(1, ceil(max_health / 1.5))
 		new_splitter.max_health = new_splitter.health
 		new_splitter.split_count = split_count + 1
 		new_splitter.movement_speed *= 1.2

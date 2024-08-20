@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://bl8gncckmp5bt"]
+[gd_scene load_steps=12 format=3 uid="uid://bl8gncckmp5bt"]
 
 [ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_ouupq"]
-[ext_resource type="Texture2D" uid="uid://cl30fu4p3nem7" path="res://Assets/1920x1080-black-solid-color-background.jpg" id="2_ccvbu"]
 [ext_resource type="AudioStream" uid="uid://cb5s1fj1t1qwv" path="res://Audio/sfx_UI_click_01.wav" id="2_fjbvr"]
 [ext_resource type="AudioStream" uid="uid://bsnkfoxsholq4" path="res://Audio/sfx_UI_click_02.wav" id="3_867g1"]
-[ext_resource type="Texture2D" uid="uid://bwkh6xmr10k8j" path="res://Assets/UI/Rectangle_1_copy.png" id="3_pyihc"]
-[ext_resource type="Texture2D" uid="uid://c4fhorflxm7lb" path="res://Assets/UI/Rectangle_1.png" id="4_hsixq"]
 [ext_resource type="PackedScene" uid="uid://cypu6v8555nk4" path="res://Scenes/Main.tscn" id="4_kag0q"]
 [ext_resource type="PackedScene" uid="uid://bg4qvqi413d8a" path="res://Scenes/Level2.tscn" id="5_bs87j"]
+[ext_resource type="Texture2D" uid="uid://bj6ge1dek01m5" path="res://Assets/Title screen/title screen.png" id="6_kx4km"]
+[ext_resource type="Texture2D" uid="uid://c0u01ffgl1uef" path="res://Assets/Title screen/easy mode.png" id="7_kl4gi"]
+[ext_resource type="Texture2D" uid="uid://b0s4lp3rftp4n" path="res://Assets/Title screen/hard mode.png" id="8_xjuq2"]
 [ext_resource type="AudioStream" uid="uid://lju0npyi1n21" path="res://Audio/Music/mx_menu_music_loop.wav" id="8_yjvcn"]
+[ext_resource type="Texture2D" uid="uid://bmo3a2feh1ve7" path="res://Assets/Title screen/hard mode locked.png" id="9_rfcsf"]
+[ext_resource type="Texture2D" uid="uid://b84smrksq2huu" path="res://Assets/Title screen/quit game.png" id="10_scgl0"]
 
 [node name="Menu" type="CanvasLayer"]
 script = ExtResource("1_ouupq")
@@ -19,19 +21,7 @@ hard_scene = ExtResource("5_bs87j")
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_ccvbu")
-
-[node name="TitleImage" type="TextureRect" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -500.0
-offset_top = 50.0
-offset_right = 500.0
-offset_bottom = 350.0
-grow_horizontal = 2
-texture = ExtResource("3_pyihc")
-expand_mode = 1
+texture = ExtResource("6_kx4km")
 
 [node name="EasyLevelButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
@@ -40,13 +30,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -354.0
-offset_top = 60.0
-offset_right = 354.0
-offset_bottom = 119.0
+offset_left = -460.0
+offset_top = -59.5
+offset_right = -103.0
+offset_bottom = 59.5
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("4_hsixq")
+texture_normal = ExtResource("7_kl4gi")
 
 [node name="HardLevelButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
@@ -55,29 +45,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -354.0
-offset_top = 160.0
-offset_right = 354.0
-offset_bottom = 219.0
+offset_left = 104.0
+offset_top = -59.5
+offset_right = 460.0
+offset_bottom = 59.5
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("4_hsixq")
-texture_disabled = ExtResource("3_pyihc")
+texture_normal = ExtResource("8_xjuq2")
+texture_disabled = ExtResource("9_rfcsf")
 
 [node name="QuitButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -354.0
-offset_top = 260.0
-offset_right = 354.0
-offset_bottom = 319.0
-grow_horizontal = 2
-grow_vertical = 2
-texture_normal = ExtResource("4_hsixq")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -180.0
+offset_right = -131.0
+offset_bottom = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("10_scgl0")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
