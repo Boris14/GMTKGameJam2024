@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GMTKGameJam2024"
+config/name="Infectible"
 run/main_scene="res://Scenes/Menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://Assets/icon.svg"
