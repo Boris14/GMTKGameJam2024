@@ -1,5 +1,7 @@
 extends Node
 
+var is_level_2_unlocked := false
+
 var immunity_decrease_per_sec := 5
 var immunity_decrease_delay := 1.5
 var immunity_response := 0.0

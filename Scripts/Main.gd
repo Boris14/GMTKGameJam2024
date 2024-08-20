@@ -50,6 +50,7 @@ func _ready():
 	bacteria.start_bacteria($PlayerStartPosition.position)
 	
 	game_flow.speed_scale = 0.0
+	
 
 func play_music(start_music, music_loop, music_loop_delay):
 	music_start_player.stream = start_music
@@ -60,6 +61,9 @@ func play_music(start_music, music_loop, music_loop_delay):
 	music_player.play()
 	
 func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
+	
 	if not is_idle or is_ended:
 		return
 	if event is InputEventMouseButton:
@@ -98,6 +102,7 @@ func win_game():
 	if has_won:
 		return
 		
+	Globals.is_level_2_unlocked = true
 	has_won = true
 	is_ended = true
 	stop_game_flow()

@@ -74,7 +74,7 @@ script = ExtResource("1_cuj3l")
 click_sounds = Array[AudioStream]([ExtResource("2_y3d5o"), ExtResource("3_pu4fu")])
 
 [node name="FadedBackground" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.392157)
+modulate = Color(1, 1, 1, 0.470588)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

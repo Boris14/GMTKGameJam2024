@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://c2ma31i61bbdx" path="res://Assets/Enemies/enemy sheet 7.png" id="21_nt28g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ngu5"]
-radius = 53.0377
+radius = 63.6396
 
 [sub_resource type="Animation" id="Animation_tk0qw"]
 length = 0.001
@@ -103,7 +103,7 @@ radius = 43.9318
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_1se12")
-max_health = 8
+max_health = 12
 movement_speed = 120.0
 hit_sounds = Array[AudioStream]([ExtResource("2_bf5gp"), ExtResource("3_6p5x1"), ExtResource("4_p123x"), ExtResource("5_3atca")])
 death_sounds = Array[AudioStream]([ExtResource("6_rtcxb"), ExtResource("7_x3g4r"), ExtResource("8_cx61x")])
@@ -113,7 +113,7 @@ shoot_sounds = Array[AudioStream]([ExtResource("15_ujblq"), ExtResource("16_j5um
 freezer_loop_sounds = Array[AudioStream]([ExtResource("19_nb0mg"), ExtResource("20_j40lf")])
 
 [node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("21_nt28g")
 hframes = 4
 
